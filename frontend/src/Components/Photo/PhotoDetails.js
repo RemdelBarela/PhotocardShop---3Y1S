@@ -138,7 +138,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             setErrorReview('')
         }
         if (success) {
-            successMsg('Reivew posted successfully')
+            successMsg('REVIEW SUBMITTED')
             setSuccess(false)
 
         }
@@ -195,11 +195,11 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                             <h4 className="mt-2">Description:</h4>
                             <p>{photo.description}</p>
                             <hr />
-                            <p id="photo_seller mb-3">Sold by: <strong>{photo.seller}</strong></p>
+                            {/* <p id="photo_seller mb-3">Sold by: <strong>{photo.seller}</strong></p> */}
 
                             {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
-                                Submit Your Review
-                            </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>}
+                            KINDLY SUBMIT YOUR REVIEW
+                            </button> : <div className="alert alert-danger mt-5" type='alert'>KINDLY SING IN TO SHARE YOUR REVIEW.</div>}
 
 
 
@@ -211,7 +211,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                                         <div className="modal-dialog" role="document">
                                             <div className="modal-content">
                                                 <div className="modal-header">
-                                                    <h5 className="modal-title" id="ratingModalLabel">Submit Review</h5>
+                                                    <h5 className="modal-title" id="ratingModalLabel">SUBMIT REVIEW</h5>
                                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
