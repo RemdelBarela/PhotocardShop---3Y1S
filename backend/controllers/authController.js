@@ -6,7 +6,7 @@ const cloudinary = require('cloudinary')
 
 exports.registerUser = async (req, res, next) => {
     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'avatars',
+        folder: 'users',
         width: 150,
         crop: "scale"
     }, (err, res) => {
@@ -142,7 +142,7 @@ exports.updatePassword = async (req, res, next) => {
     // Check previous user password
     const isMatched = await user.comparePassword(req.body.oldPassword)
     if (!isMatched) {
-        return res.status(400).json({ message: 'Old password is incorrect' })
+        return res.status(400).json({ message: 'THE PROVIDED OLD PASSWORD IS INCORRECT.' })
     }
     user.password = req.body.password;
     await user.save();
@@ -197,7 +197,7 @@ exports.getUserDetails = async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-        return res.status(400).json({ message: `User does not found with id: ${req.params.id}` })
+        return res.status(400).json({ message: `THE USER WITH THE SPECIFIED ID WAS NOT FOUND: ${req.params.id}` })
         // return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
     }
 
@@ -211,7 +211,7 @@ exports.deleteUser = async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-        return res.status(401).json({ message: `User does not found with id: ${req.params.id}` })
+        return res.status(401).json({ message: `THE USER WITH THE SPECIFIED ID WAS NOT FOUND: ${req.params.id}` })
         // return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
     }
 
