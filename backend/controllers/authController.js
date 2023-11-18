@@ -5,34 +5,49 @@ const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
 exports.registerUser = async (req, res, next) => {
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'users',
-        width: 150,
-        crop: "scale"
-    }, (err, res) => {
-        console.log(err, res);
-    });
-    const { name, email, password, role } = req.body;
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar: {
-            public_id: result.public_id,
-            url: result.secure_url
-        },
-        // role,
-    })
-    //test token
-    //  const token = user.getJwtToken();
+    let avatar = [];
+    if (typeof req.body.avatar === 'string') {
+        avatar.push(req.body.avatar);
+    } else {
+        avatar = req.body.avatar;
+    }
 
-    //   res.status(201).json({
-    //   	success:true,
-    //   	user,
-    //  	token
-    //   })
-    sendToken(user, 200, res)
-}
+    let avatarLinks = [];
+
+    for (let i = 0; i < avatar.length; i++) {
+        let avatarDataUri = avatar[i];
+        try {
+            const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
+                folder: 'user',
+                width: 150,
+                crop: "scale",
+            });
+
+            avatarLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            });
+
+            const { name, email, password, role } = req.body;
+            const user = await User.create({
+                name,
+                email,
+                password,
+                avatar: {
+                    public_id: result.public_id,
+                    url: result.secure_url
+                },
+                // role,
+            });
+
+            sendToken(user, 200, res);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Error in user registration.' });
+        }
+    }
+};
+
 
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
@@ -225,19 +240,54 @@ exports.deleteUser = async (req, res, next) => {
 }
 
 exports.updateUser = async (req, res, next) => {
-    const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
-        role: req.body.role
+    let avatar = [];
+    if (typeof req.body.avatar === 'string') {
+        avatar.push(req.body.avatar);
+    } else {
+        avatar = req.body.avatar;
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
-        new: true,
-        runValidators: true,
-        // useFindAndModify: false
-    })
+    let avatarLinks = [];
 
-    return res.status(200).json({
-        success: true
-    })
-}
+    for (let i = 0; i < avatar.length; i++) {
+        let avatarDataUri = avatar[i];
+        try {
+            const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
+                folder: 'user',
+                width: 150,
+                crop: "scale",
+            });
+
+            avatarLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            });
+
+            const newUserData = {
+                name: req.body.name,
+                email: req.body.email,
+                role: req.body.role,
+                avatar: {
+                    public_id: result.public_id,
+                    url: result.secure_url
+                }
+            };
+
+            const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+                new: true,
+                runValidators: true,
+            });
+
+            return res.status(200).json({
+                success: true,
+                user
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'FAILED TO UPDATE USER INFORMATION' });
+        }
+    }
+};
+
+

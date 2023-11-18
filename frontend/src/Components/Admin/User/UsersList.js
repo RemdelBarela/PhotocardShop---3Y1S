@@ -35,18 +35,23 @@ const UsersList = () => {
             
         }
     }
+
     const deleteUser = async (id) => {
-        try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config)
-            setIsDeleted(data.success)
-            setLoading(false)
-            
-        } catch (error) {
-           setError(error.response.data.message)
-           setError()
-            
+    try {
+        const response = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
+        console.log(response); // Log the response
+      
+        if (response && response.data) {
+            setIsDeleted(response.data.success);
+            setLoading(false);
+        } else {
+            console.error("Unexpected response structure:", response);
         }
+    } catch (error) {
+        setError(error.response?.data?.message || 'An error occurred');
     }
+}
+
 
     useEffect(() => {
         listUsers();

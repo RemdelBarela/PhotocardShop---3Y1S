@@ -134,7 +134,7 @@ const Register = () => {
                                     </div>
                                     <div className="field space">
                                         <span className="fa fa-lock"></span>
-                                        <input required placeholder="Password"
+                                        <input required placeholder="PASSWORD"
                                                 type="password"
                                                 id="password_field"
                                                 value={password}
@@ -151,7 +151,7 @@ const Register = () => {
                                                     ))}
                                                 </figure>
                                             </div>
-                                            <div className='custom-file'>
+                                            <div className='custom-file text-center'>
                                                 <input
                                                     type='file'
                                                     name='avatar'
@@ -171,7 +171,7 @@ const Register = () => {
                                         <button id="register_button" type="submit">REGISTER</button>
                                     </div>
                                 </form>
-                                <div className="login">Or Register with</div>
+                                <div className="login">OR REGISTER WITH</div>
                                 <div className="links">
                                     <div className="social-icon facebook" id="flink">
                                         <FaFacebook />

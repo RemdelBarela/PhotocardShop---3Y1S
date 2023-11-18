@@ -150,9 +150,9 @@ function App() {
           {/* <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} /> */}
-          <Route
+          {/* <Route
             path="/admin/users"
-            element={<UsersList />} />
+            element={<UsersList />} /> */}
           <Route path="/admin/user/:id" element={<UpdateUser />} />
           {/* <Route
             path="/dashboard"
@@ -170,7 +170,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* <Route
+          <Route
             path="/admin/users"
             element={
               <ProtectedRoute isAdmin={true}>
@@ -178,7 +178,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/admin/orders"
             element={
               <ProtectedRoute isAdmin={true}>

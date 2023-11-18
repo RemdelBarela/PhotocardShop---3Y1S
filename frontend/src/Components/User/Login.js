@@ -70,11 +70,11 @@ const Login = () => {
                         <div className="l-col-10 col-lg-5">
                             <div class="bg-img">
                                 <div class="l-content">
-                                    <header>Login Form</header>
+                                    <header>LOGIN FORM</header>
                                     <form onSubmit={submitHandler}>
                                         <div class="field">
                                             <span class="fa fa-user"></span>
-                                                <input placeholder="Email or Phone"
+                                                <input placeholder="EMAIL OR PHONE"
                                                     type="email"
                                                     id="email_field"
                                                     value={email}
@@ -82,20 +82,20 @@ const Login = () => {
                                         </div>
                                         <div class="field space">
                                             <span class="fa fa-lock"></span>
-                                            <input required placeholder="Password"
+                                            <input required placeholder="PASSWORD"
                                                     type="password"
                                                     id="password_field"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}/>
                                         </div>
                                         <div class="pass">
-                                            <a href="/password/forgot">Forgot Password?</a>
+                                            <a href="/password/forgot">FORGOT PASSWORD?</a>
                                         </div>
                                         <div className="field">
                                             <button id="login_button" type="submit">LOGIN</button>
                                         </div>
                                     </form>
-                                    <div class="login">Or Login with</div>
+                                    <div class="login">OR LOGIN WITH</div>
                                     <div className="links">
           
                                     <div className="social-icon facebook" id="flink">
@@ -137,8 +137,8 @@ const Login = () => {
                                             
                                         </div>
                                     </div>
-                                    <div class="signup">Don't have account?
-                                        <a href="/register"> Signup Now</a>
+                                    <div class="signup">DON'T HAVE ACCOUNT?
+                                        <a href="/register"> SIGNUP NOW</a>
                                     </div>
                                 </div>
                             </div>
