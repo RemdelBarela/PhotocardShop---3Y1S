@@ -28,6 +28,7 @@
 //     }
 
 
+<<<<<<< HEAD
 // <<<<<<< HEAD
 //     const getProducts = async (page = 1, keyword = '', price) => {
 // =======
@@ -53,6 +54,30 @@
 //     useEffect(() => {
 //         getphotos(currentPage, keyword, price, category)
 //     }, [currentPage, keyword, price, category]);
+=======
+    const getProducts = async (page = 1, keyword = '', price) => {
+    const getPhotos = async (page = 1, keyword = '', price, category='') => {
+        let link = ''
+
+        link = `${process.env.REACT_APP_API}/api/v1/photo/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        
+        if (category) {
+            link = `${process.env.REACT_APP_API}/api/v1/photo?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+        }
+
+        console.log(link)
+        let res = await axios.get(link)
+        console.log(res)
+        setphotos(res.data.photos)
+        setResPerPage(res.data.resPerPage)
+        setphotosCount(res.data.photosCount)
+        setfilteredPhotosCount(res.data.filteredPhotosCount)
+        setLoading(false)
+    }
+    useEffect(() => {
+        getPhotos(currentPage, keyword, price, category)
+    }, [currentPage, keyword, price, category]);
+>>>>>>> 25c5454ac200bab53ff1dcc0affbbe35c768be7e
 
 //     let count = photosCount
 //     if (keyword) {
@@ -111,6 +136,7 @@
 //                                         </div>
 //                                     </div>
 
+<<<<<<< HEAD
 //                                     <div className="col-6 col-md-9">
 //                                         <div className="row">
 //                                             {photos.map(product => (
@@ -149,5 +175,45 @@
 //         </>
 //     )
 // }
+=======
+                                    <div className="col-6 col-md-9">
+                                        <div className="row">
+                                            {photos.map(product => (
+                                                <></>
+                                                // <Product key={product._id} product={product} col={4} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Fragment>
+                            ) : (
+                                photos.map(product => (
+                                    <></>
+                                    // <Product key={product._id} product={product} col={3} />
+                                ))
+                            )}
+                        </div>
+                    </section>
+                    {resPerPage <= count && (
+                        <div className="d-flex justify-content-center mt-5">
+                            <Pagination
+                                activePage={currentPage}
+                                itemsCountPerPage={resPerPage}
+                                totalItemsCount={photosCount}
+                                onChange={setCurrentPageNo}
+                                nextPageText={'Next'}
+                                prevPageText={'Prev'}
+                                firstPageText={'First'}
+                                lastPageText={'Last'}
+                                itemClass="page-item"
+                                linkClass="page-link"
+                            />
+                        </div>)}
+                </div>
+            </Fragment>
+            )}
+        </>
+    )
+}}
+>>>>>>> 25c5454ac200bab53ff1dcc0affbbe35c768be7e
 
 // export default Home
