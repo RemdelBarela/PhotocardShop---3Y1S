@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
-import axios from 'axios'
-
+import axios from 'axios' 
+import '../../Register.css';
 const Register = () => {
 
     const [user, setUser] = useState({
@@ -86,15 +86,18 @@ const Register = () => {
 
     return (
         <Fragment>
-            <MetaData title={'Register User'} />
-            <div className="row wrapper" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-  <div className="col-10 col-lg-5">
-    <form className="shadow-lg" style={{ zIndex: 101, width: '400px', height: '510px', padding: '20px' }} onSubmit={submitHandler} encType='multipart/form-data'>
-                        <h1 className="mb-3">Register</h1>
+    <div className="row wrapper">
+                        <div className="col-10 col-lg-5">
+                    <div class="Register_bg-img">
+      <div class="Register_content">
+        <header>Register Form</header>
+        <form onSubmit={submitHandler} encType='multipart/form-data'>
+          <div class="field">
+            <span class="fa fa-user"></span>
+             
 
-                        <div className="form-group">
-                            <label htmlFor="email_field">Name</label>
-                            <input
+            <input
+                                placeholder="Name"
                                 type="name"
                                 id="name_field"
                                 className="form-control"
@@ -102,11 +105,13 @@ const Register = () => {
                                 value={name}
                                 onChange={onChange}
                             />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email_field">Email</label>
-                            <input
+          </div>
+       
+          <div class="field space">
+          <span class="fa fa-envelope"></span>
+        
+            <input
+                                placeholder="Email"
                                 type="email"
                                 id="email_field"
                                 className="form-control"
@@ -114,11 +119,13 @@ const Register = () => {
                                 value={email}
                                 onChange={onChange}
                             />
-                        </div>
+            <span class="show">SHOW</span>
+          </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password_field">Password</label>
-                            <input
+          <div class="field space">
+        <span class="fa fa-lock"></span>
+        <input
+                                placeholder="Password"
                                 type="password"
                                 id="password_field"
                                 className="form-control"
@@ -126,48 +133,61 @@ const Register = () => {
                                 value={password}
                                 onChange={onChange}
                             />
+          </div>
+
+
+<br/>
+          <div className='form-group'>
+          <label htmlFor='avatar_upload' class='d-flex align-items-left'>Avatar</label>
+          <div className='d-flex align-items-center'>
+        <div>
+      <figure className='avatar mr-3 item-rtl'>
+                                        <img
+                                            src={avatarPreview}
+                                            className='rounded-circle'
+                                            alt='Avatar Preview'
+                                        />
+                                    </figure>
+                                </div>
+                                <div className='custom-file'>
+                                    <input
+                                        type='file'
+                                        name='avatar'
+                                        className='custom-file-input'
+                                        id='customFile'
+                                        accept="images/*"
+                                        onChange={onChange}
+                                    />
+                                    <label className='custom-file-label d-flex align-items-left' htmlFor='customFile'>
+                                        Choose Avatar
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
-                     <div className='form-group'>
-  <label htmlFor='avatar_upload'>Avatar</label>
-  <div className='d-flex align-items-center'>
-    <div>
-      <figure className='avatar mr-3 item-rtl'>
-        <img
-          src={avatarPreview}
-          className='rounded-circle'
-          alt='Avatar Preview'
-          style={{ width: '50px', height: '50px' }} // Adjust the width and height as needed
-        />
-      </figure>
-    </div>
-    <div className='custom-file'>
-      <input
-        type='file'
-        name='avatar'
-        className='custom-file-input'
-        id='customFile'
-        accept="images/*"
-        onChange={onChange}
-      />
-      <label className='custom-file-label' htmlFor='customFile'>
-        Choose Avatar
-      </label>
-    </div>
-  </div>
-</div>
 
-                        <button
+
+                        <div className="field">
+
+
+                          <button
                             id="register_button"
                             type="submit"
-                            className="btn btn-block py-2" style={{ border: '1px solid #000' }}
-                            // disabled={loading ? false : true}
+                           // disabled={loading ? false : true}
                         >
                             REGISTER
                         </button>
-                    </form>
-                </div>
-            </div>
+</div>
+        </form>
+       
+      </div>
+    </div>
+    </div>
+    </div>
+             
+
+
+     
 
         </Fragment>
     )

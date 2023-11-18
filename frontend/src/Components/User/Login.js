@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-
+import '../../Login.css';
+import '../../Register.css';
 import Loader from '../Layout/Loader'
 import MetaData from '../Layout/MetaData'
 import { toast } from 'react-toastify';
@@ -8,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
+import { FaFacebook, FaEnvelope } from 'react-icons/fa';
+
+
 
 const Login = () => {
 
@@ -54,49 +58,73 @@ const Login = () => {
             {loading ? <Loader /> : (
                 <Fragment>
                     <MetaData title={'Login'} />
-
-                    <div className="row wrapper" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-  <div className="col-10 col-lg-5">
-    <form className="shadow-lg" style={{ zIndex: 80, width: '580px', padding: '80px' }} onSubmit={submitHandler}>
-                            
-                                <h1 className="mb-3">Login</h1>
-                                <div className="form-group">
-                                    <label htmlFor="email_field">Email</label>
-                                    <input
+                    <div className="row wrapper">
+                        <div className="col-10 col-lg-5">
+                    <div class="bg-img">
+      <div class="content">
+        <header>Login Form</header>
+        <form 
+                                onSubmit={submitHandler}
+                            >
+          <div class="field">
+            <span class="fa fa-user"></span>
+          
+            <input
+            placeholder="Email or Phone"
                                         type="email"
                                         id="email_field"
-                                        className="form-control"
+                                     
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="password_field">Password</label>
-                                    <input
+          </div>
+          <div class="field space">
+            <span class="fa fa-lock"></span>
+            <input
+            required placeholder="Password"
                                         type="password"
                                         id="password_field"
-                                        className="form-control"
+                                       
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
-                                </div>
+          
+          </div>
+          <div class="pass">
+            <a href="/password/forgot">Forgot Password?</a>
 
-                                <Link to="/password/forgot" className="float-right mb-4">Forgot Password?</Link>
+        
+          </div>
+          <div className="field">
 
-                                <button
+      <button
                                     id="login_button"
                                     type="submit"
-                                    className="btn btn-block py-3" style={{ border: '1px solid #000' }}
-                                >
+                                     >
                                     LOGIN
                                 </button>
-
-                                <Link to="/register" className="float-right mt-3">New User?</Link>
-                            </form>
-                        </div>
-                    </div>
-
+    </div>
+        </form>
+        <div class="login">Or login with</div>
+        <div className="links">
+      <div className="social-icon facebook">
+        <FaFacebook />
+        <span>Facebook</span>
+      </div>
+      <div className="social-icon gmail">
+        <FaEnvelope />
+        <span>Gmail</span>
+      </div>
+    </div>
+        <div class="signup">Don't have account?
+              <a href="/register">Signup Now</a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+             
+                  
 
                 </Fragment>
             )}
