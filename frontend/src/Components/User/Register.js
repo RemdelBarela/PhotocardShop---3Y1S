@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import axios from 'axios' 
+import '../../Register.css';
 const Register = () => {
 
     const [user, setUser] = useState({
