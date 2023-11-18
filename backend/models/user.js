@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'NAME FIELD CANNOT BE LEFT BLANK.'],
-        minlength: [7, 'YOUR NAME SHOULD CONTAIN AT LEAST 7 CHARACTERS.']
+        minlength: [5, 'YOUR NAME SHOULD CONTAIN AT LEAST 7 CHARACTERS.']
     },
     email: {
         type: String,
