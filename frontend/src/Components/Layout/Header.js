@@ -11,7 +11,7 @@ function Navbar() {
     width: 0,
     height: 0,
   });
-
+  
   useEffect(() => {
     const handleResize = () => {
       setSize({

@@ -109,7 +109,7 @@ function App() {
 
       <Router>
         {/* <Header cartItems={state.cartItems} /> */}
-        {/* <Header /> */}
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           {/* <Route path="/photo/:id" element={<PhotoDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" /> */}
