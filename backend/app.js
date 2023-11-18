@@ -4,8 +4,9 @@ const cookie = require('cookie-parser')
 const cors = require('cors')
 
 const auth = require('./routes/auth')
+const products = require('./routes/photo');
 
-// const products = require('./routes/product');
+// const photos = require('./routes/product');
 // const order = require('./routes/order')
 
 app.use(cors())
@@ -15,8 +16,9 @@ app.use(express.urlencoded({limit: "50mb", extended: true }));
 app.use(cookie());
 
 app.use('/api/v1', auth);
+app.use('/api/v1', products);
 
-// app.use('/api/v1', products);
+// app.use('/api/v1', photos);
 // app.use('/api/v1', order);
 
 module.exports = app
