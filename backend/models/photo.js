@@ -33,12 +33,6 @@ const photoSchema = new mongoose.Schema({
             },
         }
     ],
-    // stock: {
-    //     type: Number,
-    //     required: [true, 'PROVIDE PRODUCT NAME'],
-    //     maxLength: [5, 'ENSURE YOUR STOCK HAS A MAXIMUM LENGTH OF 5 CHARACTERS'],
-    //     default: 0
-    // },
     numOfReviews: {
         type: Number,
         default: 0

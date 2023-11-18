@@ -1,16 +1,8 @@
 const Photo = require('../models/photo')
 // const Order = require('../models/order')
+
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
-// exports.newPhoto = async (req, res, next) => {
-
-// 	// req.body.user = req.user.id;
-// 	const Photo = await Photo.create(req.body);
-// 	res.status(201).json({
-// 		success: true,
-// 		Photo
-// 	})
-// }
 
 exports.getPhotos = async (req, res, next) => {
 	// const photos = await Photo.find({});
@@ -50,60 +42,6 @@ exports.getSinglePhoto = async (req, res, next) => {
 	})
 }
 
-// exports.updatePhoto = async (req, res, next) => {
-// 	let Photo = await Photo.findById(req.params.id);
-// 	console.log(req.body)
-// 	if (!Photo) {
-// 		return res.status(404).json({
-// 			success: false,
-// 			message: 'Photo not found'
-// 		})
-// 	}
-// 	Photo = await Photo.findByIdAndUpdate(req.params.id, req.body, {
-// 		new: true,
-// 	})
-// 	if (!Photo) {
-// 		return res.status(404).json({
-// 			success: false,
-// 			message: 'Photo not updated'
-// 		})
-// 	}
-// 	res.status(200).json({
-// 		success: true,
-// 		Photo
-// 	})
-// }
-
-exports.deletePhoto = async (req, res, next) => {
-	const Photo = await Photo.findByIdAndDelete(req.params.id);
-	if (!Photo) {
-		return res.status(404).json({
-			success: false,
-			message: 'NO PRODUCT FOUND'
-		})
-	}
-
-	res.status(200).json({
-		success: true,
-		message: 'PRODUCT REMOVED'
-	})
-}
-
-exports.getAdminPhotos = async (req, res, next) => {
-	const photos = await Photo.find();
-	if (!photos) {
-		return res.status(404).json({
-			success: false,
-			message: 'PRODUCTS NOT FOUND'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		photos
-	})
-
-}
-
 exports.newPhoto = async (req, res, next) => {
 
 	let images = []
@@ -139,27 +77,28 @@ exports.newPhoto = async (req, res, next) => {
 	req.body.images = imagesLinks
 	req.body.user = req.user.id;
 
-	const Photo = await Photo.create(req.body);
-	if (!Photo)
+	const photo = await Photo.create(req.body);
+	if (!photo)
 		return res.status(400).json({
 			success: false,
 			message: 'FAILED TO CREATE PHOTO'
 		})
 	res.status(201).json({
 		success: true,
-		Photo
+		photo
 	})
 }
 
 exports.updatePhoto = async (req, res, next) => {
-	let Photo = await Photo.findById(req.params.id);
+	let photo = await Photo.findById(req.params.id);
 	// console.log(req.body)
-	if (!Photo) {
+	if (!photo) {
 		return res.status(404).json({
 			success: false,
 			message: 'PHOTO NOT FOUND'
 		})
 	}
+
 	let images = []
 
 	if (typeof req.body.images === 'string') {
@@ -169,9 +108,9 @@ exports.updatePhoto = async (req, res, next) => {
 	}
 	if (images !== undefined) {
 		// Deleting images associated with the Photo
-		for (let i = 0; i < Photo.images.length; i++) {
+		for (let i = 0; i < photo.images.length; i++) {
 			try {
-				let imageDataUri = Photo.images[i]
+				let imageDataUri = photo.images[i]
 			const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`)
 			} catch (error) {
 				console.log(error)
@@ -198,12 +137,12 @@ exports.updatePhoto = async (req, res, next) => {
 
 	}
 	req.body.images = imagesLinks
-	Photo = await Photo.findByIdAndUpdate(req.params.id, req.body, {
+	photo = await Photo.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
 		useFindandModify: false
 	})
-	if (!Photo)
+	if (!photo)
 		return res.status(400).json({
 			success: false,
 			message: 'FAILED TO UPDATE PHOTO'
@@ -211,9 +150,41 @@ exports.updatePhoto = async (req, res, next) => {
 	// console.log(Photo)
 	return res.status(200).json({
 		success: true,
-		Photo
+		photo
 	})
 }
+
+exports.deletePhoto = async (req, res, next) => {
+	const photo = await Photo.findByIdAndDelete(req.params.id);
+	if (!photo) {
+		return res.status(404).json({
+			success: false,
+			message: 'NO PRODUCT FOUND'
+		})
+	}
+
+	res.status(200).json({
+		success: true,
+		message: 'PRODUCT REMOVED'
+	})
+}
+
+exports.getAdminPhotos = async (req, res, next) => {
+	const photos = await Photo.find();
+	if (!photos) {
+		return res.status(404).json({
+			success: false,
+			message: 'PRODUCTS NOT FOUND'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		photos
+	})
+
+}
+
+
 
 exports.createPhotoReview = async (req, res, next) => {
 	const { rating, comment, photoId } = req.body;

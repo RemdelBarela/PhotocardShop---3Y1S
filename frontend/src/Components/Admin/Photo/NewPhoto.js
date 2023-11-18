@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import MetaData from '../Layout/MetaData'
+import MetaData from '../../Layout/MetaData'
 // import Sidebar from './SideBar'
-import { getToken } from '../../utils/helpers';
+import { getToken } from '../../../utils/helpers';
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,6 @@ const NewPhoto = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
-    const [stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([])
     const [error, setError] = useState('')
@@ -29,8 +28,6 @@ const NewPhoto = () => {
         formData.set('name', name);
         formData.set('price', price);
         formData.set('description', description);
-        formData.set('stock', stock);
-
         images.forEach(image => {
             formData.append('images', image)
         })
@@ -133,17 +130,6 @@ const NewPhoto = () => {
                                 <div className="form-group">
                                     <label htmlFor="description_field">Description</label>
                                     <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="stock_field">Stock</label>
-                                    <input
-                                        type="number"
-                                        id="stock_field"
-                                        className="form-control"
-                                        value={stock}
-                                        onChange={(e) => setStock(e.target.value)}
-                                    />
                                 </div>
 
                                 <div className='form-group'>
