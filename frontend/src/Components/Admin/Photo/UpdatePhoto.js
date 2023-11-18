@@ -10,36 +10,19 @@ import axios from 'axios';
 
 
 
-const UpdateProduct = () => {
+const UpdatePhoto = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
-    const [stock, setStock] = useState(0);
-    const [seller, setSeller] = useState('');
     const [images, setImages] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([])
     const [error, setError] = useState('')
-    const [product, setProduct] = useState({})
+    const [photo, setPhoto] = useState({})
     const [loading, setLoading] = useState(true)
     const [updateError, setUpdateError] = useState('')
     const [isUpdated, setIsUpdated] = useState(false)
 
-    const categories = [
-        'Electronics',
-        'Cameras',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        "Books",
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
-        'Outdoor',
-        'Home'
-    ]
     let { id } = useParams();
     let navigate = useNavigate();
 
@@ -50,10 +33,10 @@ const UpdateProduct = () => {
         position: toast.POSITION.BOTTOM_CENTER
     });
 
-    const getProductDetails =  async (id) => {
+    const getPhotoDetails =  async (id) => {
         try {
-           const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/${id}`)
-           setProduct(data.product)
+           const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/photo/${id}`)
+           setPhoto(data.photo)
            setLoading(false)
            
         } catch (error) {
@@ -62,7 +45,7 @@ const UpdateProduct = () => {
         }
     }
       
-    const updateProduct = async (id, productData)  => {
+    const updatePhoto = async (id, photoData)  => {
         try {
            
             const config = {
@@ -71,7 +54,7 @@ const UpdateProduct = () => {
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`, productData, config)
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/photo/${id}`, photoData, config)
             setIsUpdated(data.success)
            
         } catch (error) {
@@ -80,16 +63,13 @@ const UpdateProduct = () => {
         }
     }
     useEffect(() => {
-        if (product && product._id !== id) {
-            getProductDetails(id)
+        if (photo && photo._id !== id) {
+            getPhotoDetails(id)
         } else {
-            setName(product.name);
-            setPrice(product.price);
-            setDescription(product.description);
-            setCategory(product.category);
-            setSeller(product.seller);
-            setStock(product.stock)
-            setOldImages(product.images)
+            setName(photo.name);
+            setPrice(photo.price);
+            setDescription(photo.description);
+            setOldImages(photo.images)
         }
         if (error) {
             errMsg(error)
@@ -100,11 +80,11 @@ const UpdateProduct = () => {
            
         }
         if (isUpdated) {
-            navigate('/admin/products');
-            successMsg('Product updated successfully');
+            navigate('/admin/photos');
+            successMsg('Photo updated successfully');
            
         }
-    }, [error, isUpdated, updateError, product, id])
+    }, [error, isUpdated, updateError, photo, id])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -112,13 +92,10 @@ const UpdateProduct = () => {
         formData.set('name', name);
         formData.set('price', price);
         formData.set('description', description);
-        formData.set('category', category);
-        formData.set('stock', stock);
-        formData.set('seller', seller);
         images.forEach(image => {
             formData.append('images', image)
         })
-        updateProduct(product._id, formData)
+        updatePhoto(photo._id, formData)
     }
     const onChange = e => {
         const files = Array.from(e.target.files)
@@ -138,7 +115,7 @@ const UpdateProduct = () => {
     }
     return (
         <Fragment>
-            <MetaData title={'Update Product'} />
+            <MetaData title={'Update Photo'} />
             <div className="row">
                 {/* <div className="col-12 col-md-2">
                     <Sidebar />
@@ -147,7 +124,7 @@ const UpdateProduct = () => {
                     <Fragment>
                         <div className="wrapper my-5">
                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                                <h1 className="mb-4">Update Product</h1>
+                                <h1 className="mb-4">Update Photo</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
                                     <input
@@ -166,38 +143,6 @@ const UpdateProduct = () => {
                                         className="form-control"
                                         value={price}
                                         onChange={(e) => setPrice(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="description_field">Description</label>
-                                    <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="category_field">Category</label>
-                                    <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
-                                        {categories.map(category => (
-                                            <option key={category} value={category} >{category}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="stock_field">Stock</label>
-                                    <input
-                                        type="number"
-                                        id="stock_field"
-                                        className="form-control"
-                                        value={stock}
-                                        onChange={(e) => setStock(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="seller_field">Seller Name</label>
-                                    <input
-                                        type="text"
-                                        id="seller_field"
-                                        className="form-control"
-                                        value={seller}
-                                        onChange={(e) => setSeller(e.target.value)}
                                     />
                                 </div>
                                 <div className='form-group'>
@@ -239,4 +184,4 @@ const UpdateProduct = () => {
     )
 }
 
-export default UpdateProduct
+export default UpdatePhoto

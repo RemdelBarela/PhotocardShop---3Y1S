@@ -29,8 +29,8 @@ exports.getPhotos = async (req, res, next) => {
 }
 
 exports.getSinglePhoto = async (req, res, next) => {
-	const Photo = await Photo.findById(req.params.id);
-	if (!Photo) {
+	const photo = await Photo.findById(req.params.id);
+	if (!photo) {
 		return res.status(404).json({
 			success: false,
 			message: 'NO PRODUCT FOUND'
@@ -38,7 +38,7 @@ exports.getSinglePhoto = async (req, res, next) => {
 	}
 	res.status(200).json({
 		success: true,
-		Photo
+		photo
 	})
 }
 

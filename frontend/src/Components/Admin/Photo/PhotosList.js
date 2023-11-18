@@ -108,11 +108,6 @@ const PhotosList = () => {
                     sort: 'asc'
                 },
                 {
-                    label: 'Stock',
-                    field: 'stock',
-                    sort: 'asc'
-                },
-                {
                     label: 'Actions',
                     field: 'actions',
                 },
