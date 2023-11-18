@@ -37,7 +37,7 @@ const UsersList = () => {
     }
     const deleteUser = async (id) => {
         try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config)
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/users/${id}`, config)
             setIsDeleted(data.success)
             setLoading(false)
             
