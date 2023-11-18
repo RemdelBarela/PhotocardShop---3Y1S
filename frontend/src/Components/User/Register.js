@@ -87,9 +87,9 @@ const Register = () => {
     return (
         <Fragment>
             <MetaData title={'Register User'} />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
+            <div className="row wrapper" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+  <div className="col-10 col-lg-5">
+    <form className="shadow-lg" style={{ zIndex: 101, width: '400px', height: '510px', padding: '20px' }} onSubmit={submitHandler} encType='multipart/form-data'>
                         <h1 className="mb-3">Register</h1>
 
                         <div className="form-group">
@@ -128,38 +128,39 @@ const Register = () => {
                             />
                         </div>
 
-                        <div className='form-group'>
-                            <label htmlFor='avatar_upload'>Avatar</label>
-                            <div className='d-flex align-items-center'>
-                                <div>
-                                    <figure className='avatar mr-3 item-rtl'>
-                                        <img
-                                            src={avatarPreview}
-                                            className='rounded-circle'
-                                            alt='Avatar Preview'
-                                        />
-                                    </figure>
-                                </div>
-                                <div className='custom-file'>
-                                    <input
-                                        type='file'
-                                        name='avatar'
-                                        className='custom-file-input'
-                                        id='customFile'
-                                        accept="images/*"
-                                        onChange={onChange}
-                                    />
-                                    <label className='custom-file-label' htmlFor='customFile'>
-                                        Choose Avatar
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                     <div className='form-group'>
+  <label htmlFor='avatar_upload'>Avatar</label>
+  <div className='d-flex align-items-center'>
+    <div>
+      <figure className='avatar mr-3 item-rtl'>
+        <img
+          src={avatarPreview}
+          className='rounded-circle'
+          alt='Avatar Preview'
+          style={{ width: '50px', height: '50px' }} // Adjust the width and height as needed
+        />
+      </figure>
+    </div>
+    <div className='custom-file'>
+      <input
+        type='file'
+        name='avatar'
+        className='custom-file-input'
+        id='customFile'
+        accept="images/*"
+        onChange={onChange}
+      />
+      <label className='custom-file-label' htmlFor='customFile'>
+        Choose Avatar
+      </label>
+    </div>
+  </div>
+</div>
 
                         <button
                             id="register_button"
                             type="submit"
-                            className="btn btn-block py-3"
+                            className="btn btn-block py-2" style={{ border: '1px solid #000' }}
                             // disabled={loading ? false : true}
                         >
                             REGISTER

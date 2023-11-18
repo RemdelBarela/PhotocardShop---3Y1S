@@ -1,88 +1,82 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import '../../App.css'
- import Search from './Search'
-import axios from 'axios'
-import { logout, getUser } from '../../utils/helpers'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import { BiMenuAltRight } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import "./header.scss";
 
+function Navbar() {
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [size, setSize] = useState({
+    width: 0,
+    height: 0,
+  });
 
-const Header = ({ cartItems }) => {
-    const [user, setUser] = useState({})
-    const navigate = useNavigate()
-    const logoutUser = async () => {
-        try {
-            await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
-            setUser({})
-            logout(() => navigate('/'))
-        } catch (error) {
-            toast.error(error.response.data.message)
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
 
-        }
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (size.width > 768 && menuOpen) {
+      setMenuOpen(false);
     }
-    const logoutHandler = () => {
-        logoutUser();
-        toast.success('log out', {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
-    }
-    useEffect(() => {
-        setUser(getUser())
-    }, [])
-    return (
-        <Fragment>
-            <nav className="navbar row">
-                <Link to="/" style={{ textDecoration: 'none' }} >
-                    <div className="col-12 col-md-3">
-                        <div className="navbar-brand">
-                            <img src="./images/shopit_logo.png" />
-                        </div>
-                    </div>
-                </Link>
-                <div className="col-12 col-md-6 mt-2 mt-md-0">
-                    {/* <Search /> */}
-                </div>
+  }, [size.width, menuOpen]);
 
-                <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-                    <Link to="/cart" style={{ textDecoration: 'none' }} >
-                        <span id="cart" className="ml-3">Cart</span>
-                        <span className="ml-1" id="cart_count">{cartItems.length}</span>
-                        {/*<span className="ml-1" id="cart_count">2</span>*/}
-                    </Link>
-                    {user ? (<div className="ml-4 dropdown d-inline">
-                        <Link to="#!" className="btn dropdown-toggle text-white mr-4" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <figure className="avatar avatar-nav">
-                                <img
-                                    src={user.avatar && user.avatar.url}
-                                    alt={user && user.name}
-                                    className="rounded-circle"
-                                />
-                            </figure>
-                            <span>{user && user.name}</span>
-                        </Link>
+  const menuToggleHandler = () => {
+    setMenuOpen((prev) => !prev);
+  };
 
-                        <div className="dropdown-menu" aria-labelledby="dropDownMenuButton">
-                            {user && user.role === 'admin' && (
-                                <Link className="dropdown-item" to="/dashboard">Dashboard</Link>
-                            )}
-                            <Link className="dropdown-item" to="/orders/me">Orders</Link>
-                            <Link className="dropdown-item" to="/me">Profile</Link>
-
-                            <Link
-                                className="dropdown-item text-danger" to="/" onClick={logoutHandler}
-                            >
-                                Logout
-                            </Link>
-                        </div>
-                    </div>) : <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>}
-
-                    {/* <span id="cart" className="ml-3">Cart</span>
-                    <span className="ml-1" id="cart_count">2</span> */}
-                </div>
-            </nav>
-        </Fragment>
-    )
+  return (
+    <header className="header">
+      <div className="header__content">
+        <Link to="/" className="header__content__logo">
+          PHOTOCARDSHOP
+        </Link>
+        <nav
+          className={`header__content__nav ${menuOpen && size.width < 768 ? "isMenu" : ""}`}
+        >
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <Link to="/works">Browse Works</Link>
+            </li>
+            <li>
+              <Link to="/help">Help</Link>
+            </li>
+          </ul>
+          <div className="header__content__buttons">
+            <Link to="/register">
+              <button className="btn">Register</button>
+            </Link>
+            <Link to="/login">
+              <button className="btn btn__login">Login</button>
+            </Link>
+          </div>
+        </nav>
+        <div className="header__content__toggle">
+          {!menuOpen ? (
+            <BiMenuAltRight onClick={menuToggleHandler} />
+          ) : (
+            <AiOutlineClose onClick={menuToggleHandler} />
+          )}
+        </div>
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Navbar;
