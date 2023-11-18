@@ -5,8 +5,8 @@
   box-sizing: border-box;
   user-select: none;
 }
-.bg-img{
-  /* background: url('../public/images/bg.jpg'); */
+.bg-img
+{
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -18,9 +18,16 @@
   left: 0;
   height: 100%;
   width: 100%;
-  /* background: rgba(0,0,0,0.7); */
 }
-.content{
+
+.r-row
+{
+  display: flex;
+  flex-direction: column; /* or row, depending on your content layout */
+  justify-content: center;
+  align-items: center;
+}
+.r-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -28,11 +35,12 @@
   text-align: center;
   padding: 60px 32px;
   width: 500px;
-  transform: translate(-50%,-50%);
-  background: rgba(255,255,255,0.04);
-  box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
 }
-.content header{
+
+.r-content header{
   color: rgb(0, 0, 0);
   font-size: 33px;
   font-weight: 600;
@@ -90,7 +98,7 @@
   text-decoration: underline;
 }
 .field input[type="submit"]{
-  background: #3498db;
+  background: black;
   border: 1px solid #2691d9;
   color: white;
   font-size: 18px;
@@ -100,31 +108,78 @@
   font-family: 'Montserrat',sans-serif;
 }
 .field input[type="submit"]:hover{
-  background: #2691d9;
+  background: black;
 }
-  .field button {
-    width: 100%; /* Make the button take the full width of its container */
-    box-sizing: border-box; /* Include padding and border in the element's total width */
-    background: #3498db;
-    border: 1px solid #2691d9;
-    color: white;
-    font-size: 18px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    padding: 10px 20px; /* Adjust padding as needed */
-  }
+
+.field button 
+{
+  width: 100%; /* Make the button take the full width of its container */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+  background: black;
+  border: 1px solid #2691d9;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  padding: 10px 20px; /* Adjust padding as needed */
+}
+
+.avatar {
+  display: inline-block;
+  margin-bottom: 0;
+  height: 3rem;
+  width: 3rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.avatar-nav {
+  margin-right: 0.6rem;
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
+.r-field label
+{
+  justify-content: center;
+}
+
+#register_button
+{
+  background-color: black;
+  border: none;
+}
+
+#register_button:hover
+{
+  background-color: #c51d1d;
+  border: none;
+}
+
+.field button:hover 
+{
+  background: black;
+}
   
-  .field button:hover {
-    background: #2691d9;
-  }
-  
-  .login {
-    color: rgb(0, 0, 0);
-    margin: 20px 0;
-    font-family: 'Poppins', sans-serif;
-  }
+.login 
+{
+  color: rgb(0, 0, 0);
+  margin: 20px 0;
+  font-family: 'Poppins', sans-serif;
+}
   
   
 .links {
@@ -141,23 +196,25 @@
   margin-right: 10px; /* Adjust as needed */
 }
 
-.facebook {
+.facebook 
+{
   background: #4267B2;
-  border: 1px solid #3e61a8;
+  border:n none;
 }
 
 .gmail {
   background: #c51d1d;
-  border: 1px solid rgb(223, 32, 32);
+  border: none;
 }
 
-.facebook:hover {
-  background: #3e61a8;
+#flink:hover {
+  background: black;
 }
 
-.gmail:hover {
-  background: #b40e0e;
+#glink:hover {
+  background: black;
 }
+
 
 .links i {
   font-size: 17px;
@@ -171,15 +228,4 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.signup{
-  font-size: 15px;
-  color: rgb(0, 0, 0);
-  font-family: 'Poppins',sans-serif;
-}
-.signup a{
-  color: #3498db;
-  text-decoration: none;
-}
-.signup a:hover{
-  text-decoration: underline;
-}
+

@@ -16,6 +16,7 @@ const NewPhoto = () => {
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState('');
     const [photo, setPhoto] = useState({});
+    
     let navigate = useNavigate();
 
     const submitHandler = (e) => {
