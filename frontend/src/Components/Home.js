@@ -9,20 +9,6 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useParams } from "react-router-dom"
 
-const categories = [
-    'Electronics',
-    'Cameras',
-    'Laptops',
-    'Accessories',
-    'Headphones',
-    'Food',
-    "Books",
-    'Clothes/Shoes',
-    'Beauty/Health',
-    'Sports',
-    'Outdoor',
-    'Home'
-]
 const Home = () => {
     let { keyword } = useParams()
     const [loading, setLoading] = useState(true)
@@ -33,7 +19,6 @@ const Home = () => {
     const [resPerPage, setResPerPage] = useState(0)
     const [filteredProductsCount, setFilteredProductsCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
-    const [category, setCategory] = useState('');
 
     // const createSliderWithTooltip = Slider.createSliderWithTooltip;
     // const Range = createSliderWithTooltip(Slider.Range);
@@ -43,7 +28,7 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '', price, category='') => {
+    const getProducts = async (page = 1, keyword = '', price) => {
         let link = ''
 
         link = `${process.env.REACT_APP_API}/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`

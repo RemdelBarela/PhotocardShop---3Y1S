@@ -1,15 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Carousel } from 'react-bootstrap'
-
 import Loader from '../Layout/Loader'
 import MetaData from '../Layout/MetaData'
-
 import axios from 'axios'
 import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
-import ListReviews from '../Review/ListReviews'
+import ListReviews from '..Photo/Review/ListReviews'
 
 
 const PhotoDetails = ({ cartItems, addItemToCart }) => {
@@ -33,7 +31,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     // const { cartItems } = state
 
     const PhotoDetails = async (id) => {
-        let link = `http://localhost:4001/api/v1/photo/${id}`
+        let link = `http://localhost:4000/api/v1/photo/${id}`
         try {
             let res = await axios.get(link)
             setPhoto(res.data.photo)
