@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins:400,500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+.Register_bg-img{
+  /* background: url('../public/images/bg.jpg'); */
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+.Register_bg-img:after{
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  /* background: rgba(0,0,0,0.7); */
+}
+.Register_content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  text-align: center;
+  padding: 60px 32px;
+  width: 500px;
+  transform: translate(-50%,-50%);
+  background: rgba(255,255,255,0.04);
+  box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+}
+.Register_content header{
+  color: rgb(0, 0, 0);
+  font-size: 33px;
+  font-weight: 600;
+  margin: 0 0 35px 0;
+  font-family: 'Montserrat',sans-serif;
+}
+.Register_field{
+  position: relative;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  background: rgba(255,255,255,0.94);
+}
+.Register_field span{
+  color: #222;
+  width: 40px;
+  line-height: 45px;
+}
+.Register_field input{
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #222;
+  font-size: 16px;
+  font-family: 'Poppins',sans-serif;
+}
+.Register_space{
+  margin-top: 16px;
+}
+.Register_show{
+  position: absolute;
+  right: 13px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #222;
+  display: none;
+  cursor: pointer;
+  font-family: 'Montserrat',sans-serif;
+}
+.Register_pass-key:valid ~ .show{
+  display: block;
+}
+.Register_pass{
+  text-align: left;
+  margin: 10px 0;
+}
+.Register_pass a{
+  color: white;
+  text-decoration: none;
+  font-family: 'Poppins',sans-serif;
+}
+.Register_pass:hover a{
+  text-decoration: underline;
+}
+.Register_field input[type="submit"]{
+  background: #3498db;
+  border: 1px solid #2691d9;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Montserrat',sans-serif;
+}
+.Register_field input[type="submit"]:hover{
+  background: #2691d9;
+}
+.Register_login{
+  color: white;
+  margin: 20px 0;
+  font-family: 'Poppins',sans-serif;
+}
+
+.field button {
+  width: 100%; /* Make the button take the full width of its container */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+  background: #3498db;
+  border: 1px solid #2691d9;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  padding: 10px 20px; /* Adjust padding as needed */
+}
+
+.field button:hover {
+  background: #2691d9;
+}

@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
-import axios from 'axios'
-
+import axios from 'axios' 
 const Register = () => {
 
     const [user, setUser] = useState({
@@ -86,8 +85,108 @@ const Register = () => {
 
     return (
         <Fragment>
-            <MetaData title={'Register User'} />
-            <div className="row wrapper">
+    <div className="row wrapper">
+                        <div className="col-10 col-lg-5">
+                    <div class="Register_bg-img">
+      <div class="Register_content">
+        <header>Register Form</header>
+        <form onSubmit={submitHandler} encType='multipart/form-data'>
+          <div class="field">
+            <span class="fa fa-user"></span>
+             
+
+            <input
+                                placeholder="Name"
+                                type="name"
+                                id="name_field"
+                                className="form-control"
+                                name='name'
+                                value={name}
+                                onChange={onChange}
+                            />
+          </div>
+       
+          <div class="field space">
+          <span class="fa fa-envelope"></span>
+        
+            <input
+                                placeholder="Email"
+                                type="email"
+                                id="email_field"
+                                className="form-control"
+                                name='email'
+                                value={email}
+                                onChange={onChange}
+                            />
+            <span class="show">SHOW</span>
+          </div>
+
+          <div class="field space">
+        <span class="fa fa-lock"></span>
+        <input
+                                placeholder="Password"
+                                type="password"
+                                id="password_field"
+                                className="form-control"
+                                name='password'
+                                value={password}
+                                onChange={onChange}
+                            />
+          </div>
+
+
+<br/>
+          <div className='form-group'>
+          <label htmlFor='avatar_upload' class='d-flex align-items-left'>Avatar</label>
+          <div className='d-flex align-items-center'>
+        <div>
+      <figure className='avatar mr-3 item-rtl'>
+                                        <img
+                                            src={avatarPreview}
+                                            className='rounded-circle'
+                                            alt='Avatar Preview'
+                                        />
+                                    </figure>
+                                </div>
+                                <div className='custom-file'>
+                                    <input
+                                        type='file'
+                                        name='avatar'
+                                        className='custom-file-input'
+                                        id='customFile'
+                                        accept="images/*"
+                                        onChange={onChange}
+                                    />
+                                    <label className='custom-file-label d-flex align-items-left' htmlFor='customFile'>
+                                        Choose Avatar
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div className="field">
+
+
+                          <button
+                            id="register_button"
+                            type="submit"
+                           // disabled={loading ? false : true}
+                        >
+                            REGISTER
+                        </button>
+</div>
+        </form>
+       
+      </div>
+    </div>
+    </div>
+    </div>
+             
+
+
+            {/* <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
                         <h1 className="mb-3">Register</h1>
@@ -166,7 +265,7 @@ const Register = () => {
                         </button>
                     </form>
                 </div>
-            </div>
+            </div>  */}
 
         </Fragment>
     )
