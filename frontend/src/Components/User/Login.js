@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import '../../Login.css';
 import '../../Register.css';
-import FacebookLoginButton from './FacebookLoginButton';
 import Loader from '../Layout/Loader'
 import MetaData from '../Layout/MetaData'
 import { toast } from 'react-toastify';
@@ -10,7 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
-import { FaFacebook, FaEnvelope } from 'react-icons/fa';
+import { FaFacebook} from 'react-icons/fa';
+import { FcGoogle} from 'react-icons/fc';
 
 
 
@@ -115,7 +115,7 @@ const Login = () => {
         <div className="links">
       <div className="social-icon facebook">
         <FaFacebook />
-        <FacebookLoginButton onFacebookLogin={handleFacebookLogin} />
+        <span>Facebook</span>
       </div>
       <div className="social-icon gmail">
         <FaEnvelope />
