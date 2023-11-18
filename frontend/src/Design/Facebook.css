@@ -1,0 +1,11 @@
+/* Add this CSS to hide the default text */
+.facebook-login-button span {
+    display: none;
+  }
+
+  .facebook-login-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  

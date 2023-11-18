@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import Loader from '../Layout/Loader'
+import Loader from '../Layout/Loader' 
 import MetaData from '../Layout/MetaData'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +9,8 @@ import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
 import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
-
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin } from 'react-google-login';
 
 
 const Login = () => {
@@ -23,7 +24,15 @@ const Login = () => {
     // const notify = (error) => toast.error(error, {
     //     position: toast.POSITION.BOTTOM_RIGHT
     // });
-
+    const handleFacebookLogin = (response) => {
+        // Handle the Facebook login response
+        console.log(response);
+      };
+    
+      const responseGoogle = (response) => {
+        // Handle the response from Google, e.g., send it to your server for authentication
+        console.log(response);
+      };
     const login = async (email, password) => {
         try {
             const config = {
@@ -88,13 +97,44 @@ const Login = () => {
                                     </form>
                                     <div class="login">Or Login with</div>
                                     <div className="links">
-                                        <div className="social-icon facebook" id="flink">
-                                            <FaFacebook />
-                                            <span>Facebook</span>
-                                        </div>
+          
+                                    <div className="social-icon facebook" id="flink">
+                                    
+                                    <FaFacebook/>
+                                    <FacebookLogin
+                                    appId="3675250786095175"
+                                    autoLoad={false}
+                                    fields="name,email,picture"
+                                    callback={handleFacebookLogin}
+                                    textButton={false}
+                                    className="custom-facebook-button" // Add a custom CSS class
+                                    >
+                                    <div className="facebook-button-content">
+                                        <FaFacebook />
+                                        <span>Facebook</span>
+                                    </div>
+                                    </FacebookLogin>
+                                                                    
+                                    </div>
+              
+
+ 
+
+    
                                         <div className="social-icon gmail" id="glink">
-                                            <FcGoogle />
-                                            <span>Google</span>
+                                          
+                                            <GoogleLogin
+                                            clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
+                                            buttonText="Login with Google"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                              >
+                                    <div >
+                                   
+                                        <span>Google</span>
+                                    </div>
+                                    </GoogleLogin>
+                                            
                                         </div>
                                     </div>
                                     <div class="signup">Don't have account?
