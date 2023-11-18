@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import MetaData from '../Layout/MetaData'
-import Sidebar from './SideBar'
+import MetaData from '../../Layout/MetaData'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { errMsg, successMsg } from '../../utils/helpers';
-import { getToken } from '../../utils/helpers';
+import { errMsg, successMsg } from '../../../utils/helpers';
+import { getToken } from '../../../utils/helpers';
 import axios from 'axios';
 
 const UpdateUser = () => {
@@ -81,7 +80,7 @@ const UpdateUser = () => {
             <MetaData title={`Update User`} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                 </div>
                 <div className="col-12 col-md-10">
                     <div className="row wrapper">

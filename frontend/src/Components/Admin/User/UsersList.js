@@ -4,12 +4,12 @@ import { MDBDataTable } from 'mdbreact'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import MetaData from '../Layout/MetaData'
-import Loader from '../Layout/Loader'
-import Sidebar from './SideBar'
-import { errMsg, successMsg } from '../../utils/helpers';
+import MetaData from '../../Layout/MetaData'
+import Loader from '../../Layout/Loader'
+// import Sidebar from './SideBar'
+import { errMsg, successMsg } from '../../../utils/helpers';
 import axios from 'axios';
-import { getToken } from '../../utils/helpers';
+import { getToken } from '../../../utils/helpers';
 
 const UsersList = () => {
     const [loading, setLoading] = useState(true)
@@ -118,7 +118,7 @@ const UsersList = () => {
             <MetaData title={'All Users'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                 </div>
                 <div className="col-12 col-md-10">
                     <Fragment>
