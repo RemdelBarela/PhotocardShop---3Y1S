@@ -19,9 +19,9 @@ import NewPassword from "./Components/User/NewPassword";
 // import ListOrders from "./Components/Order/ListOrders";
 // import OrderDetails from "./Components/Order/OrderDetails";
 // import Dashboard from "./Components/Admin/Dashboard";
-// import ProductsList from "./Components/Admin/ProductsList";
-// import NewProduct from "./Components/Admin/NewProduct";
-// import UpdateProduct from "./Components/Admin/UpdateProduct";
+// import photosList from "./Components/Admin/photosList";
+// import newPhoto from "./Components/Admin/newPhoto";
+// import updatePhoto from "./Components/Admin/updatePhoto";
 import { toast,  } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
   import axios from "axios";
@@ -126,11 +126,11 @@ function App() {
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} /> */}
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          {/* <Route path="/admin/products" element={<ProductsList />} /> */}
-          {/* <Route path="/admin/product" element={<NewProduct />} />
+          {/* <Route path="/admin/photos" element={<photosList />} /> */}
+          {/* <Route path="/admin/product" element={<newPhoto />} />
           <Route
             path="/admin/product/:id"
-            element={<UpdateProduct />} /> */}
+            element={<updatePhoto />} /> */}
           {/* <Route
             path="/admin/orders"
             element={<OrdersList />}
@@ -151,10 +151,10 @@ function App() {
             }
           />
           <Route
-            path="/admin/products"
+            path="/admin/photos"
             element={
               <ProtectedRoute isAdmin={true}>
-                <ProductsList />
+                <photosList />
               </ProtectedRoute>
             }
           />

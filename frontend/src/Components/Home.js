@@ -26,12 +26,12 @@ const categories = [
 const Home = () => {
     let { keyword } = useParams()
     const [loading, setLoading] = useState(true)
-    const [products, setProducts] = useState([])
+    const [photos, setphotos] = useState([])
     const [error, setError] = useState()
-    const [productsCount, setProductsCount] = useState(0)
+    const [photosCount, setphotosCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
     const [resPerPage, setResPerPage] = useState(0)
-    const [filteredProductsCount, setFilteredProductsCount] = useState(0)
+    const [filteredPhotosCount, setfilteredPhotosCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
     const [category, setCategory] = useState('');
 
@@ -43,40 +43,40 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '', price, category='') => {
+    const getphotos = async (page = 1, keyword = '', price, category='') => {
         let link = ''
 
-        link = `${process.env.REACT_APP_API}/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
         
         if (category) {
-            link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+            link = `${process.env.REACT_APP_API}/api/v1/photos?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
         }
 
         console.log(link)
         let res = await axios.get(link)
         console.log(res)
-        setProducts(res.data.products)
+        setphotos(res.data.photos)
         setResPerPage(res.data.resPerPage)
-        setProductsCount(res.data.productsCount)
-        setFilteredProductsCount(res.data.filteredProductsCount)
+        setphotosCount(res.data.photosCount)
+        setfilteredPhotosCount(res.data.filteredPhotosCount)
         setLoading(false)
     }
     useEffect(() => {
-        getProducts(currentPage, keyword, price, category)
+        getphotos(currentPage, keyword, price, category)
     }, [currentPage, keyword, price, category]);
 
-    let count = productsCount
+    let count = photosCount
     if (keyword) {
-        count = filteredProductsCount
+        count = filteredPhotosCount
     }
     return (
         <>
             {loading ? <Loader /> : (<Fragment>
-                <MetaData title={'Buy Best Products Online'} />
+                <MetaData title={'Buy Best photos Online'} />
                 <div className="container container-fluid">
 
-                    <h1 id="products_heading">Latest Products</h1>
-                    <section id="products" className="container mt-5">
+                    <h1 id="photos_heading">Latest photos</h1>
+                    <section id="photos" className="container mt-5">
                         <div className="row">
                             {keyword ? (
                                 <Fragment>
@@ -124,7 +124,7 @@ const Home = () => {
 
                                     <div className="col-6 col-md-9">
                                         <div className="row">
-                                            {products.map(product => (
+                                            {photos.map(product => (
                                                 <></>
                                                 // <Product key={product._id} product={product} col={4} />
                                             ))}
@@ -132,7 +132,7 @@ const Home = () => {
                                     </div>
                                 </Fragment>
                             ) : (
-                                products.map(product => (
+                                photos.map(product => (
                                     <></>
                                     // <Product key={product._id} product={product} col={3} />
                                 ))
@@ -144,7 +144,7 @@ const Home = () => {
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={resPerPage}
-                                totalItemsCount={productsCount}
+                                totalItemsCount={photosCount}
                                 onChange={setCurrentPageNo}
                                 nextPageText={'Next'}
                                 prevPageText={'Prev'}

@@ -67,7 +67,7 @@ nav {
 }
 
 /* Home page */
-#products_heading {
+#photos_heading {
   margin-top: 1.8rem;
 }
 
@@ -565,8 +565,8 @@ ul.CTAs a {
   margin-bottom: 5px;
 }
 
-/* Products List Admin */
-#products_table .btn {
+/* photos List Admin */
+#photos_table .btn {
   padding: 0.2rem 0.5rem;
   margin-left: 0.4rem;
 }
