@@ -228,4 +228,12 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.custom-file {
+  position: relative;
+}
 
+.custom-file-label {
+  display: block;
+  text-align: left;
+  margin-left: 5%;
+}
