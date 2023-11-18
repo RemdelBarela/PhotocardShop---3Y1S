@@ -28,17 +28,14 @@ const Home = () => {
     }
 
 
-<<<<<<< HEAD
     const getProducts = async (page = 1, keyword = '', price) => {
-=======
-    const getphotos = async (page = 1, keyword = '', price, category='') => {
->>>>>>> fb72baa71cd7cd99ffe6c10f58835e8fb5fae311
+    const getPhotos = async (page = 1, keyword = '', price, category='') => {
         let link = ''
 
-        link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        link = `${process.env.REACT_APP_API}/api/v1/photo/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
         
         if (category) {
-            link = `${process.env.REACT_APP_API}/api/v1/photos?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+            link = `${process.env.REACT_APP_API}/api/v1/photo?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
         }
 
         console.log(link)
@@ -51,7 +48,7 @@ const Home = () => {
         setLoading(false)
     }
     useEffect(() => {
-        getphotos(currentPage, keyword, price, category)
+        getPhotos(currentPage, keyword, price, category)
     }, [currentPage, keyword, price, category]);
 
     let count = photosCount
@@ -148,6 +145,6 @@ const Home = () => {
             )}
         </>
     )
-}
+}}
 
 export default Home
