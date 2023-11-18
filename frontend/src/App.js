@@ -33,8 +33,8 @@ import UpdatePhoto from "./Components/Admin/Photo/UpdatePhoto";
 // import Dashboard from "./Components/Admin/Dashboard";
 // import OrdersList from "./Components/Admin/OrdersList";
 // import ProcessOrder from "./Components/Admin/ProcessOrder"
-// import UsersList from "./Components/Admin/UsersList";
-// import UpdateUser from "./Components/Admin/UpdateUser";
+import UsersList from "./Components/Admin/User/UsersList";
+import UpdateUser from "./Components/Admin/User/UpdateUser";
 
 // import PhotoReviews from "./Components/Admin/PhotoReviews";
 function App() {
@@ -150,10 +150,10 @@ function App() {
           {/* <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} /> */}
-          {/* <Route
+          <Route
             path="/admin/users"
-            element={<UsersList />} /> */}
-          {/* <Route path="/admin/user/:id" element={<UpdateUser />} /> */}
+            element={<UsersList />} />
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
           {/* <Route
             path="/dashboard"
             element={
