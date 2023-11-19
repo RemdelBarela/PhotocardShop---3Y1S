@@ -92,7 +92,7 @@ const PhotosList = () => {
         const data = {
             columns: [
                 {
-                    label: 'ID',
+                    label: 'Photo ID',
                     field: 'id',
                     sort: 'asc'
                 },

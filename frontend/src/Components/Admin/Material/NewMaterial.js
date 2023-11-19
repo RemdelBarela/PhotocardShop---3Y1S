@@ -82,18 +82,18 @@ const NewMaterial = () => {
 
     return (
         <Fragment>
-            <MetaData title={'New Material'} />
+            <MetaData title={'NEW MATERIAL'} />
             <div className="row">
 
             <div className="col-12 col-md-2">
-            <div style={{  height: '210vh', overflow: 'scroll initial' }}>
+            <div style={{  height: '90vh', overflow: 'scroll initial' }}>
                 <Sidebar />
                 </div>
             </div>
                 <div className="np col-12 col-md-8">
-                    <div className="np wrapper my-5">
+                    <div className="np wrapper my-5" style={{ width: '100%', paddingLeft: '10%', marginLeft: '10%' }}>
                         <Fragment>
-                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', paddingLeft: '15%', margin: '0 auto' }}>
+                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', margin: '0 auto' }}>
                             <h1 className="mb-4 text-center">CREATE NEW MATERIAL</h1>
 
                             <div className="form-group">

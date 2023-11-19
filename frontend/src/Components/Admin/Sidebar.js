@@ -15,12 +15,12 @@ const Sidebar = () => {
 
   const togglePhotosDropdown = () => {
     setIsPhotosDropdownOpen(!isPhotosDropdownOpen);
-    setIsMaterialsDropdownOpen(false); // Close the Materials dropdown when Photos is opened
+    setIsMaterialsDropdownOpen(false);
   };
 
   const toggleMaterialsDropdown = () => {
     setIsMaterialsDropdownOpen(!isMaterialsDropdownOpen);
-    setIsPhotosDropdownOpen(false); // Close the Photos dropdown when Materials is opened
+    setIsPhotosDropdownOpen(false);
   };
 
   return (
@@ -39,28 +39,34 @@ const Sidebar = () => {
             </CDBSidebarMenuItem>
             {isPhotosDropdownOpen && (
               <div style={{ paddingLeft: '20px', marginTop: '10px' }}>
+
                 <NavLink exact to="/admin/photos" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="chart-line">PHOTOS LIST</CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="list-alt">PHOTOS LIST</CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/admin/photo" target="_blank" activeClassName="activeClicked">
+
+                <NavLink link to="/admin/photo" activeClassName="activeClicked">
                   <CDBSidebarMenuItem icon="plus">CREATE</CDBSidebarMenuItem>
                 </NavLink>
+
               </div>
             )}
           </NavLink>
 
           <NavLink activeClassName="activeClicked">
-            <CDBSidebarMenuItem onClick={toggleMaterialsDropdown} icon="image">
+            <CDBSidebarMenuItem onClick={toggleMaterialsDropdown} icon="toolbox">
               MATERIALS
             </CDBSidebarMenuItem>
             {isMaterialsDropdownOpen && (
               <div style={{ paddingLeft: '20px', marginTop: '10px' }}>
+
                 <NavLink exact to="/admin/materials" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="chart-line">MATERIALS LIST</CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="list-alt">MATERIALS LIST</CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/admin/material" target="_blank" activeClassName="activeClicked">
+
+                <NavLink exact to="/admin/material" activeClassName="activeClicked">
                   <CDBSidebarMenuItem icon="plus">CREATE</CDBSidebarMenuItem>
                 </NavLink>
+
               </div>
             )}
           </NavLink>
@@ -72,9 +78,11 @@ const Sidebar = () => {
             <NavLink exact to="/admin/orders" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="shopping-cart">ORDERS</CDBSidebarMenuItem>
             </NavLink>
+
             <NavLink exact to="/admin/users" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user">USERS</CDBSidebarMenuItem>
             </NavLink>
+
             <NavLink exact to="/admin/reviews" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="star">REVIEWS</CDBSidebarMenuItem>
             </NavLink>
