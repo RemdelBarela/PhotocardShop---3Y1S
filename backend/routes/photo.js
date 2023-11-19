@@ -6,7 +6,7 @@ const { newPhoto, getPhotos, getSinglePhoto, updatePhoto, deletePhoto, getAdminP
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
-router.post('/admin/photo/new', isAuthenticatedUser, upload.array('images', 10), newPhoto)
+router.post('/admin/photo/new', isAuthenticatedUser, upload.array('images', 5), newPhoto)
 router.get('/photos', getPhotos)
 router.get('/photo/:id', getSinglePhoto);
 router.route('/admin/photo/:id', isAuthenticatedUser, authorizeRoles('admin')).put(upload.array('images', 10), updatePhoto).delete(deletePhoto);

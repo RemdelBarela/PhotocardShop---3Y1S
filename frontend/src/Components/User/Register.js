@@ -80,19 +80,6 @@ const Register = () => {
         setAvatarPreview([]);
         setAvatar([]);
         files.forEach(file => {
-            // if (e.target.name === 'avatar') {
-            //     const reader = new FileReader();
-            //     reader.onload = () => {
-            //         if (reader.readyState === 2) {
-            //             setAvatarPreview(oldArray => [...oldArray, reader.result]);
-            //             setAvatar(oldArray => [...oldArray, reader.result]);
-            //         }
-            //     }
-            //     reader.readAsDataURL(file)
-            // } else {
-            //     setUser({ ...user, [e.target.name]: e.target.value })
-            // }
-            
                 const reader = new FileReader();
                 reader.onload = () => {
                     if (reader.readyState === 2) {
@@ -149,7 +136,7 @@ const Register = () => {
                                                 onChange={(e) => setName(e.target.value)}/>
                                     </div>
                                     <div className="field space">
-                                        <span className="fa fa-user"></span>
+                                        <span className="fa fa-envelope"></span>
                                             <input placeholder="EMAIL"
                                                 type="email"
                                                 id="email_field"

@@ -12,6 +12,7 @@ const Toast = (message, type) => {
             position: toast.POSITION.BOTTOM_CENTER
         }
       );
+
     case "error":
       return toast.error(
         <div>
@@ -20,6 +21,7 @@ const Toast = (message, type) => {
             position: toast.POSITION.BOTTOM_CENTER
         }
       );
+
     case "warning":
       return toast.warning(
         <div>
@@ -28,6 +30,7 @@ const Toast = (message, type) => {
             position: toast.POSITION.BOTTOM_CENTER
         }
       );
+
     default:
       return toast.warning(
         <div>

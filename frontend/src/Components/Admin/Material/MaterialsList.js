@@ -5,6 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Sidebar from '../Sidebar'
 import MetaData from '../../Layout/MetaData'
 // import Sidebar from './SideBar'
 import { getToken } from '../../../utils/helpers';
@@ -141,30 +142,36 @@ const MaterialsList = () => {
         <Fragment>
             <MetaData title={'All Materials'} />
             <div className="row">
-                {/* <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div> */}
+                <div className="col-12 col-md-2">
+                    <div style={{ height: '100vh', overflow: 'scroll initial' }}>
+                        <Sidebar />
+                    </div>
+                </div>
 
-                <div className="col-12 col-md-10">
-                    <Fragment>
-                        <h1 className="my-5">All Materials</h1>
+                <div className="col-12 col-md-8 d-flex justify-content-center align-items-center">
+                    <div className="wrapper my-5">
+                        <Fragment>
+                            <div style={{ width: '100%' }}>
+                                <h1 className="my-5 ">All Materials</h1>
 
-                        {loading ? <Loader /> : (
-                            <MDBDataTable
-                                data={materialsList()}
-                                className="px-3"
-                                bordered
-                                striped
-                                hover
-                            />
-                        )}
-
-                    </Fragment>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <MDBDataTable
+                                        data={materialsList()}
+                                        className="px-3"
+                                        bordered
+                                        striped
+                                        hover
+                                    />
+                                )}
+                            </div>
+                        </Fragment>
+                    </div>
                 </div>
             </div>
-
         </Fragment>
-    )
+    );
 }
 
 export default MaterialsList
