@@ -23,6 +23,10 @@ import PhotosList from "./Components/Admin/Photo/PhotosList";
 import NewPhoto from "./Components/Admin/Photo/NewPhoto";
 import UpdatePhoto from "./Components/Admin/Photo/UpdatePhoto";
 
+import MaterialsList from "./Components/Admin/Material/MaterialsList";
+import NewMaterial from "./Components/Admin/Material/NewMaterial";
+import UpdateMaterial from "./Components/Admin/Material/UpdateMaterial";
+
 // import Cart from "./Components/Cart/Cart";
 // import Shipping from "./Components/Cart/Shipping";
 // import ConfirmOrder from "./Components/Cart/ConfirmOrder";
@@ -142,6 +146,11 @@ function App() {
           <Route
             path="/admin/photo/:id"
             element={<UpdatePhoto />} />
+          
+          <Route path="/admin/material" element={<NewMaterial />} />
+          <Route
+            path="/admin/material/:id"
+            element={<UpdateMaterial />} />
 
           {/* <Route
             path="/admin/orders"
@@ -178,6 +187,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/materials"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <MaterialsList />
+              </ProtectedRoute>
+            }
+          />
+
+          
           {/* <Route
             path="/admin/orders"
             element={
