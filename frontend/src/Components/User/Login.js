@@ -22,9 +22,7 @@ const Login = () => {
     const navigate = useNavigate()
     let location = useLocation();
     const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
-    // const notify = (error) => toast.error(error, {
-    //     position: toast.POSITION.BOTTOM_RIGHT
-    // });
+   
     const handleFacebookLogin = (response) => {
         // Handle the Facebook login response
        
@@ -52,7 +50,7 @@ const Login = () => {
             authenticate(data, () => navigate("/"))
 
         } catch (error) {
-            toast.error("invalid user or password", {
+            toast.error("INVALID USER OR PASSWORD", {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
         }
@@ -80,7 +78,7 @@ const Login = () => {
                                     <header>LOGIN FORM</header>
                                     <form onSubmit={submitHandler}>
                                         <div class="field">
-                                            <span class="fa fa-user"></span>
+                                            <span class="fa fa-envelope"></span>
                                                 <input placeholder="EMAIL OR PHONE"
                                                     type="email"
                                                     id="email_field"

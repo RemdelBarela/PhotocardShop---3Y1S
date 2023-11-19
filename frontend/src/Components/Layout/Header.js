@@ -61,11 +61,13 @@ function Header() {
         </Link>
         <nav className={`header__content__nav ${menuOpen && size.width < 768 ? "isMenu" : ""}`}>
           <ul>
+            <li>
             <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
               <Link to="/me" style={{ textDecoration: 'none' }} >
                 <span id="cart" className="ml-3">PROFILE</span>       
               </Link>
             </div>
+            </li>
             <li>
               <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
                 <Link to="/cart" style={{ textDecoration: 'none' }} >

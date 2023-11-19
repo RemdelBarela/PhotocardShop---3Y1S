@@ -92,11 +92,12 @@
                                 transition: 0.3s ease all;
         
                                 &:hover {
-                                    background: rgba(#fff, 0.1);
+                                    background: none;
+                                    color: #c51d1d;
                                 }
                                 &:active {
                                     border-radius: calc(#{12px} + 6px);
-                                    background: linear-gradient(rgba(#fff, 0.1), rgba(#fff, 0.2));
+                                    color: #c51d1d;
                                 }
                             }
                         }
