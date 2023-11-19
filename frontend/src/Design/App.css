@@ -58,7 +58,7 @@ nav {
 }
 
 #cart_count {
-  background-color: #febd69;
+  background-color:#eeeeee;
   padding: 0.2rem 0.5rem;
   border-radius: 0.2rem;
   color: black;
@@ -614,3 +614,4 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+

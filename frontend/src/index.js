@@ -4,8 +4,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './Design/Login.css';
 import './Design/Register.css';
-import ".//Design/Header.scss";
+import "./Design/Header.scss";
+import "./Design/Header.css";
 import './Design/Facebook.css';
+import './Design/App.css';
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
