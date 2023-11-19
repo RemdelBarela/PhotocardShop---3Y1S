@@ -123,7 +123,7 @@ const PhotosList = () => {
                 stock: photo.stock,
                 actions: <Fragment>
                     <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-pen"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deletePhotoHandler(photo._id)}>
                         <i className="fa fa-trash"></i>
@@ -153,10 +153,8 @@ const PhotosList = () => {
                 <div className="col-12 col-md-8">
                 <div className="wrapper my-5">
                 <Fragment>
-                <div style={{ width: '100%', padding: '20px' }} >
-              
-                        <h1 className="my-5 text-center">All Photos</h1>
-
+                <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
+                        <h1 className="my-5">LIST OF ALL ALL PHOTOS</h1>
                         {loading ? <Loader /> : (
                             <MDBDataTable
                                 data={photosList()}
@@ -166,11 +164,11 @@ const PhotosList = () => {
                                 hover
                             />
                         )}
-</div>
+                    </div>
                     </Fragment>
-                </div></div>
+                    </div>
+                </div>
             </div>
-
         </Fragment>
     )
 }

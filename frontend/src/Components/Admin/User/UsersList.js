@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import MetaData from '../../Layout/MetaData'
 import Loader from '../../Layout/Loader'
-// import Sidebar from './SideBar'
+import Sidebar from '../Sidebar'
 import { errMsg, successMsg } from '../../../utils/helpers';
 import axios from 'axios';
 import { getToken } from '../../../utils/helpers';
@@ -109,7 +109,7 @@ const UsersList = () => {
                 role: user.role,
                 actions: <Fragment>
                     <Link to={`/admin/user/${user._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-pen"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteUserHandler(user._id)}>
                         <i className="fa fa-trash"></i>
@@ -124,11 +124,15 @@ const UsersList = () => {
             <MetaData title={'All Users'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                    {/* <Sidebar /> */}
+                <div style={{  height: '210vh', overflow: 'scroll initial' }}>
+                        <Sidebar />
+                    </div>
                 </div>
                 <div className="col-12 col-md-10">
+                    <div className="wrapper my-5">
                     <Fragment>
-                        <h1 className="my-5">USERS LIST</h1>
+                    <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
+                        <h1 className="my-5">LIST OF ALL USERS</h1>
                         {loading ? <Loader /> : (
                             <MDBDataTable
                                 data={setUsers()}
@@ -137,8 +141,11 @@ const UsersList = () => {
                                 striped
                                 hover
                             />
+                         
                         )}
+                           </div>
                     </Fragment>
+                </div>
                 </div>
             </div>
         </Fragment>

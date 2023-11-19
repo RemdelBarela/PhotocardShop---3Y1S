@@ -85,15 +85,15 @@ const NewPhoto = () => {
             <MetaData title={'NEW PHOTO'} />
             <div className="row">
             <div className="col-12 col-md-2">
-            <div style={{ display: 'flex', overflow: 'scroll initial' }}>
-    
+            <div style={{  height: '210vh', overflow: 'scroll initial' }}>
                 <Sidebar />
                 </div>
             </div>
             <div className="col-12 col-md-8">
                 <div className="wrapper my-5">
-                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
-                            <h1 className="mb-4 text-center">NEW PRODUCT</h1>
+                <Fragment>
+                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', paddingLeft: '15%', margin: '0 auto' }}>
+                            <h1 className="mb-4 text-center">CREATE NEW PRODUCT</h1>
 
                             <div className="form-group">
                                 <label htmlFor="name_field">NAME</label>
@@ -165,6 +165,7 @@ const NewPhoto = () => {
                                 SUBMIT
                             </button>
                         </form>
+                        </Fragment>
                     </div>
                 </div>
             </div>
