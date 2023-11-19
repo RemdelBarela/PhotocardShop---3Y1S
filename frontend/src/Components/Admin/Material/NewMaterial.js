@@ -73,7 +73,7 @@ const NewMaterial = () => {
         }
 
         if (success) {
-            navigate('/admin/material');
+            navigate('/admin/materials');
             toast.success('THE MATERIAL IS ADDED SUCCESSFULLY', {
                 position: toast.POSITION.BOTTOM_RIGHT
             });

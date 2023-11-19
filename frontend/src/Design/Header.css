@@ -1,0 +1,10 @@
+.header__content__logo
+{
+    text-decoration: none;
+}
+
+.header__content__logo:hover
+{
+    color: #c51d1d;
+    text-decoration: none;
+}
