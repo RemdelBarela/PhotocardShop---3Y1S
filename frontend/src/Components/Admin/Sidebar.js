@@ -17,11 +17,9 @@ const Sidebar = () => {
   };
 
   return (
-     <CDBSidebar textColor="#fff" backgroundColor="#333">
+     <CDBSidebar textColor="#fff" backgroundColor="rgb(35 47 62)" >
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
-          </a>
+         
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
@@ -61,10 +59,7 @@ const Sidebar = () => {
           </CDBSidebarMenu>
 
           
-        </CDBSidebarContent>
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div style={{ padding: '20px 5px' }}></div>
-        </CDBSidebarFooter>
+        </CDBSidebarContent> 
       </CDBSidebar>
     
   );

@@ -5,7 +5,7 @@ import { getToken } from '../../../utils/helpers';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Sidebar from '../Sidebar'
 const NewPhoto = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
@@ -83,10 +83,15 @@ const NewPhoto = () => {
     return (
         <Fragment>
             <MetaData title={'NEW PHOTO'} />
-            
-            <div className="row justify-content-center">
-                <div className="col-12 col-md-8">
-                    <div className="wrapper my-5">
+            <div className="row">
+            <div className="col-12 col-md-2">
+            <div style={{ display: 'flex', overflow: 'scroll initial' }}>
+    
+                <Sidebar />
+                </div>
+            </div>
+            <div className="col-12 col-md-8">
+                <div className="wrapper my-5">
                         <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
                             <h1 className="mb-4 text-center">NEW PRODUCT</h1>
 
