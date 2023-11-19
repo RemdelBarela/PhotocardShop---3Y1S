@@ -24,6 +24,8 @@ import PhotosList from "./Components/Admin/Photo/PhotosList";
 import NewPhoto from "./Components/Admin/Photo/NewPhoto";
 import UpdatePhoto from "./Components/Admin/Photo/UpdatePhoto";
 
+import NewMaterial from "./Components/Admin/Material/NewMaterial"
+
 // import Cart from "./Components/Cart/Cart";
 // import Shipping from "./Components/Cart/Shipping";
 // import ConfirmOrder from "./Components/Cart/ConfirmOrder";
@@ -204,7 +206,14 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true} >
                 <PhotoReviews />
-              </ProtectedRoute>} /> */}
+              </ProtectedRoute>} /> */
+              
+              <Route
+              path="/admin/materials"
+              element={
+                <ProtectedRoute isAdmin={true} >
+                  <PhotoReviews />
+                </ProtectedRoute>} />}
 
         </Routes>
       </Router>

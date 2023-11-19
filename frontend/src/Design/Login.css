@@ -156,6 +156,32 @@
   color: white;
   margin: 0 0 20px 0;
 }
+/* YourComponent.css */
+
+.custom-facebook-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-facebook-button:hover {
+  background-color: black;
+}
+
+.facebook-button-content {
+  display: flex;
+  align-items: center;
+}
+
+.facebook-button-content svg {
+  margin-right: 8px; /* Adjust the margin as needed */
+}
+
+.facebook-button-content span {
+  color: rgb(0, 0, 0); /* Adjust the text color as needed */
+}
 
 .facebook, .gmail {
   flex: 1;

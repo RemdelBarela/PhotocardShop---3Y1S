@@ -1,5 +1,5 @@
 const Material = require('../models/material')
-const Order = require('../models/order')
+// const Order = require('../models/order')
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 
@@ -14,7 +14,7 @@ exports.getMaterials = async (req, res, next) => {
 	if (!materials) {
 		return res.status(404).json({
 			success: false,
-			message: 'No Materials'
+			message: 'MATERIAL LIST IS EMPTY'
 		})
 	}
 	res.status(200).json({
@@ -32,7 +32,7 @@ exports.getSingleMaterial = async (req, res, next) => {
 	if (!material) {
 		return res.status(404).json({
 			success: false,
-			message: 'Material not found'
+			message: 'NO MATERIALS FOUND'
 		})
 	}
 	res.status(200).json({
@@ -80,7 +80,7 @@ exports.newMaterial = async (req, res, next) => {
 	if (!material)
 		return res.status(400).json({
 			success: false,
-			message: 'Material not created'
+			message: 'FAILED TO CREATE MATERIAL'
 		})
 	res.status(201).json({
 		success: true,
@@ -94,7 +94,7 @@ exports.updateMaterial = async (req, res, next) => {
 	if (!material) {
 		return res.status(404).json({
 			success: false,
-			message: 'Material not found'
+			message: 'NO MATERIALS FOUND'
 		})
 	}
 	let images = []
@@ -135,35 +135,48 @@ exports.updateMaterial = async (req, res, next) => {
 
 	}
 	req.body.images = imagesLinks
-	product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+	material = await Material.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
 		useFindandModify: false
 	})
-	if (!product)
+	if (!material)
 		return res.status(400).json({
 			success: false,
-			message: 'Product not updated'
+			message: 'FAILED TO UPDATE MATERIAL'
 		})
 	// console.log(product)
 	return res.status(200).json({
 		success: true,
-		product
+		material
 	})
 }
 
-exports.deleteProduct = async (req, res, next) => {
-	const product = await Product.findByIdAndDelete(req.params.id);
-	if (!product) {
+exports.deleteMaterial = async (req, res, next) => {
+	const material = await Material.findByIdAndDelete(req.params.id);
+	if (!material) {
 		return res.status(404).json({
 			success: false,
-			message: 'Product not found'
+			message: 'NO MATERIALS FOUND'
 		})
 	}
 
 	res.status(200).json({
 		success: true,
-		message: 'Product deleted'
+		message: 'MATERIAL DELETED SUCCESSFULLY'
 	})
+}
 
+exports.getAdminMaterials = async (req, res, next) => {
+	const materials = await Material.find();
+	if (!materials) {
+		return res.status(404).json({
+			success: false,
+			message: 'MATERIALS NOT FOUND'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		materials
+	})
 }
