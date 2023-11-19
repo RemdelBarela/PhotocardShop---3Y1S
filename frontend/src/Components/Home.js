@@ -56,36 +56,12 @@ const Home = () => {
             {loading ? <Loader /> : (<Fragment>
                 <MetaData title={'Buy Best Photos Online'} />
                 <div className="container container-fluid">
-
                     <h1 id="photos_heading">Latest Photos</h1>
                     <section id="photos" className="container mt-5">
                         <div className="row">
                             {keyword ? (
                                 <Fragment>
-                                    {/* <div className="col-6 col-md-3 mt-5 mb-5">
-                                        <div className="px-5">
-                                            <Range
-                                                marks={{
-                                                    1: `$1`,
-                                                    1000: `$1000`
-                                                }}
-                                                min={1}
-                                                max={1000}
-                                                defaultValue={[1, 1000]}
-                                                tipFormatter={value => `$${value}`}
-                                                tipProps={{
-                                                    placement: "top",
-                                                    visible: true
-                                                }}
-                                                value={price}
-                                                onChange={price => setPrice(price)}
-                                            />
-                                            <hr className="my-5" />
-                                            
-
-                                        </div>
-                                    </div> */}
-
+                                    
                                     <div className="col-6 col-md-9">
                                         <div className="row">
                                             {photos.map(photo => (
@@ -119,6 +95,7 @@ const Home = () => {
                 </div>
             </Fragment>
             )}
+           
         </>
     )
 }
