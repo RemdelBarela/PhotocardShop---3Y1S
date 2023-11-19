@@ -7,40 +7,45 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
 const UpdateProfile = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [avatar, setAvatar] = useState('')
-  const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
-  const [error, setError] = useState('')
-  const [user, setUser] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [isUpdated, setIsUpdated] = useState(false)
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [oldAvatars, setOldAvatars] = useState([]);
+  const [avatar, setAvatar] = useState([]);
+  const [avatarPreview, setAvatarPreview] = useState([]);
+  const [error, setError] = useState('');
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+
   let navigate = useNavigate();
 
-  const getProfile = async () => {
-    const config = {
-      headers: {
-        // 'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getToken()}`
-      }
+  const config = {
+    headers: {
+      // 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getToken()}`
     }
-    try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, config)
-      setUser(data.user)
-      if (user) {
-        setName(user.name);
-        setEmail(user.email);
-        setAvatarPreview(user.avatar.url)
-      }
-      setLoading(false)
-
-    } catch (error) {
-      toast.error("invalid user or password", {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-    }
-
   }
+
+  const errMsg = (message = '') => toast.error(message, {
+    position: toast.POSITION.BOTTOM_CENTER
+  });
+  const successMsg = (message = '') => toast.success(message, {
+      position: toast.POSITION.BOTTOM_CENTER
+  });
+
+  const getProfile = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me/`,config);
+      setUser(data.user);
+      // setName(data.user.name);
+      // setEmail(data.user.email);
+      setAvatarPreview(data.user.avatar.url);
+      setOldAvatars(data.user.oldAvatars || []);
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.message)
+    }
+  };
 
   const updateProfile = async (userData) => {
     try {
@@ -49,51 +54,58 @@ const UpdateProfile = () => {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${getToken()}`
         }
-      }
-      const { data } = await axios.put('/api/v1/me/update', userData, config)
-      setIsUpdated(true)
+      };
+      const {data} = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config)
+      setIsUpdated(data.success);
     } catch (error) {
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
+      setError(error.response.data.message)
     }
-  }
+  };
+
   useEffect(() => {
+
     getProfile()
 
-    if (isUpdated) {
-      toast.success('User updated successfully', {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-      navigate('/me', { replace: true })
+    if (error) {
+        errMsg(error);
+        setError('');
     }
-  }, [])
+
+    if (isUpdated) {
+        successMsg('YOUR INFORMATION IS UPDATED SUCCESSFULLY');
+        navigate('/me');
+    }
+}, [error, isUpdated, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.set('name', name);
     formData.set('email', email);
-    formData.set('avatar', avatar);
+    avatar.forEach(avatars => {
+      formData.append('avatar', avatars);
+  })
 
-    (updateProfile(formData))
-  }
+    updateProfile(formData);
+  };
 
   const onChange = e => {
-    const reader = new FileReader();
+    const files = Array.from(e.target.files);
+    setAvatarPreview([]);
+    setAvatar([]);
+    
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(oldArray => [...oldArray, reader.result]);
+          setAvatar(oldArray => [...oldArray, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result)
-        setAvatar(reader.result)
-      }
-    }
-
-    reader.readAsDataURL(e.target.files[0])
-
-  }
-  console.log(user)
   return (
     <Fragment>
       <MetaData title={'Update Profile'} />
@@ -131,13 +143,16 @@ const UpdateProfile = () => {
               <label htmlFor='avatar_upload'>Avatar</label>
               <div className='d-flex align-items-center'>
                 <div>
-                  <figure className='avatar mr-3 item-rtl'>
-                    <img
-                      src={avatarPreview}
-                      className='rounded-circle'
-                      alt='Avatar Preview'
-                    />
-                  </figure>
+                <figure className='avatar mr-3 item-rtl'>
+                  {/* {oldAvatars && oldAvatars.map((img, index) => (
+                    <img key={index} src={img.url} alt={img.url} 
+                      className="mt-3 mr-2" width="55" height="52" />
+                  ))}
+                  {avatarPreview.map((img, index) => (
+                    <img src={index} key={img} alt="Avatar Preview" 
+                      className="mr-2" width="100" height="100"/>
+                  ))} */}
+                </figure>
                 </div>
                 <div className='custom-file'>
                   <input
