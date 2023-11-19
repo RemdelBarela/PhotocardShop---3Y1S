@@ -48,24 +48,24 @@ const UpdateUser = () => {
     }
 
     useEffect(() => {
-        // console.log(user && user._id !== userId);
         if (user && user._id !== id) {
-            getUserDetails(id)
-        } else {
+            getUserDetails(id);
+        } else if (user) {
             setName(user.name);
             setEmail(user.email);
-            setRole(user.role)
+            setRole(user.role);
         }
+    
         if (error) {
             errMsg(error);
             setError('');
         }
+    
         if (isUpdated) {
-            successMsg('USER INFORMATION UPDATED SUCCESSFULLY')
-            navigate('/admin/users')
-           
+            successMsg('USER INFORMATION UPDATED SUCCESSFULLY');
+            navigate('/admin/users');
         }
-    }, [error, isUpdated, id, user])
+    }, [id, user, error, isUpdated, navigate]);
     const submitHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();

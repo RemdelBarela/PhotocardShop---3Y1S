@@ -1,0 +1,9 @@
+.photo{
+    justify-content: center;
+}
+
+.photo .col-12{
+    width: '100%';
+    padding: '30px';
+   
+}

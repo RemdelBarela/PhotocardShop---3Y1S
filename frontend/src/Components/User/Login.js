@@ -12,9 +12,8 @@ import { FcGoogle} from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 
-
 const Login = () => {
-
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)

@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const auth = require('./routes/auth')
 const products = require('./routes/photo');
+const material = require('./routes/material')
 
 // const photos = require('./routes/product');
 // const order = require('./routes/order')
@@ -17,6 +18,7 @@ app.use(cookie());
 
 app.use('/api/v1', auth);
 app.use('/api/v1', products);
+app.use('/api/v1', material);
 
 // app.use('/api/v1', photos);
 // app.use('/api/v1', order);

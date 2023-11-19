@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import MetaData from '../../Layout/MetaData'
-// import Sidebar from './SideBar'
+import Sidebar from '../Sidebar'
 import { getToken } from '../../../utils/helpers';
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -115,72 +115,72 @@ const UpdatePhoto = () => {
     }
     return (
         <Fragment>
-            <MetaData title={'Update Photo'} />
-            <div className="row">
-                {/* <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div> */}
-                <div className="col-12 col-md-10">
-                    <Fragment>
-                        <div className="wrapper my-5">
-                            <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                                <h1 className="mb-4">Update Photo</h1>
-                                <div className="form-group">
-                                    <label htmlFor="name_field">Name</label>
-                                    <input
-                                        type="text"
-                                        id="name_field"
-                                        className="form-control"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="price_field">Price</label>
-                                    <input
-                                        type="text"
-                                        id="price_field"
-                                        className="form-control"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label>Images</label>
-                                    <div className='custom-file'>
-                                        <input
-                                            type='file'
-                                            name='images'
-                                            className='custom-file-input'
-                                            id='customFile'
-                                            onChange={onChange}
-                                            multiple
-                                        />
-                                        <label className='custom-file-label' htmlFor='customFile'>
-                                            Choose Images
-                                        </label>
-                                    </div>
-                                    {oldImages && oldImages.map(img => (
-                                        <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
-                                    ))}
-                                    {imagesPreview.map(img => (
-                                        <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
-                                    ))}
-                                </div>
-                                <button
-                                    id="login_button"
-                                    type="submit"
-                                    className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
-                                >
-                                    UPDATE
-                                </button>
-                            </form>
+        <MetaData title={'UPDATE PHOTO'} />
+        <div className="row">
+            <div className="col-12 col-md-2">
+                <Sidebar />
+            </div>
+            <div className="col-12 col-md-8">
+                <div className="wrapper my-5">
+                    <form className="shadow-lg photoForm" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
+                        <h1 className="mb-4 text-center">UPDATE PHOTO</h1>
+                        <div className="form-group">
+                            <label htmlFor="name_field">NAME</label>
+                            <input
+                                type="text"
+                                id="name_field"
+                                className="form-control"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </div>
-                    </Fragment>
+                        <div className="form-group">
+                            <label htmlFor="price_field">PRICE</label>
+                            <input
+                                type="text"
+                                id="price_field"
+                                className="form-control"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label>IMAGES</label>
+                            <div className='custom-file'>
+                                <input
+                                    type='file'
+                                    name='images'
+                                    className='custom-file-input'
+                                    id='customFile'
+                                    onChange={onChange}
+                                    multiple
+                                />
+                                <label className='custom-file-label' htmlFor='customFile'>
+                                    CHOOSE IMAGES
+                                </label>
+                            </div>
+                            {oldImages && oldImages.map(img => (
+                                <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
+                            ))}
+                            {imagesPreview.map(img => (
+                                <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
+                            ))}
+                        </div>
+                        <button
+                            id="login_button"
+                            type="submit"
+                            className="btn btn-block btn-primary py-3"
+                            disabled={loading ? true : false}
+                            style={{ marginTop: '20px' }}
+                        >
+                            UPDATE
+                        </button>
+                    </form>
                 </div>
             </div>
-        </Fragment>
+        </div>
+    </Fragment>
+    
     )
 }
 
