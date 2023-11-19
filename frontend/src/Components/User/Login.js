@@ -26,7 +26,13 @@ const Login = () => {
     // });
     const handleFacebookLogin = (response) => {
         // Handle the Facebook login response
-        console.log(response);
+       
+        if (response.email) {
+            login(response.email, ''); // No password is required for Facebook login
+          } else {
+            // Handle the case where the email is not available in the Facebook response
+            console.error('Email not available in the Facebook response');
+          }
       };
     
       const responseGoogle = (response) => {
@@ -128,6 +134,7 @@ const Login = () => {
                                             buttonText="Login with Google"
                                             onSuccess={responseGoogle}
                                             onFailure={responseGoogle}
+                                             cookiePolicy={'none'}
                                               >
                                     <div >
                                    
