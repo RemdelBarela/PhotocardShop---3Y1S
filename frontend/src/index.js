@@ -10,6 +10,7 @@ import "./Design/Header.css";
 import './Design/Facebook.css';
 import './Design/App.css';
 import './Design/Photo.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
