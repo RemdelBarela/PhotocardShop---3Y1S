@@ -49,10 +49,10 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">Cart</Link>
             </li>
             <li>
-              <Link to="/works">Browse Works</Link>
+              <Link to="/works">Profile</Link>
             </li>
             <li>
               <Link to="/help">Help</Link>

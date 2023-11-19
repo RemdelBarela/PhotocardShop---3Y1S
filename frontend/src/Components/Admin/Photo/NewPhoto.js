@@ -83,9 +83,9 @@ const NewPhoto = () => {
     return (
         <Fragment>
             <MetaData title={'New Photo'} />
-            <div className="row">
-                <div className="np col-12 col-md-8" style={{ position: 'relative',  justifyContent: 'center', alignItems: 'center', height: '120vh' }}>
-                    <div className="np wrapper my-5">
+            <div className="row justify-content-center">
+                <div className="col-12 col-md-8">
+                    <div className="wrapper my-5">
                         <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
                             <h1 className="mb-4 text-center">New Product</h1>
 
@@ -96,6 +96,8 @@ const NewPhoto = () => {
                                     id="name_field"
                                     className="form-control"
                                     value={name}
+                                    label='First name'
+                                    placeholder='Enter name'
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
@@ -106,6 +108,8 @@ const NewPhoto = () => {
                                     type="text"
                                     id="price_field"
                                     className="form-control"
+                                    label='Price'
+                                    placeholder='Enter Price'
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
@@ -113,7 +117,15 @@ const NewPhoto = () => {
 
                             <div className="form-group">
                                 <label htmlFor="description_field">Description</label>
-                                <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+
+                                <textarea
+                                    className="form-control"
+                                    id="description_field"
+                                    rows="8"
+                                    placeholder="Enter your description here..."
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                ></textarea>
                             </div>
 
                             <div className='form-group'>
@@ -144,7 +156,7 @@ const NewPhoto = () => {
                                 className="btn btn-block btn-primary py-3"
                                 style={{ marginTop: '20px' }}
                             >
-                                CREATE
+                                Submit
                             </button>
                         </form>
                     </div>
