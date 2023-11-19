@@ -70,6 +70,7 @@ const UsersList = () => {
     const deleteUserHandler = (id) => {
        deleteUser(id)
     }
+    
     const setUsers = () => {
         const data = {
             columns: [
