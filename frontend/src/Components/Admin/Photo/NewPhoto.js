@@ -82,54 +82,55 @@ const NewPhoto = () => {
 
     return (
         <Fragment>
-            <MetaData title={'New Photo'} />
+            <MetaData title={'NEW PHOTO'} />
+            
             <div className="row justify-content-center">
                 <div className="col-12 col-md-8">
                     <div className="wrapper my-5">
                         <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
-                            <h1 className="mb-4 text-center">New Product</h1>
+                            <h1 className="mb-4 text-center">NEW PRODUCT</h1>
 
                             <div className="form-group">
-                                <label htmlFor="name_field">Name</label>
+                                <label htmlFor="name_field">NAME</label>
                                 <input
                                     type="text"
                                     id="name_field"
                                     className="form-control"
                                     value={name}
                                     label='First name'
-                                    placeholder='Enter name'
+                                    placeholder='ENTER NAME'
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="price_field">Price</label>
+                                <label htmlFor="price_field">PRICE</label>
                                 <input
                                     type="text"
                                     id="price_field"
                                     className="form-control"
                                     label='Price'
-                                    placeholder='Enter Price'
+                                    placeholder='ENTER PRICE'
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="description_field">Description</label>
+                                <label htmlFor="description_field">DESCRIPTION</label>
 
                                 <textarea
                                     className="form-control"
                                     id="description_field"
                                     rows="8"
-                                    placeholder="Enter your description here..."
+                                    placeholder="ENTER YOUR DESCRIPTION HERE..."
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                 ></textarea>
                             </div>
 
                             <div className='form-group'>
-                                <label>Images</label>
+                                <label>IMAGES</label>
                                 <div className='custom-file'>
                                     <input
                                         type='file'
@@ -140,7 +141,7 @@ const NewPhoto = () => {
                                         multiple
                                     />
                                     <label className='custom-file-label' htmlFor='customFile'>
-                                        Choose Images
+                                        CHOOSE IMAGES
                                     </label>
                                 </div>
                                 <div className="image-preview-container mt-3">
@@ -151,12 +152,12 @@ const NewPhoto = () => {
                             </div>
 
                             <button
-                                id="create_button"
+                                id="login_button"
                                 type="submit"
                                 className="btn btn-block btn-primary py-3"
                                 style={{ marginTop: '20px' }}
                             >
-                                Submit
+                                SUBMIT
                             </button>
                         </form>
                     </div>
