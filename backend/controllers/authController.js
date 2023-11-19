@@ -43,9 +43,11 @@ exports.registerUser = async (req, res, next) => {
             sendToken(user, 200, res);
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Error in user registration.' });
+            return res.status(500).json({ error: 'UNSUCCESFUL REGISTRATION' });
         }
     }
+    console.log('Email value before creating user:', email);
+
 };
 
 

@@ -144,14 +144,14 @@ const UpdateProfile = () => {
               <div className='d-flex align-items-center'>
                 <div>
                 <figure className='avatar mr-3 item-rtl'>
-                  {/* {oldAvatars && oldAvatars.map((img, index) => (
+                  {oldAvatars && oldAvatars.map((img, index) => (
                     <img key={index} src={img.url} alt={img.url} 
                       className="mt-3 mr-2" width="55" height="52" />
                   ))}
                   {avatarPreview.map((img, index) => (
                     <img src={index} key={img} alt="Avatar Preview" 
                       className="mr-2" width="100" height="100"/>
-                  ))} */}
+                  ))}
                 </figure>
                 </div>
                 <div className='custom-file'>

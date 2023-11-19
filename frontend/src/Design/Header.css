@@ -8,3 +8,19 @@
     color: #c51d1d;
     text-decoration: none;
 }
+
+#profile, #cart, #myOrders, #dashboard
+{
+    color: white;
+}
+
+#profile:hover, #cart:hover, #myOrders:hover, #dashboard:hover
+{
+    color: #c51d1d;
+}
+
+#regis
+{
+    background-color: none;
+    color: white;
+}
