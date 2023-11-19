@@ -9,8 +9,8 @@ import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
 import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
-
-
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin } from 'react-google-login';
 
 const Login = () => {
     

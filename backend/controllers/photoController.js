@@ -15,7 +15,7 @@ exports.getPhotos = async (req, res, next) => {
 	if (!photos) {
 		return res.status(404).json({
 			success: false,
-			message: 'CURRENTLY NO PRODUCTS AVAILABLE'
+			message: 'PHOTO LIST IS EMPTY'
 		})
 	}
 	res.status(200).json({
@@ -95,7 +95,7 @@ exports.updatePhoto = async (req, res, next) => {
 	if (!photo) {
 		return res.status(404).json({
 			success: false,
-			message: 'PHOTO NOT FOUND'
+			message: 'NO PHOTO FOUND'
 		})
 	}
 
@@ -181,10 +181,7 @@ exports.getAdminPhotos = async (req, res, next) => {
 		success: true,
 		photos
 	})
-
 }
-
-
 
 exports.createPhotoReview = async (req, res, next) => {
 	const { rating, comment, photoId } = req.body;

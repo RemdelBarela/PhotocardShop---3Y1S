@@ -97,6 +97,7 @@ exports.updateMaterial = async (req, res, next) => {
 			message: 'NO MATERIALS FOUND'
 		})
 	}
+
 	let images = []
 
 	if (typeof req.body.images === 'string') {
@@ -163,7 +164,7 @@ exports.deleteMaterial = async (req, res, next) => {
 
 	res.status(200).json({
 		success: true,
-		message: 'MATERIAL DELETED SUCCESSFULLY'
+		message: 'MATERIAL REMOVED'
 	})
 }
 

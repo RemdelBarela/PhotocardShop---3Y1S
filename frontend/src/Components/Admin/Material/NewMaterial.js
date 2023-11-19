@@ -23,7 +23,7 @@ const NewMaterial = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.set('name', name);
-        formData.set('stock', price);
+        formData.set('stock', stock);
         // formData.set('description', description);
         images.forEach(image => {
             formData.append('images', image);

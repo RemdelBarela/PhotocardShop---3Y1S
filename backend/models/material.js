@@ -10,7 +10,7 @@ const materialSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: [true, 'PROVIDE MATERIAL STOCK'],
-        maxLength: [5, 'ENSURE YOUR STOCK HAS A MAXIMUM LENGTH OF 5 CHARACTERS'],
+        minLength: [2, 'ENSURE YOUR STOCK HAS A MINIMUM LENGTH OF 2 CHARACTERS'],
         default: 0
     },
     images: [

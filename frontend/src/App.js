@@ -13,12 +13,11 @@ import PhotoDetails from "./Components/Photo/PhotoDetails";
 
 import Login from "./Components/User/Login";
 import Register from './Components/User/Register';
+import Profile from "./Components/User/Profile";
+import UpdateProfile from "./Components/User/UpdateProfile";
 import UpdatePassword from "./Components/User/UpdatePassword";
 import ForgotPassword from "./Components/User/ForgotPassword";
 import NewPassword from "./Components/User/NewPassword";
-
-import Profile from "./Components/User/Profile";
-import UpdateProfile from "./Components/User/UpdateProfile";
 
 import PhotosList from "./Components/Admin/Photo/PhotosList";
 import NewPhoto from "./Components/Admin/Photo/NewPhoto";
@@ -122,13 +121,11 @@ function App() {
 
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
+          <Route path="/me" element={<Profile />} exact="true" />
+          <Route path="/me/update" element={<UpdateProfile />} exact="true" />
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
-
-          <Route path="/me" element={<Profile />} exact="true" />
-          <Route path="/me/update:id" element={<UpdateProfile />} exact="true" />
-
 
           {/* <Route path="/cart"
             element={<Cart
@@ -149,6 +146,11 @@ function App() {
           <Route
             path="/admin/photo/:id"
             element={<UpdatePhoto />} />
+            
+          <Route path="/admin/material" element={<NewMaterial />} />
+          <Route
+            path="/admin/material/:id"
+            element={<UpdateMaterial />} />
 
           {/* <Route
             path="/admin/orders"
@@ -160,7 +162,7 @@ function App() {
           {/* <Route
             path="/admin/users"
             element={<UsersList />} /> */}
-          
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
           {/* <Route
             path="/dashboard"
             element={
@@ -169,8 +171,14 @@ function App() {
               </ProtectedRoute>
             }
           /> */}
-          
-          
+          <Route
+            path="/admin/photos"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <PhotosList />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin/users"
             element={
@@ -179,7 +187,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          
+          <Route
+              path="/admin/materials"
+              element={
+                <ProtectedRoute isAdmin={true} >
+                  <MaterialsList />
+                </ProtectedRoute>}
+          />
          
 
           {/* <Route
