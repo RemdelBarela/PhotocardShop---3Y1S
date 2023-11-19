@@ -5,7 +5,7 @@ import axios from 'axios'
 import Pagination from 'react-js-pagination'
 import Photo from './Photo/Photo'
 import Loader from './Layout/Loader'
-import Slider from 'rc-slider';
+// import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useParams } from "react-router-dom"
 

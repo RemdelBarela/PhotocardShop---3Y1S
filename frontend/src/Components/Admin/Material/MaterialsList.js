@@ -96,6 +96,11 @@ const MaterialsList = () => {
                     sort: 'asc'
                 },
                 {
+                    label: 'Images',
+                    field: 'images',
+                    sort: 'asc'
+                },
+                {
                     label: 'Material Name',
                     field: 'name',
                     sort: 'asc',
@@ -117,6 +122,9 @@ const MaterialsList = () => {
         materials.forEach(material => {
             data.rows.push({
                 id: material._id,
+                images: material.images.map((image, index) => (
+                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
+                  )),
                 name: material.name,
                 // price: `$${photo.price}`,
                 stock: material.stock,

@@ -117,6 +117,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           {/* <Route path="/photo/:id" element={<PhotoDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" /> */}
+          <Route path="/photo/:id" element={<PhotoDetails />} exact="true" />
           <Route path="/search/:keyword" element={<Home />} exact="true" />
 
           <Route path="/login" element={<Login />} exact="true" />
@@ -204,14 +205,14 @@ function App() {
                 <OrdersList />
               </ProtectedRoute>
             }
-          />
+          />*/}
 
-          <Route
+          {/* <Route
             path="/admin/reviews"
             element={
               <ProtectedRoute isAdmin={true} >
                 <PhotoReviews />
-              </ProtectedRoute>} /> */}
+              </ProtectedRoute>} />  */}
 
         </Routes>
       </Router>

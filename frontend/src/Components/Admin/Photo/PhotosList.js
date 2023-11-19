@@ -56,7 +56,7 @@ const PhotosList = () => {
         }
 
         if (isDeleted) {
-            toast.success('Photo deleted successfully', {
+            toast.success('PHOTO DELETED SUCCESSFULLY', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             navigate('/admin/photos');
@@ -97,6 +97,11 @@ const PhotosList = () => {
                     sort: 'asc'
                 },
                 {
+                    label: 'Images',
+                    field: 'images',
+                    sort: 'asc'
+                },
+                {
                     label: 'Name',
                     field: 'name',
                     sort: 'asc',
@@ -118,9 +123,11 @@ const PhotosList = () => {
         photos.forEach(photo => {
             data.rows.push({
                 id: photo._id,
+                images: photo.images.map((image, index) => (
+                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
+                  )),
                 name: photo.name,
                 price: `$${photo.price}`,
-                stock: photo.stock,
                 actions: <Fragment>
                     <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
                         <i className="fa fa-pen"></i>
@@ -141,8 +148,8 @@ const PhotosList = () => {
 
     return (
         <Fragment>
-            <MetaData title={'All Photos'} />
-            <div className="row">
+            <MetaData title={'ALL PHOTOS'} />
+            <div className="row" id="photolist">
                 <div className="col-12 col-md-2">
                 <div style={{  height: '210vh', overflow: 'scroll initial' }}>
     
@@ -154,7 +161,7 @@ const PhotosList = () => {
                 <div className="wrapper my-5">
                 <Fragment>
                 <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
-                        <h1 className="my-5">LIST OF ALL ALL PHOTOS</h1>
+                        <h1 className="my-5">LIST OF ALL PHOTOS</h1>
                         {loading ? <Loader /> : (
                             <MDBDataTable
                                 data={photosList()}
