@@ -44,7 +44,7 @@ function Header() {
             <li>
             <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
               <Link to="/me" style={{ textDecoration: 'none' }} >
-                <span id="profile" className="ml-3">PROFILE</span>       
+                <span id="profile" className="ml-3"><i class="fa-solid fa-user"></i>PROFILE</span>       
               </Link>
             </div>
             </li>

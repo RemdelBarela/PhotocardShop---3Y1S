@@ -1,28 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { getUser } from '../../utils/helpers'
 
 const Footer = () => {
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    setUser(getUser())
+}, [])
   return (
     <footer className="bg-dark text-white py-3 fixed-bottom">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-md-6">
+          <div className="col-md-6 ">
             <p className="mb-0">&copy; 2023 PhotocardShop</p>
           </div>
-          <div className="col-md-6">
-            <div className="social-icons text-md-right">
-              <span className="mr-2">Follow Us</span>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="ml-3">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="ml-3">
-              <i class="fab fa-instagram" style={{ color: '#e63d70' }}></i>
-
-              </a>
-            </div>
+          {user ? (
+            <div className="col-md-6 d-flex justify-content-end">
+            <p className="mb-0"><i>Welcome, <b>{user && user.name}</b></i></p>
           </div>
+          ) : ([])}
+
+          
         </div>
       </div>
     </footer>
