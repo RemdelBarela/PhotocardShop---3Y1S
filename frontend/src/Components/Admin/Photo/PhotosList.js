@@ -144,7 +144,7 @@ const PhotosList = () => {
             <MetaData title={'All Photos'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{ display: 'flex', height: '132vh', overflow: 'scroll initial' }}>
+                <div style={{  height: '160vh', overflow: 'scroll initial' }}>
     
                     <Sidebar />
                     </div>
@@ -153,6 +153,8 @@ const PhotosList = () => {
                 <div className="col-12 col-md-8">
                 <div className="wrapper my-5">
                 <Fragment>
+                <div style={{ width: '100%', padding: '20px' }} >
+              
                         <h1 className="my-5 text-center">All Photos</h1>
 
                         {loading ? <Loader /> : (
@@ -164,7 +166,7 @@ const PhotosList = () => {
                                 hover
                             />
                         )}
-
+</div>
                     </Fragment>
                 </div></div>
             </div>
