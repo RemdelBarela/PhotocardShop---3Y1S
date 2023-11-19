@@ -85,7 +85,7 @@ const NewPhoto = () => {
             <MetaData title={'NEW PHOTO'} />
             <div className="row">
             <div className="col-12 col-md-2">
-            <div style={{ display: 'flex', height: '140vh', overflow: 'scroll initial' }}>
+            <div style={{ display: 'flex', overflow: 'scroll initial' }}>
     
                 <Sidebar />
                 </div>

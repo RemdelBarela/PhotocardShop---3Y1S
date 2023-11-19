@@ -144,7 +144,7 @@ const PhotosList = () => {
             <MetaData title={'All Photos'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{  height: '160vh', overflow: 'scroll initial' }}>
+                <div style={{  height: '210vh', overflow: 'scroll initial' }}>
     
                     <Sidebar />
                     </div>
