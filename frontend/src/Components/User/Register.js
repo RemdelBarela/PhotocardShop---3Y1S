@@ -4,6 +4,8 @@ import MetaData from '../Layout/MetaData'
 import axios from 'axios' 
 import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin } from 'react-google-login';
 
 const Register = () => {
 
@@ -14,6 +16,28 @@ const Register = () => {
 //     })
 
 //     const { name, email, password } = user;
+    const responseFacebook = (e) => {
+        // Handle the Facebook login response
+        // You can send the obtained user information to your server for registration
+         
+        
+        const formData = new FormData();
+        formData.set('name', e.name);
+        formData.set('email', e.email);
+        formData.set('password', e.password);
+        avatar.forEach(avatars => {
+            formData.append('avatar', avatars);
+        });
+        
+        register(formData)
+        
+    };
+
+    const responseGoogle = (response) => {
+        // Handle the Gmail login response
+        // Send the obtained user information to your server for registration
+        console.log(response);
+      };
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -41,9 +65,9 @@ const Register = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('name', name);
-        formData.set('email', email);
-        formData.set('password', password);
+        formData.set('name', e.name);
+        formData.set('email', e.email);
+        formData.set('password', e.password);
         avatar.forEach(avatars => {
             formData.append('avatar', avatars);
         });
@@ -174,14 +198,42 @@ const Register = () => {
                                 <div className="login">OR REGISTER WITH</div>
                                 <div className="links">
                                     <div className="social-icon facebook" id="flink">
+                                    
+                                    <FaFacebook/>
+                                    <FacebookLogin
+                                    appId="3675250786095175"
+                                    autoLoad={false}
+                                    fields="name,email,picture"
+                                    callback={responseFacebook}
+                                    textButton={false}
+                                    className="custom-facebook-button" // Add a custom CSS class
+                                    >
+                                    <div className="facebook-button-content">
                                         <FaFacebook />
                                         <span>Facebook</span>
                                     </div>
-                                    <div className="social-icon gmail" id="glink">
-                                        <FcGoogle/>
-                                        <span>Google</span>
+                                    </FacebookLogin>
+                                                                    
                                     </div>
-                                </div>
+              
+                                    </div>
+                                    <div className="social-icon gmail" id="glink">
+                                          
+                                          <GoogleLogin
+                                          clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
+                                          buttonText="Login with Google"
+                                          onSuccess={responseGoogle}
+                                          onFailure={responseGoogle}
+                                          cookiePolicy={'none'} // Use 'single_host_origin' for localhost
+
+                                            >
+                                  <div >
+                                 
+                                      <span>Google</span>
+                                  </div>
+                                  </GoogleLogin>
+                                          
+                                      </div>
                             </div>
                         </div>
                     </div>
