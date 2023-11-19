@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import MetaData from '../../Layout/MetaData'
-// import Sidebar from './SideBar'
+import Sidebar from '../Sidebar'
 import { getToken } from '../../../utils/helpers';
 import Loader from '../../Layout/Loader'
 
@@ -143,13 +143,17 @@ const PhotosList = () => {
         <Fragment>
             <MetaData title={'All Photos'} />
             <div className="row">
-                {/* <div className="col-12 col-md-2">
+                <div className="col-12 col-md-2">
+                <div style={{ display: 'flex', height: '132vh', overflow: 'scroll initial' }}>
+    
                     <Sidebar />
-                </div> */}
+                    </div>
+                </div>
 
-                <div className="col-12 col-md-10">
-                    <Fragment>
-                        <h1 className="my-5">All Photos</h1>
+                <div className="col-12 col-md-8">
+                <div className="wrapper my-5">
+                <Fragment>
+                        <h1 className="my-5 text-center">All Photos</h1>
 
                         {loading ? <Loader /> : (
                             <MDBDataTable
@@ -162,7 +166,7 @@ const PhotosList = () => {
                         )}
 
                     </Fragment>
-                </div>
+                </div></div>
             </div>
 
         </Fragment>

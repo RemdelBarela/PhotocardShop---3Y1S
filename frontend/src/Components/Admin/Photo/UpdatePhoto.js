@@ -118,7 +118,10 @@ const UpdatePhoto = () => {
         <MetaData title={'UPDATE PHOTO'} />
         <div className="row">
             <div className="col-12 col-md-2">
+            <div style={{ display: 'flex', height: '106vh', overflow: 'scroll initial' }}>
+    
                 <Sidebar />
+                </div>
             </div>
             <div className="col-12 col-md-8">
                 <div className="wrapper my-5">
