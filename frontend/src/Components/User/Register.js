@@ -21,15 +21,15 @@ const Register = () => {
         // You can send the obtained user information to your server for registration
          
         
-        const formData = new FormData();
-        formData.set('name', e.name);
-        formData.set('email', e.email);
-        formData.set('password', e.password);
-        avatar.forEach(avatars => {
-            formData.append('avatar', avatars);
-        });
+        // const formData = new FormData();
+        // formData.set('name', e.name);
+        // formData.set('email', e.email);
+        // formData.set('password', e.password);
+        // avatar.forEach(avatars => {
+        //     formData.append('avatar', avatars);
+        // });
         
-        register(formData)
+        // register(formData)
         
     };
 

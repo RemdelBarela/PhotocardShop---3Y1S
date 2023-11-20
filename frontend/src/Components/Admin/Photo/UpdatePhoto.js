@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react'
 import MetaData from '../../Layout/MetaData'
 import Sidebar from '../Sidebar'
 import { getToken } from '../../../utils/helpers';
-
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
@@ -152,7 +151,7 @@ const UpdatePhoto = () => {
                             <div className='custom-file'>
                                 <input
                                     type='file'
-                                    name='images'
+                                    name='avatar'
                                     className='custom-file-input'
                                     id='customFile'
                                     onChange={onChange}
