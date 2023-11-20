@@ -1,48 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { getUser } from '../../utils/helpers'
 
 const Footer = () => {
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    setUser(getUser())
+}, [])
   return (
-    <footer className="bg-dark text-white py-5">
+    <footer className="bg-dark text-white py-3 fixed-bottom">
       <div className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <h5 className="mb-4">Quick Links</h5>
-            <ul className="list-unstyled">
-              <li><a href="/">Home</a></li>
-              <li><a href="/shop">Shop</a></li>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-            </ul>
+        <div className="row align-items-center">
+          <div className="col-md-6 ">
+            <p className="mb-0">&copy; 2023 PhotocardShop</p>
           </div>
-          <div className="col-md-4">
-            <h5 className="mb-4">Newsletter</h5>
-            <p>Subscribe to our newsletter for the latest updates and exclusive offers.</p>
-            <form>
-              <div className="input-group">
-                <input type="email" className="form-control" placeholder="Enter your email" />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="button">Subscribe</button>
-                </div>
-              </div>
-            </form>
+          {user ? (
+            <div className="col-md-6 d-flex justify-content-end">
+            <p className="mb-0"><i>Welcome, <b>{user && user.name}</b></i></p>
           </div>
-          <div className="col-md-4">
-            <h5 className="mb-4">Follow Us</h5>
-            <div className="social-icons">
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-instagram"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="text-center mt-4">
-          <p>&copy; 2022 Your E-Commerce Shop. All Rights Reserved.</p>
+          ) : ([])}
+
+          
         </div>
       </div>
     </footer>

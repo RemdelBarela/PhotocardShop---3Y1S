@@ -139,6 +139,18 @@
   border: none;
 }
 
+#create_button
+{
+  background-color: black;
+  border: none;
+}
+
+#create_button:hover
+{
+  background-color: #c51d1d;
+  border: none;
+}
+
   .field button:hover {
     background: black;
   }

@@ -5,7 +5,7 @@ import { getToken } from '../../../utils/helpers';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Sidebar from '../Sidebar'
 const NewMaterial = () => {
     const [name, setName] = useState('');
     const [stock, setStock] = useState(0);
@@ -82,12 +82,19 @@ const NewMaterial = () => {
 
     return (
         <Fragment>
-            <MetaData title={'New Material'} />
+            <MetaData title={'NEW MATERIAL'} />
             <div className="row">
-                <div className="np col-12 col-md-8" style={{ position: 'relative',  justifyContent: 'center', alignItems: 'center', height: '120vh' }}>
-                    <div className="np wrapper my-5">
-                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
-                            <h1 className="mb-4 text-center">NEW MATERIAL</h1>
+
+            <div className="col-12 col-md-2">
+            <div style={{  height: '90vh', overflow: 'scroll initial' }}>
+                <Sidebar />
+                </div>
+            </div>
+                <div className="np col-12 col-md-8">
+                    <div className="np wrapper my-5" style={{ width: '100%', paddingLeft: '10%', marginLeft: '10%' }}>
+                        <Fragment>
+                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', margin: '0 auto' }}>
+                            <h1 className="mb-4 text-center">CREATE NEW MATERIAL</h1>
 
                             <div className="form-group">
                                 <label htmlFor="name_field">NAME</label>
@@ -142,6 +149,7 @@ const NewMaterial = () => {
                                 CREATE
                             </button>
                         </form>
+                        </Fragment>
                     </div>
                 </div>
             </div>

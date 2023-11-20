@@ -26,10 +26,10 @@ const UpdatePhoto = () => {
     let navigate = useNavigate();
 
     const errMsg = (message = '') => toast.error(message, {
-        position: toast.POSITION.BOTTOM_CENTER
+        position: toast.POSITION.BOTTOM_RIGHT
     });
     const successMsg = (message = '') => toast.success(message, {
-        position: toast.POSITION.BOTTOM_CENTER
+        position: toast.POSITION.BOTTOM_RIGHT
     });
 
     const getPhotoDetails =  async (id) => {
