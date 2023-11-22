@@ -5,8 +5,10 @@ import MetaData from '../Layout/MetaData'
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 import { toast } from 'react-toastify';
+import { Carousel } from 'react-bootstrap'
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
+import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 
 const Profile = () => {
   const [loading, setLoading] = useState(true)
@@ -43,44 +45,72 @@ const Profile = () => {
         <Fragment>
           <MetaData title={'Your Profile'} />
 
-          <h2 className="mt-5 ml-5">My Profile</h2>
-          <div className="row justify-content-around mt-5 user-info">
-            <div className="col-12 col-md-3">
-            <div className='avatar avatar-profile'>
-              {user.avatar.length > 0 && (
-                <img
-                  className="rounded-circle img-fluid"
-                  src={user.avatar[0].url} // Accessing the URL of the first image in the array
-                  alt={`Avatar`}
-                />
-              )}
-            </div>
-              <Link to="/me/update" id="edit_profile" className="btn btn-primary btn-block my-5">
-                Edit Profile
-              </Link>
-            </div>
-
-            <div className="col-12 col-md-5">
-              <h4>Full Name</h4>
-              <p>{user.name}</p>
-
-              <h4>Email Address</h4>
-              <p>{user.email}</p>
-
-              <h4>Joined On</h4>
-              <p>{String(user.createdAt).substring(0, 10)}</p>
-
-              {user.role !== 'admin' && (
-                <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                  My Orders
-                </Link>
-              )}
-
-              <Link to="/password/update" className="btn btn-primary btn-block mt-3">
-                Change Password
-              </Link>
-            </div>
-          </div>
+          <div className="gradient-custom-2" style={{ backgroundColor: 'white' }}>
+      <MDBContainer className="py-5 h-100">
+        <MDBRow className="justify-content-center align-items-center h-100">
+          <MDBCol lg="9" xl="7">
+            <MDBCard>
+              <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
+                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
+                {user.avatar.length > 0 && (
+                  <MDBCardImage src={user.avatar[0].url}
+                    alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" 
+                    fluid 
+                    style={{ width: '150px', height: '150px', objectFit: 'cover', zIndex: '1'}} />  
+                 )}
+                </div>
+                <div className="ms-3" style={{ marginTop: '130px' }}>
+                  <MDBTypography tag="h5">{user.name}</MDBTypography>
+                  <MDBCardText>{user.email}</MDBCardText>
+                </div>
+              </div>
+              <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                <div className="d-flex justify-content-end text-center py-1">
+                  <div>
+                    <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                      <Link to="/me/update" id="proflink">
+                          EDIT PROFILE
+                        </Link>
+                    </MDBBtn>
+                  </div>
+                  <div>
+                    {user.role !== 'admin' && (
+                    <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                      <Link to="/orders/me" id="proflink">
+                        MY ORDERS
+                      </Link>
+                    </MDBBtn>
+                  )}
+                  </div>
+                  <div>
+                    {user.role !== 'admin' && (
+                    <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                      <Link to="/password/update" id="proflink">
+                        CHANGE PASSWORD
+                      </Link>
+                    </MDBBtn>
+                  )}
+                  </div>
+                </div>
+              </div>
+              <MDBCardBody className="text-black p-4">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <MDBCardText className="lead fw-normal mb-0">AVATARS</MDBCardText>
+                </div>
+                <MDBRow>
+                {user.avatar && user.avatar.map(avatars => (
+                  <MDBCol className="mb-2">
+                    <MDBCardImage key={avatars.public_id} src={avatars.url}
+                      alt="image 1" className="w-100 rounded-3" />
+                  </MDBCol>
+                  ))}
+                </MDBRow>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
         </Fragment>
       )}
     </Fragment>
