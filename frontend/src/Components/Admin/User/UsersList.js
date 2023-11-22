@@ -85,6 +85,11 @@ const UsersList = () => {
                     sort: 'asc'
                 },
                 {
+                    label: 'Name',
+                    field: 'name',
+                    sort: 'asc'
+                },
+                {
                     label: 'Email',
                     field: 'email',
                     sort: 'asc'

@@ -1,0 +1,25 @@
+#profbutton
+{
+ background-color: black;
+ border: none;
+ margin-left: 10px;
+ margin-right: 10px;
+}
+
+#profbutton:hover
+{
+ background-color: #c51d1d;
+ 
+}
+
+#proflink
+{
+    color: white;
+    text-decoration: none;
+}
+
+#proflink:hover
+{
+    color: white;
+    text-decoration: none;
+}

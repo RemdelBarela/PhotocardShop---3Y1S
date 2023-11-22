@@ -9,12 +9,13 @@ import { getToken } from '../../utils/helpers';
 const UpdateProfile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [oldAvatars, setOldAvatars] = useState([]);
+  const [oldAvatar, setOldAvatar] = useState([]);
   const [avatar, setAvatar] = useState([]);
   const [avatarPreview, setAvatarPreview] = useState([]); // Ensure initialization here
   const [error, setError] = useState('');
   const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [updateError, setUpdateError] = useState('')
   const [isUpdated, setIsUpdated] = useState(false);
 
   let navigate = useNavigate();
@@ -25,41 +26,32 @@ const UpdateProfile = () => {
     }
   };
 
-  const errMsg = (message = '') => toast.error(message, { position: toast.POSITION.BOTTOM_CENTER });
-  const successMsg = (message = '') => toast.success(message, { position: toast.POSITION.BOTTOM_CENTER });
+  const errMsg = (message = '') => toast.error(message, { 
+    position: toast.POSITION.BOTTOM_RIGHT });
+  const successMsg = (message = '') => toast.success(message, { 
+    position: toast.POSITION.BOTTOM_RIGHT });
 
   const getProfile = async () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me/`, config);
       setUser(data.user);
+      setName(data.user.name); // Set the user's name in the state
+      setEmail(data.user.email); // Set the user's email in the state
+      setOldAvatar(data.user.oldAvatar || []);
       setAvatarPreview(data.user.avatar.url);
-      setOldAvatars(data.user.oldAvatars || []);
+      // setOldAvatar(data.user.OldAvatar || []);
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
     }
   };
 
-  // const updateProfile = async (userData) => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //         'Authorization': `Bearer ${getToken()}`
-  //       }
-  //     };
-  //     const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config);
-  //     setIsUpdated(data.success);
-  //   } catch (error) {
-  //     setError(error.response.data.message);
-  //   }
-  // };
-
 
   const updateProfile = async (userData) => {
     try {
         const config = {
             headers: {
+                'Content-Type': 'application/json', 
                 'Authorization': `Bearer ${getToken()}`
             }
         };
@@ -78,66 +70,48 @@ const UpdateProfile = () => {
       setError('');
     }
 
-    if (isUpdated) {
-      successMsg('YOUR INFORMATION IS UPDATED SUCCESSFULLY');
-      navigate('/me');
+    if (updateError) {
+      errMsg(updateError);
+     
     }
-  }, [error, isUpdated, navigate]);
 
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   const formData = new FormData();
-  //   formData.set('name', name);
-  //   formData.set('email', email);
-
-  //   avatar.forEach((avatar, index) => {
-  //     formData.append(`images[${index}]`, avatar);
-  //   });
-
-  //   try {
-  //     await updateProfile(formData);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+    if (isUpdated) {
+      navigate('/me');
+      successMsg('YOUR INFORMATION IS UPDATED SUCCESSFULLY');
+    }
+    }, [error, isUpdated, navigate]);
 
 
-  const submitHandler = async (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.set('name', name);
     formData.set('email', email);
 
-    avatar.forEach((avatar, index) => {
-        formData.append(`images`, avatar); // Removed [index] from here
+    avatar.forEach((avatars) => {
+        formData.append('avatar', avatars); // Removed [index] from here
     });
-
-    try {
-        await updateProfile(formData);
-    } catch (error) {
-        console.error(error);
-    }
+    updateProfile(formData)
 };
 
 
-  const onChange = (e) => {
+  const onChange = e => {
     const files = Array.from(e.target.files)
     setAvatarPreview([]);
     setAvatar([])
-    setOldAvatars([])
+    setOldAvatar([])
     files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-              setAvatarPreview(oldArray => [...oldArray, reader.result])
-                setAvatar(oldArray => [...oldArray, reader.result])
-            }
-        }
-        reader.readAsDataURL(file)
-    })
-  };
+      const reader = new FileReader();
+      reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(oldArray => [...oldArray, reader.result])
+            setAvatar(oldArray => [...oldArray, reader.result])
+          }
+      }
+      reader.readAsDataURL(file)
+  })
+}
 
   return (
     <Fragment>
@@ -187,12 +161,15 @@ const UpdateProfile = () => {
                   CHOOSE IMAGES
                 </label>
               </div>
-              {oldAvatars && oldAvatars.map(img => (
-                                <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
-                            ))}
-              {avatarPreview && avatarPreview.length > 0 && avatarPreview.map((url, index) => (
-                <img src={url} key={index} alt="Preview" className="mr-2" width="100" height="100" />
+              {oldAvatar && oldAvatar.map(img => (
+                <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
               ))}
+              {/* {avatarPreview.map(img => (
+                <img src={img} key={img} alt="Preview" className="mr-2" width="100" height="100" />
+              ))} */}
+               {avatarPreview && avatarPreview.length > 0 && avatarPreview.map(img => (
+          <img src={img} key={img} alt="Preview" className="mr-2" width="100" height="100" />
+        ))}
             
             </div>
 

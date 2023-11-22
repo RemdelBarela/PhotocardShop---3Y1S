@@ -73,7 +73,7 @@ const NewPhoto = () => {
         }
 
         if (success) {
-            navigate('/admin/photo');
+            navigate('/admin/photos');
             toast.success('THE PHOTO IS ADDED SUCCESSFULLY', {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
