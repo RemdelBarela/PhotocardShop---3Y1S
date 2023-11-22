@@ -11,6 +11,7 @@ import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login'
+import { LoginSocialFacebook } from 'reactjs-social-login';
 
 
 
@@ -22,7 +23,8 @@ const Login = () => {
     const navigate = useNavigate()
     let location = useLocation();
     const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
-   
+    const [profile , setProfile] = useState(null);
+
     const handleFacebookLogin = (response) => {
         // Handle the Facebook login response
        
@@ -104,8 +106,28 @@ const Login = () => {
                                     <div className="links">
           
                                     <div className="social-icon facebook" id="flink">
+                                    <LoginSocialFacebook
+                                    appId='3675250786095175'
+                                    onResolve={(response)=>{
+                                        console.log(response);
+                                        setProfile(response.data);
+                                            if(profile)
+                                         {       
+                                        login(profile.email,profile.accessToken)
+                                         
+                                         }
+                                        
+                                                                    }}
                                     
-                                    <FaFacebook/>
+                                    onReject={(response)=>{
+                                        console.log(response);
+                                    }}>
+                                         <FaFacebook />
+                                        {/* <FacebookLoginButton/> */}
+                                    </LoginSocialFacebook>
+
+
+                                    {/* <FaFacebook/>
                                     <FacebookLogin
                                     appId="3675250786095175"
                                     autoLoad={false}
@@ -119,7 +141,7 @@ const Login = () => {
                                         <span>Facebook</span>
                                     </div>
                                     </FacebookLogin>
-                                                                    
+                                                                     */}
                                     </div>
               
 

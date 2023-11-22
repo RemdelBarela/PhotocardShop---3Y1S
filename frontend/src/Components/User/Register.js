@@ -6,6 +6,9 @@ import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
+import { LoginSocialFacebook } from 'reactjs-social-login';
+
+// import { FacebookLoginButton } from 'reactjs-facebook-login-buttons';
 
 const Register = () => {
 
@@ -39,6 +42,48 @@ const Register = () => {
         console.log(response);
       };
 
+
+      const registerWithFacebook = async (response) => {
+        try {
+          setLoading(true);
+    
+          // Send Facebook response to server for registration
+          const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/register/facebook`, {
+            accessToken: response.accessToken,
+            userID: response.userID,
+          });
+    
+          // Handle success, update state, redirect, etc.
+          setIsAuthenticated(true);
+          setLoading(false);
+          navigate('/');
+        } catch (error) {
+          // Handle error
+          setLoading(false);
+          setError(error.response.data.error);
+        }
+      };
+    
+      const registerWithGoogle = async (response) => {
+        try {
+          setLoading(true);
+    
+          // Send Google response to server for registration
+          const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/register/google`, {
+            tokenId: response.tokenId,
+          });
+    
+          // Handle success, update state, redirect, etc.
+          setIsAuthenticated(true);
+          setLoading(false);
+          navigate('/');
+        } catch (error) {
+          // Handle error
+          setLoading(false);
+          setError(error.response.data.error);
+        }
+      };
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -47,7 +92,7 @@ const Register = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
-   
+    const [profile , setProfile] = useState(null);
 
     let navigate = useNavigate()
     useEffect(() => {
@@ -185,8 +230,17 @@ const Register = () => {
                                 <div className="login">OR REGISTER WITH</div>
                                 <div className="links">
                                     <div className="social-icon facebook" id="flink">
+                                    <LoginSocialFacebook
+                                    appId='3675250786095175'
+                                    onResolve={registerWithFacebook}
                                     
-                                    <FaFacebook/>
+                                    onReject={(response)=>{
+                                        console.log(response);
+                                    }}>
+                                         <FaFacebook />
+                                        {/* <FacebookLoginButton/> */}
+                                    </LoginSocialFacebook>
+                                    {/* <FaFacebook/>
                                     <FacebookLogin
                                     appId="3675250786095175"
                                     autoLoad={false}
@@ -199,7 +253,7 @@ const Register = () => {
                                         <FaFacebook />
                                         <span>Facebook</span>
                                     </div>
-                                    </FacebookLogin>
+                                    </FacebookLogin> */}
                                                                     
                                     </div>
               
@@ -209,8 +263,8 @@ const Register = () => {
                                           <GoogleLogin
                                           clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
                                           buttonText="Login with Google"
-                                          onSuccess={responseGoogle}
-                                          onFailure={responseGoogle}
+                                          onSuccess={registerWithGoogle}
+                                          onFailure={registerWithGoogle}
                                           cookiePolicy={'none'} // Use 'single_host_origin' for localhost
 
                                             >

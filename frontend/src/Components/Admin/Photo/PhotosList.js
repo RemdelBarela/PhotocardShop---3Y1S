@@ -56,7 +56,7 @@ const PhotosList = () => {
         }
 
         if (isDeleted) {
-            toast.success('PHOTO DELETED SUCCESSFULLY', {
+            toast.success('Photo deleted successfully', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             navigate('/admin/photos');
@@ -92,13 +92,8 @@ const PhotosList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Photo ID',
+                    label: 'ID',
                     field: 'id',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Images',
-                    field: 'images',
                     sort: 'asc'
                 },
                 {
@@ -123,14 +118,12 @@ const PhotosList = () => {
         photos.forEach(photo => {
             data.rows.push({
                 id: photo._id,
-                images: photo.images.map((image, index) => (
-                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
-                  )),
                 name: photo.name,
                 price: `$${photo.price}`,
+                stock: photo.stock,
                 actions: <Fragment>
                     <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pen"></i>
+                        <i className="fa fa-pencil"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deletePhotoHandler(photo._id)}>
                         <i className="fa fa-trash"></i>
@@ -148,8 +141,8 @@ const PhotosList = () => {
 
     return (
         <Fragment>
-            <MetaData title={'ALL PHOTOS'} />
-            <div className="row" id="photolist">
+            <MetaData title={'All Photos'} />
+            <div className="row">
                 <div className="col-12 col-md-2">
                 <div style={{  height: '210vh', overflow: 'scroll initial' }}>
     
@@ -160,8 +153,10 @@ const PhotosList = () => {
                 <div className="col-12 col-md-8">
                 <div className="wrapper my-5">
                 <Fragment>
-                <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
-                        <h1 className="my-5">LIST OF ALL PHOTOS</h1>
+                <div style={{ width: '100%', padding: '20px' }} >
+              
+                        <h1 className="my-5 text-center">All Photos</h1>
+
                         {loading ? <Loader /> : (
                             <MDBDataTable
                                 data={photosList()}
@@ -171,11 +166,11 @@ const PhotosList = () => {
                                 hover
                             />
                         )}
-                    </div>
+</div>
                     </Fragment>
-                    </div>
-                </div>
+                </div></div>
             </div>
+
         </Fragment>
     )
 }

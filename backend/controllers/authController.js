@@ -4,6 +4,9 @@ const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
+
+const axios = require('axios'); // Add this line at the top of your file
+
 exports.registerUser = async (req, res, next) => {
 
     let avatar = [];
@@ -15,6 +18,10 @@ exports.registerUser = async (req, res, next) => {
 
     let avatarLinks = [];
 
+    if (avatar && avatar.length) {
+        
+     
+      
     for (let i = 0; i < avatar.length; i++) {
         let avatarDataUri = avatar[i];
 
@@ -35,7 +42,7 @@ exports.registerUser = async (req, res, next) => {
 		}
 
     }
-    
+}
     req.body.avatar = avatarLinks;
 
     const user = await User.create(req.body);
@@ -408,3 +415,65 @@ exports.updateUser = async (req, res, next) => {
 };
 
 
+
+//
+ 
+// Facebook registration
+exports.registerFacebookUser = async (req, res, next) => {
+    const { accessToken, userID } = req.body;
+  
+    try {
+      // Get user profile information from Facebook
+      const response = await axios.get(`https://graph.facebook.com/v12.0/${userID}?fields=id,name,email,picture&access_token=${accessToken}`);
+      const { id, name, email, picture } = response.data;
+  
+      // Check if the user with the same email already exists in the database
+      let user = await User.findOne({ email });
+  
+      // If the user doesn't exist, create a new user
+      if (!user) {
+        user = await User.create({
+          name,
+          email,
+          password: `${id}${process.env.JWT_SECRET}`,
+          avatar: [{ public_id: id, url: picture.data.url }],
+        });
+      }
+  
+      // Send JWT token to the client
+      sendToken(user, 200, res);
+    } catch (error) {
+      console.error('Error in registerFacebookUser:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+  // Google registration
+  exports.registerGoogleUser = async (req, res, next) => {
+    const { tokenId } = req.body;
+  
+    try {
+      // Get user profile information from Google
+      const response = await axios.post('https://www.googleapis.com/oauth2/v3/tokeninfo', { id_token: tokenId });
+      const { sub, name, email, picture } = response.data;
+  
+      // Check if the user with the same email already exists in the database
+      let user = await User.findOne({ email });
+  
+      // If the user doesn't exist, create a new user
+      if (!user) {
+        user = await User.create({
+          name,
+          email,
+          password: `${sub}${process.env.JWT_SECRET}`,
+          avatar: [{ public_id: sub, url: picture }],
+        });
+      }
+  
+      // Send JWT token to the client
+      sendToken(user, 200, res);
+    } catch (error) {
+      console.error('Error in registerGoogleUser:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
