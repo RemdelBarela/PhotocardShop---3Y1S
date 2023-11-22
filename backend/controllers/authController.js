@@ -170,182 +170,66 @@ exports.updatePassword = async (req, res, next) => {
 
 }
 
-// exports.updateProfile = async (req, res, next) => {
-
-
-//     let photo = await User.findById(req.user.id);
-// 	// console.log(req.body)
-// 	if (!photo) {
-// 		return res.status(404).json({
-// 			success: false,
-// 			message: 'NO PHOTO FOUND'
-// 		})
-// 	}
-
-// 	let images = []
-
-// 	if (typeof req.user.images === 'string') {
-// 		images.push(req.user.images)
-// 	} else {
-// 		images = req.user.images
-// 	}
-// 	if (images !== undefined) {
-// 		// Deleting images associated with the Photo
-// 		for (let i = 0; i < photo.images.length; i++) {
-// 			try {
-// 				let imageDataUri = photo.images[i]
-// 			const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`)
-// 			} catch (error) {
-// 				console.log(error)
-// 			}
-// 		}
-// 	}
-// 	let imagesLinks = [];
-// 	if (images && images.length) {
-//         for (let i = 0; i < images.length; i++) {
-//             try {
-//                 let imageDataUri = images[i];
-//                 const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
-//                     folder: 'photos',
-//                     width: 150,
-//                     crop: "scale",
-//                 });
-//                 imagesLinks.push({
-//                     public_id: result.public_id,
-//                     url: result.secure_url
-//                 });
-//             } catch (error) {
-//                 console.log(error);
-//             }
-//         }
-//     } else {
-//         console.log("No images to process");
-//     }
-// 	req.user.images = imagesLinks
-// 	photo = await User.findByIdAndUpdate(req.user.id, req.body, {
-// 		new: true,
-// 		runValidators: true,
-// 		useFindandModify: false
-// 	})
-// 	if (!photo)
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: 'FAILED TO UPDATE PHOTO'
-// 		})
-
-
-//     const newUserData = {
-//         name: req.body.name,
-//         email: req.body.email
-//     }
-//     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-//         new:
-//          true,
-//         runValidators: true,
-//     })
-
-//     res.status(200).json({
-//         success: true
-//     })
- 
-// }
-
 exports.updateProfile = async (req, res, next) => {
-    try {
-        let photo = await User.findById(req.user.id);
+        let user = await User.findById(req.user.id);
 
-        if (!photo) {
+        if (!user) {
             return res.status(404).json({
                 success: false,
-                message: 'NO PHOTO FOUND'
+                message: 'NO USER FOUND'
             });
         }
 
-        // let images = [];
-
-        // if (req.user.images && typeof req.user.images === 'string') {
-        //     images.push(req.user.images);
-        // } else if (req.user.images && req.user.images.length > 0) {
-        //     images = req.user.images;
-        // }
-        let images = [];
-
-        if (req.user && req.user.images) {
-            if (typeof req.user.images === 'string') {
-                images.push(req.body.images);
-            } else if (Array.isArray(req.user.images) && req.user.images.length > 0) {
-                images = req.body.images;
+        let avatar = [];
+        if (typeof req.body.avatar === 'string') {
+            avatar.push(req.body.avatar);
+        } else {
+            avatar = req.body.avatar;
+        }
+    
+        let avatarLinks = [];
+    
+        for (let i = 0; i < avatar.length; i++) {
+            let avatarDataUri = avatar[i];
+    
+            try {
+                const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
+                    folder: 'user',
+                    width: 150,
+                    crop: "scale",
+                });
+    
+                avatarLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url
+                })
+                
+            } catch (error) {
+                console.log(error)
             }
+    
         }
         
-        // Deleting images associated with the Photo
-        for (let i = 0; i < photo.length; i++) {
-            try {
-                let imageDataUri = photo.images[i];
-                const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`);
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        req.body.avatar = avatarLinks;
 
-        let imagesLinks = [];
-        if (images && images.length > 0) {
-            for (let i = 0; i < images.length; i++) {
-                try {
-                    let imageDataUri = images[i];
-                    const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
-                        folder: 'photos',
-                        width: 150,
-                        crop: "scale",
-                    });
-                    imagesLinks.push({
-                        public_id: result.public_id,
-                        url: result.secure_url
-                    });
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        } else {
-            console.log("No images to process");
-        }
-
-        req.user.images = imagesLinks;
-        const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+        user = await User.findByIdAndUpdate(req.user.id, req.body, {
             new: true,
             runValidators: true,
             useFindAndModify: false
-        });
+        })
 
-        if (!updatedUser) {
+        if (!user) {
             return res.status(400).json({
                 success: false,
                 message: 'FAILED TO UPDATE PHOTO'
-            });
-        }
+            })
 
-        const newUserData = {
-            name: req.body.name,
-            email: req.body.email
-        };
+            return res.status(200).json({
+                success: true,
+                photo
+            })
 
-        const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-            new: true,
-            runValidators: true,
-        });
-
-        res.status(200).json({
-            success: true
-        });
-
-    }   catch (error) {
-        console.error('Error in updateProfile:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'Internal Server Error'
-        });
-    }
-    
+}   
 };
 
 
