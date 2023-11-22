@@ -32,7 +32,7 @@ const Home = () => {
     const getPhotos = async (page = 1, keyword = '', price) => {
         let link = ''
 
-        link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}`
 
         console.log(link)
         let res = await axios.get(link)
