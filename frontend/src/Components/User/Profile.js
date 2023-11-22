@@ -12,7 +12,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState({})
 
-
   const getProfile = async () => {
     const config = {
       headers: {

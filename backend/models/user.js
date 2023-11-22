@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'NAME FIELD CANNOT BE LEFT BLANK.'],
-        minlength: [5, 'YOUR NAME SHOULD CONTAIN AT LEAST 7 CHARACTERS.']
+        minlength: [5, 'YOUR NAME SHOULD CONTAIN AT LEAST 5 CHARACTERS.']
     },
     email: {
         type: String,
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
             url: {
                 type: String,
                 required: true
-            }
+            },
         }
     ],
     role: {

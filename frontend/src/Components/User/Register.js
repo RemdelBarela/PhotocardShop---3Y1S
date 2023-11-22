@@ -65,9 +65,9 @@ const Register = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('name', e.name);
-        formData.set('email', e.email);
-        formData.set('password', e.password);
+        formData.set('name', name);
+        formData.set('email', email);
+        formData.set('password', password);
         avatar.forEach(avatars => {
             formData.append('avatar', avatars);
         });
@@ -131,7 +131,7 @@ const Register = () => {
                                             <input placeholder="NAME"
                                                 type="text"
                                                 id="name_field"
-                                                name='name'
+                                                // name='name'
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}/>
                                     </div>

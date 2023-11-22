@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
 exports.registerUser = async (req, res, next) => {
+
     let avatar = [];
     if (typeof req.body.avatar === 'string') {
         avatar.push(req.body.avatar);
@@ -16,6 +17,7 @@ exports.registerUser = async (req, res, next) => {
 
     for (let i = 0; i < avatar.length; i++) {
         let avatarDataUri = avatar[i];
+
         try {
             const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
                 folder: 'user',
@@ -26,30 +28,29 @@ exports.registerUser = async (req, res, next) => {
             avatarLinks.push({
                 public_id: result.public_id,
                 url: result.secure_url
-            });
-
-            const { name, email, password, role } = req.body;
-            const user = await User.create({
-                name,
-                email,
-                password,
-                avatar: {
-                    public_id: result.public_id,
-                    url: result.secure_url
-                },
-                // role,
-            });
-
-            sendToken(user, 200, res);
+            })
+            
         } catch (error) {
-            console.log(error);
-            return res.status(500).json({ error: 'UNSUCCESFUL REGISTRATION' });
-        }
+			console.log(error)
+		}
+
     }
-    console.log('Email value before creating user:', email);
+    
+    req.body.avatar = avatarLinks;
 
-};
+    const user = await User.create(req.body);
+    if (!user)
+        return res.status(400).json({
+            success: false,
+            message: 'UNSUCCESFUL REGISTRATION'
+        })
+    res.status(201).json({
+        success: true,
+        user
+    })
 
+    // sendToken(user, 200, res);
+}
 
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;

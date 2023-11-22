@@ -80,8 +80,8 @@ const UsersList = () => {
                     sort: 'asc'
                 },
                 {
-                    label: 'Name',
-                    field: 'name',
+                    label: 'Avatars',
+                    field: 'avatar',
                     sort: 'asc'
                 },
                 {
@@ -104,6 +104,9 @@ const UsersList = () => {
         allUsers.forEach(user => {
             data.rows.push({
                 id: user._id,
+                avatar: user.avatar.map((avatars, index) => (
+                    <img key={index} src={avatars.url} alt={`Avatar ${index}`} style={{ width: '50px', height: '50px' }} />
+                  )),
                 name: user.name,
                 email: user.email,
                 role: user.role,
