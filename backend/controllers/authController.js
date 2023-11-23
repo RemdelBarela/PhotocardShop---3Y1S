@@ -4,9 +4,6 @@ const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
-
-const axios = require('axios'); // Add this line at the top of your file
-
 exports.registerUser = async (req, res, next) => {
 
     let avatar = [];
@@ -177,66 +174,182 @@ exports.updatePassword = async (req, res, next) => {
 
 }
 
-exports.updateProfile = async (req, res, next) => {
-        let user = await User.findById(req.user.id);
+// exports.updateProfile = async (req, res, next) => {
 
-        if (!user) {
+
+//     let photo = await User.findById(req.user.id);
+// 	// console.log(req.body)
+// 	if (!photo) {
+// 		return res.status(404).json({
+// 			success: false,
+// 			message: 'NO PHOTO FOUND'
+// 		})
+// 	}
+
+// 	let images = []
+
+// 	if (typeof req.user.images === 'string') {
+// 		images.push(req.user.images)
+// 	} else {
+// 		images = req.user.images
+// 	}
+// 	if (images !== undefined) {
+// 		// Deleting images associated with the Photo
+// 		for (let i = 0; i < photo.images.length; i++) {
+// 			try {
+// 				let imageDataUri = photo.images[i]
+// 			const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`)
+// 			} catch (error) {
+// 				console.log(error)
+// 			}
+// 		}
+// 	}
+// 	let imagesLinks = [];
+// 	if (images && images.length) {
+//         for (let i = 0; i < images.length; i++) {
+//             try {
+//                 let imageDataUri = images[i];
+//                 const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
+//                     folder: 'photos',
+//                     width: 150,
+//                     crop: "scale",
+//                 });
+//                 imagesLinks.push({
+//                     public_id: result.public_id,
+//                     url: result.secure_url
+//                 });
+//             } catch (error) {
+//                 console.log(error);
+//             }
+//         }
+//     } else {
+//         console.log("No images to process");
+//     }
+// 	req.user.images = imagesLinks
+// 	photo = await User.findByIdAndUpdate(req.user.id, req.body, {
+// 		new: true,
+// 		runValidators: true,
+// 		useFindandModify: false
+// 	})
+// 	if (!photo)
+// 		return res.status(400).json({
+// 			success: false,
+// 			message: 'FAILED TO UPDATE PHOTO'
+// 		})
+
+
+//     const newUserData = {
+//         name: req.body.name,
+//         email: req.body.email
+//     }
+//     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+//         new:
+//          true,
+//         runValidators: true,
+//     })
+
+//     res.status(200).json({
+//         success: true
+//     })
+ 
+// }
+
+exports.updateProfile = async (req, res, next) => {
+    try {
+        let photo = await User.findById(req.user.id);
+
+        if (!photo) {
             return res.status(404).json({
                 success: false,
-                message: 'NO USER FOUND'
+                message: 'NO PHOTO FOUND'
             });
         }
 
-        let avatar = [];
-        if (typeof req.body.avatar === 'string') {
-            avatar.push(req.body.avatar);
-        } else {
-            avatar = req.body.avatar;
-        }
-    
-        let avatarLinks = [];
-    
-        for (let i = 0; i < avatar.length; i++) {
-            let avatarDataUri = avatar[i];
-    
-            try {
-                const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
-                    folder: 'user',
-                    width: 150,
-                    crop: "scale",
-                });
-    
-                avatarLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url
-                })
-                
-            } catch (error) {
-                console.log(error)
+        // let images = [];
+
+        // if (req.user.images && typeof req.user.images === 'string') {
+        //     images.push(req.user.images);
+        // } else if (req.user.images && req.user.images.length > 0) {
+        //     images = req.user.images;
+        // }
+        let images = [];
+
+        if (req.user && req.user.images) {
+            if (typeof req.user.images === 'string') {
+                images.push(req.body.images);
+            } else if (Array.isArray(req.user.images) && req.user.images.length > 0) {
+                images = req.body.images;
             }
-    
         }
         
-        req.body.avatar = avatarLinks;
+        // Deleting images associated with the Photo
+        for (let i = 0; i < photo.length; i++) {
+            try {
+                let imageDataUri = photo.images[i];
+                const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`);
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-        user = await User.findByIdAndUpdate(req.user.id, req.body, {
+        let imagesLinks = [];
+        if (images && images.length > 0) {
+            for (let i = 0; i < images.length; i++) {
+                try {
+                    let imageDataUri = images[i];
+                    const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
+                        folder: 'photos',
+                        width: 150,
+                        crop: "scale",
+                    });
+                    imagesLinks.push({
+                        public_id: result.public_id,
+                        url: result.secure_url
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        } else {
+            console.log("No images to process");
+        }
+
+        req.user.images = imagesLinks;
+        const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
             new: true,
             runValidators: true,
             useFindAndModify: false
-        })
+        });
 
-        if (!user) {
+        if (!updatedUser) {
             return res.status(400).json({
                 success: false,
                 message: 'FAILED TO UPDATE PHOTO'
-            })
+            });
+        }
 
-            return res.status(200).json({
-                success: true,
-                photo
-            })
+        const newUserData = {
+            name: req.body.name,
+            email: req.body.email
+        };
 
-}   
+        const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+            new: true,
+            runValidators: true,
+        });
+
+        res.status(200).json({
+            success: true
+        });
+
+    }   catch (error) {
+        console.error('Error in updateProfile:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        });
+    }
+    
 };
 
 
@@ -299,65 +412,3 @@ exports.updateUser = async (req, res, next) => {
 };
 
 
-
-//
- 
-// Facebook registration
-exports.registerFacebookUser = async (req, res, next) => {
-    const { accessToken, userID } = req.body;
-  
-    try {
-      // Get user profile information from Facebook
-      const response = await axios.get(`https://graph.facebook.com/v12.0/${userID}?fields=id,name,email,picture&access_token=${accessToken}`);
-      const { id, name, email, picture } = response.data;
-  
-      // Check if the user with the same email already exists in the database
-      let user = await User.findOne({ email });
-  
-      // If the user doesn't exist, create a new user
-      if (!user) {
-        user = await User.create({
-          name,
-          email,
-          password: `${id}${process.env.JWT_SECRET}`,
-          avatar: [{ public_id: id, url: picture.data.url }],
-        });
-      }
-  
-      // Send JWT token to the client
-      sendToken(user, 200, res);
-    } catch (error) {
-      console.error('Error in registerFacebookUser:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
-  
-  // Google registration
-  exports.registerGoogleUser = async (req, res, next) => {
-    const { tokenId } = req.body;
-  
-    try {
-      // Get user profile information from Google
-      const response = await axios.post('https://www.googleapis.com/oauth2/v3/tokeninfo', { id_token: tokenId });
-      const { sub, name, email, picture } = response.data;
-  
-      // Check if the user with the same email already exists in the database
-      let user = await User.findOne({ email });
-  
-      // If the user doesn't exist, create a new user
-      if (!user) {
-        user = await User.create({
-          name,
-          email,
-          password: `${sub}${process.env.JWT_SECRET}`,
-          avatar: [{ public_id: sub, url: picture }],
-        });
-      }
-  
-      // Send JWT token to the client
-      sendToken(user, 200, res);
-    } catch (error) {
-      console.error('Error in registerGoogleUser:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
