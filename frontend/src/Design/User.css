@@ -1,0 +1,12 @@
+#upu
+{
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+#upu:hover{
+    background-color: #c51d1d;
+    color: white;
+    border: none;
+}

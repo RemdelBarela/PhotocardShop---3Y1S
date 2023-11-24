@@ -74,22 +74,22 @@ const Profile = () => {
                     </MDBBtn>
                   </div>
                   <div>
-                    {user.role !== 'admin' && (
+                    {user.role ? (
                     <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
                       <Link to="/orders/me" id="proflink">
                         MY ORDERS
                       </Link>
                     </MDBBtn>
-                  )}
+                  ) : ('')}
                   </div>
                   <div>
-                    {user.role !== 'admin' && (
+                    {user.role ? (
                     <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
                       <Link to="/password/update" id="proflink">
                         CHANGE PASSWORD
                       </Link>
                     </MDBBtn>
-                  )}
+                  ):('')}
                   </div>
                 </div>
               </div>
