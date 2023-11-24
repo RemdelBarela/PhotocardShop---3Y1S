@@ -1,5 +1,6 @@
 const Photo = require('../models/photo')
 // const Order = require('../models/order')
+const Material = require('../models/material')
 
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
@@ -247,6 +248,21 @@ exports.deleteReview = async (req, res, next) => {
         success: true
     })
 }
+
+exports.getAllMaterials = async (req, res, next) => {
+	const allmaterials = await Material.find();
+	if (!allmaterials) {
+		return res.status(404).json({
+			success: false,
+			message: 'MATERIALS NOT FOUND'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		allmaterials
+	})
+}
+
 
 // exports.photoSales = async (req, res, next) => {
 //     const totalSales = await Order.aggregate([

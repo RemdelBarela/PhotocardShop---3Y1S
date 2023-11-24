@@ -181,3 +181,18 @@ exports.getAdminMaterials = async (req, res, next) => {
 		materials
 	})
 }
+
+exports.getAllMaterials = async (req, res, next) => {
+	const allmaterials = await Material.find();
+	if (!allmaterials) {
+		return res.status(404).json({
+			success: false,
+			message: 'MATERIALS NOT FOUND'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		allmaterials
+	})
+}
+
