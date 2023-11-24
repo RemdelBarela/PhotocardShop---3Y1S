@@ -117,7 +117,7 @@ const UpdateProfile = () => {
     <Fragment>
       <MetaData title={'Update Profile'} />
 
-      <div className="row wrapper">
+      <div className="row wrapper" id="upcon">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
             <h1 className="mt-2 mb-5">Update Profile</h1>
@@ -174,7 +174,7 @@ const UpdateProfile = () => {
 
             {/* ... (other form elements) */}
 
-            <button type="submit" className="btn update-btn btn-block mt-4 mb-3" disabled={loading ? true : false} >
+            <button type="submit" className="btn update-btn btn-block mt-4 mb-3" id="upbut" disabled={loading ? true : false} >
               Update
             </button>
           </form>
