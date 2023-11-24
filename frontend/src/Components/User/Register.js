@@ -1,13 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
-import axios from 'axios' 
+import axios from 'axios'  
 import { FaFacebook} from 'react-icons/fa';
 import { FcGoogle} from 'react-icons/fc';
 import { GoogleLogin } from 'react-google-login';
 import { LoginSocialFacebook } from 'reactjs-social-login';
 import Modal from 'react-modal' 
+import { gapi } from 'gapi-script';
 
+const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleusercontent.com";
 const Register = () => {
 
 
@@ -96,6 +98,22 @@ const Register = () => {
             })
     }
 
+
+    // useEffect(() => {
+    //     const start = async () => {
+    //         try {
+    //             await gapi.client.init({
+    //                 clientId: clientID,
+    //                 scope: "", // Add the required scope if needed
+    //             });
+    //         } catch (error) {
+    //             console.error('Error initializing Google API client:', error);
+    //         }
+    //     };
+    
+    //     gapi.load('client:auth2', start);
+    // }, []);
+    
     const register = async (userData) => {
         try {
             const config = {
@@ -186,66 +204,84 @@ const Register = () => {
                                     </div>
                                 </form>
                                 <div className="login">OR REGISTER WITH</div>
-                                <div className="links">
-                                    <div className="social-icon facebook" id="flink">
-                                    <div> 
+                                    <div className="links">
+                                        <div className="social-icon facebook" id="flink">
+                                            <div> 
+                                                <LoginSocialFacebook
+                                                    appId='3675250786095175'
+                                                    onResolve={(response) => {
+                                                    setProfile(response.data);
+                                                    handleLoginClick();
+                                                    }}
+                                                    onReject={(response) => {
+                                                    console.log(response);
+                                                    }}
+                                                >
+                                                    <FaFacebook />
+                                                </LoginSocialFacebook>
 
-
-                                        
-
-                                    <LoginSocialFacebook
-                                            appId='3675250786095175'
-                                            onResolve={(response) => {
-                                            setProfile(response.data);
-                                            handleLoginClick();
-                                            }}
-                                            onReject={(response) => {
-                                            console.log(response);
-                                            }}
-                                        >
-                                            <FaFacebook />
-                                        </LoginSocialFacebook>
-
-                                            <Modal
-                                            isOpen={showModal}
-                                            onRequestClose={handleModalReject}
-                                            contentLabel="Login Confirmation"
-                                            className="custom-modal" // Add a custom class for styling
-                                            overlayClassName="custom-overlay" // Add a custom class for overlay styling
-                                        >
-                                                <div className="modal-content">
-                                            <p>Are you sure you want to log in with Facebook?</p>
-                                            <button className="yes" onClick={handleModalConfirm}>Yes</button>
-                                            <button className="no" onClick={handleModalReject}>No</button>
-                                            </div>
-                                        
-                                        </Modal>
-
-   
+                                                <Modal
+                                                    isOpen={showModal}
+                                                    onRequestClose={handleModalReject}
+                                                    contentLabel="Login Confirmation"
+                                                    className="custom-modal" // Add a custom class for styling
+                                                    overlayClassName="custom-overlay" // Add a custom class for overlay styling
+                                                    >
+                                                    
+                                                    <div className="modal-content">
+                                                        <p>Are you sure you want to log in with Facebook?</p>
+                                                        <button className="yes" onClick={handleModalConfirm}>Yes</button>
+                                                        <button className="no" onClick={handleModalReject}>No</button>
+                                                    </div>
+                                                </Modal>
+                                            </div>                               
                                         </div>
-                                                                    
-                                    </div>
               
-                                    </div>
-                                    <div className="social-icon gmail" id="glink">
-                                    <GoogleLogin
-                                        clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
-                                        buttonText="Login with Google"
-                                        onResolve={(response) => {
-                                            console.log(response);
-                                            setProfile(response.data);
-                                        }}
-                                        onReject={(response) => {
-                                            console.log(response);
-                                        }}
-                                        cookiePolicy={'none'} 
-                                        >
-                                        <FcGoogle/>
-                                    </GoogleLogin>
-                                </div>
+                                        <div className="social-icon gmail" id="glink">
+                                            <div>
+                                                <GoogleLogin
+                                                    clientId={clientID}
+                                                    buttonText="Login with Google"
+                                                    onSuccess={(response) => {
+                                                        console.log(response);
+                                                        setProfile(response);
+
+                                                        if (profile) {
+                                                            console.log(profile.accessToken);
+                                                            try {
+                                                            const formData = new FormData();
+                                                            formData.set('name', profile.profileObj.name);
+                                                            formData.set('email', profile.profileObj.email);
+                                                            formData.set('password', profile.profileObj.googleId);
+                                                
+                                                            formData.append('avatar', profile.profileObj.imageUrl);
+                                                            
+                                                            register(formData);
+                                                            } catch (error) {
+                                                            console.error('Registration error:', error);
+                                                            }
+                                                        }
+                                                    }}
+                                                    onFailure={(response) => {
+                                                        console.log(response);
+                                                    }}
+                                                    cookiePolicy={'single_host_origin'}
+                                                    isSignedIn={true}
+                                                    render={(renderProps) => (
+                                                        <FcGoogle
+                                                          onClick={renderProps.onClick}
+                                                          disabled={renderProps.disabled}
+                                                          size={18}
+                                                        />
+                                                      )}
+                                                    />
+                                               
+                                            </div>
+                                        </div>
+                                     </div>
+                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </Fragment>
     )

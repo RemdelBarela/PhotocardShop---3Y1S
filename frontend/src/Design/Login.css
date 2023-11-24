@@ -257,17 +257,34 @@
 }
 
 .gmail {
-  background: #c51d1d;
+  background: transparent;
   border: none;
 }
 
-#flink:hover {
+/* #flink:hover {
   background: black;
 }
 
 #glink:hover {
-  background: black;
+  background: black !important;
 }
+
+#glink2:hover {
+  background: pink !important;
+} */
+
+#links:hover
+{
+  background: black !important;
+
+  
+}
+
+#glink2
+{
+  background: transparent !important;
+}
+
 
 
 .links i {
