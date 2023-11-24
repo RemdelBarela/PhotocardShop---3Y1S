@@ -120,6 +120,7 @@ import Photo from './Photo/Photo';
 import Loader from './Layout/Loader';
 import { useParams } from 'react-router-dom';
 
+
 const Home = () => {
   let { keyword } = useParams();
   const [loading, setLoading] = useState(true);
@@ -214,19 +215,15 @@ const Home = () => {
                           <h6 className="text-success">
                             {photo.freeShipping ? 'Free shipping' : ''}
                           </h6>
-                          <div className="d-flex flex-column mt-4">
-                            <MDBBtn color="primary" size="sm">
-                              Details
-                            </MDBBtn>
-                            <MDBBtn
-                              outline
-                              color="primary"
-                              size="sm"
-                              className="mt-2"
-                            >
-                              Add to wish list
-                            </MDBBtn>
-                          </div>
+                          <div className="button-container">
+  <MDBBtn style={{ width: '100px' }} color="primary" size="sm">
+    Details
+  </MDBBtn>
+  <MDBBtn style={{ width: '100px' }} outline color="primary" size="sm" className="mt-2">
+    Add to wish list
+  </MDBBtn>
+</div>
+
                         </MDBCol>
                       </MDBRow>
                     </MDBCardBody>

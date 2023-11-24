@@ -614,3 +614,12 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container .btn {
+  width: 100px; /* Set a fixed width for your buttons */
+}
