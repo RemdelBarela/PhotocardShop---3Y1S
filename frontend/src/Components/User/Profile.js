@@ -45,7 +45,7 @@ const Profile = () => {
         <Fragment>
           <MetaData title={'Your Profile'} />
 
-          <div className="gradient-custom-2" style={{ backgroundColor: 'white' }}>
+          <div className="gradient-custom-2" style={{ backgroundColor: 'bls' }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">
@@ -64,10 +64,11 @@ const Profile = () => {
                   <MDBCardText>{user.email}</MDBCardText>
                 </div>
               </div>
-              <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }} id="profmdb">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
                     <MDBBtn id="profbutton" outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                      
                       <Link to="/me/update" id="proflink">
                           EDIT PROFILE
                         </Link>
