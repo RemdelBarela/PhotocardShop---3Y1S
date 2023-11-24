@@ -1,3 +1,4 @@
+
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import MetaData from '../../Layout/MetaData'
@@ -6,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { errMsg, successMsg } from '../../../utils/helpers';
 import { getToken } from '../../../utils/helpers';
 import axios from 'axios';
+import Sidebar from '../Sidebar'
 
 const UpdateUser = () => {
     const [name, setName] = useState('')
@@ -80,13 +82,13 @@ const UpdateUser = () => {
             <MetaData title={`Update User`} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                    {/* <Sidebar /> */}
+                    <Sidebar />
                 </div>
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10"style={{ marginBottom: '100px' }}>
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
                             <form className="shadow-lg" onSubmit={submitHandler}>
-                                <h1 className="mt-2 mb-5">USER INFORMATION UPDATE</h1>
+                                <h1 className="mt-2 mb-4">USER INFORMATION UPDATE</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">NAME</label>
                                     <input
@@ -96,7 +98,10 @@ const UpdateUser = () => {
                                         name='name'
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                    />
+                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.25)' }}
+                                        readOnly
+                                        disabled
+                                    />  
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email_field">EMAIL</label>
@@ -107,6 +112,9 @@ const UpdateUser = () => {
                                         name='email'
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
+                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.25)' }}
+                                        readOnly
+                                        disabled
                                     />
                                 </div>
                                 <div className="form-group">
@@ -122,7 +130,7 @@ const UpdateUser = () => {
                                         <option value="admin">ADMIN</option>
                                     </select>
                                 </div>
-                                <button type="submit" className="btn update-btn btn-block mt-4 mb-3" >UPDATE</button>
+                                <button type="submit" className="btn update-btn btn-block mt-4 mb-4" id="upu">UPDATE</button>
                             </form>
                         </div>
                     </div>

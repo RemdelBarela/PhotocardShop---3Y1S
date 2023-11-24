@@ -11,6 +11,7 @@ import './Design/Facebook.css';
 import './Design/App.css';
 import './Design/Photo.css';
 import './Design/Profile.css';
+import './Design/User.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
