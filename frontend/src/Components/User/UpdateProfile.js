@@ -89,7 +89,7 @@ const UpdateProfile = () => {
     formData.set('name', name);
     formData.set('email', email);
 
-    avatar.forEach((avatars) => {
+    avatar.forEach(avatars => {
         formData.append('avatar', avatars); // Removed [index] from here
     });
     updateProfile(formData)
