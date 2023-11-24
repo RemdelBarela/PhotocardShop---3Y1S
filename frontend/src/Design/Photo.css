@@ -8,3 +8,19 @@
    
 }
 
+#Bviewdeets
+{
+    color: white;
+    background-color: black;
+}
+
+#Bviewdeets:hover
+{
+    color: white;
+    background-color: #c51d1d;
+}
+
+#viewdeets
+{
+    color: white;
+}
