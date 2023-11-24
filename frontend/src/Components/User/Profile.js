@@ -97,14 +97,27 @@ const Profile = () => {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <MDBCardText className="lead fw-normal mb-0">AVATARS</MDBCardText>
                 </div>
-                <MDBRow>
-                {user.avatar && user.avatar.map(avatars => (
-                  <MDBCol className="mb-2">
-                    <MDBCardImage key={avatars.public_id} src={avatars.url}
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  ))}
-                </MDBRow>
+                <MDBContainer>
+                  {user.avatar && user.avatar.length > 0 && (
+                    // Loop through avatars and create rows with three columns each
+                    user.avatar.reduce((rows, avatar, index) => {
+                      if (index % 3 === 0) {
+                        rows.push([]);
+                      }
+                      rows[rows.length - 1].push(avatar);
+                      return rows;
+                    }, []).map((rowAvatars, rowIndex) => (
+                      <MDBRow key={rowIndex}>
+                        {rowAvatars.map((avatar) => (
+                          <MDBCol key={avatar.public_id} className="mb-2" md="4">
+                            <MDBCardImage src={avatar.url} alt={`Image ${avatar.public_id}`} className="w-100 rounded-3" />
+                          </MDBCol>
+                        ))}
+                      </MDBRow>
+                    ))
+                  )}
+                </MDBContainer>
+
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

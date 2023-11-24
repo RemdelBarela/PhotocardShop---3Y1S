@@ -121,7 +121,6 @@ const UpdateProfile = () => {
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
             <h1 className="mt-2 mb-5">Update Profile</h1>
-
             
             <div className="form-group">
               <label htmlFor="email_field">Name</label>
@@ -167,9 +166,9 @@ const UpdateProfile = () => {
               {/* {avatarPreview.map(img => (
                 <img src={img} key={img} alt="Preview" className="mr-2" width="100" height="100" />
               ))} */}
-               {avatarPreview && avatarPreview.length > 0 && avatarPreview.map(img => (
-          <img src={img} key={img} alt="Preview" className="mr-2" width="100" height="100" />
-        ))}
+              {avatarPreview && avatarPreview.length > 0 && avatarPreview.map(img => (
+                <img src={img} key={img} alt="Preview" className="mr-2" width="100" height="100" />
+              ))}
             
             </div>
 

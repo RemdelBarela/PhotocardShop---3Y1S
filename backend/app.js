@@ -4,6 +4,7 @@ const cookie = require('cookie-parser')
 const cors = require('cors')
 
 const auth = require('./routes/auth')
+
 const photos = require('./routes/photo')
 const material = require('./routes/material')
 const photocard = require('./routes/photocard')

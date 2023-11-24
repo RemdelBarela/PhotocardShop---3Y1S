@@ -8,8 +8,8 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
 router.get('/materials', getMaterials)
 router.get('/material/:id', getSingleMaterial);
-router.post('/admin/material/new', isAuthenticatedUser, upload.array('images', 10), newMaterial)
-router.route('/admin/material/:id', isAuthenticatedUser,).put(upload.array('images', 10), updateMaterial).delete(deleteMaterial);
+router.post('/admin/material/new', isAuthenticatedUser, upload.array('images'), newMaterial)
+router.route('/admin/material/:id', isAuthenticatedUser,).put(upload.array('images'), updateMaterial).delete(deleteMaterial);
 router.get('/admin/materials', isAuthenticatedUser, authorizeRoles('admin'), getAdminMaterials);
 // router.put('/review', isAuthenticatedUser, createPhotoReview);
 // router.get('/reviews', isAuthenticatedUser, getPhotoReviews)

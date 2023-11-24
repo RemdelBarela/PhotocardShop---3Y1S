@@ -81,7 +81,7 @@ const UpdateUser = () => {
             <MetaData title={`Update User`} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{  height: '90vh', overflow: 'scroll initial' }}>
+                {/* <div style={{  height: '90vh', overflow: 'scroll initial' }}> */}
 
                     <Sidebar />
                 </div>
@@ -135,7 +135,7 @@ const UpdateUser = () => {
                             </form>
                         </div>
                     </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
         </Fragment>
