@@ -58,7 +58,7 @@ const Home = () => {
                 <div className="container container-fluid">
                     <h1 id="photos_heading">Latest Photos</h1>
                     <section id="photos" className="container mt-5">
-                        <div className="row">
+                        <div className="row" >
                             {keyword ? (
                                 <Fragment>
                                     
@@ -78,7 +78,7 @@ const Home = () => {
                         </div>
                     </section>
                     {resPerPage <= count && (
-                        <div className="d-flex justify-content-center mt-5">
+                        <div className="d-flex justify-content-center mt-5"style={{ marginBottom: '100px' }}>
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={resPerPage}
