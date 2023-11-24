@@ -40,6 +40,7 @@ const PhotosList = () => {
 
         }
     }
+
     useEffect(() => {
         getAdminPhotos()
 
@@ -86,14 +87,17 @@ const PhotosList = () => {
         }
     }
 
-
-
     const photosList = () => {
         const data = {
             columns: [
                 {
                     label: 'ID',
                     field: 'id',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Images',
+                    field: 'images',
                     sort: 'asc'
                 },
                 {
@@ -118,6 +122,9 @@ const PhotosList = () => {
         photos.forEach(photo => {
             data.rows.push({
                 id: photo._id,
+                images: photo.images.map((image, index) => (
+                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
+                  )),
                 name: photo.name,
                 price: `$${photo.price}`,
                 stock: photo.stock,
