@@ -46,37 +46,44 @@ exports.getSinglePhoto = async (req, res, next) => {
 exports.newPhoto = async (req, res, next) => {
 
 	let images = []
-	if (typeof req.body.images === 'string') {
+	if (typeof req.body.images === 'string') 
+	{
 		images.push(req.body.images)
-	} else {
+	} 
+	
+	else 
+	{
 		images = req.body.images
 	}
 
 	let imagesLinks = [];
 
-	for (let i = 0; i < images.length; i++) {
-		let imageDataUri = images[i]
-		// console.log(imageDataUri)
-		try {
-			const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
-				folder: 'photos',
-				width: 150,
-				crop: "scale",
-			});
+	if (images && images.length) 
+	{
 
-			imagesLinks.push({
-				public_id: result.public_id,
-				url: result.secure_url
-			})
+		for (let i = 0; i < images.length; i++) 
+		{
+			let imageDataUri = images[i]
 
-		} catch (error) {
-			console.log(error)
+			try {
+				const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
+					folder: 'photos',
+					width: 150,
+					crop: "scale",
+				});
+
+				imagesLinks.push({
+					public_id: result.public_id,
+					url: result.secure_url
+				})
+
+			} catch (error) {
+				console.log(error)
+			}
+
 		}
-
 	}
-
 	req.body.images = imagesLinks
-	req.body.user = req.user.id;
 
 	const photo = await Photo.create(req.body);
 	if (!photo)
@@ -156,6 +163,7 @@ exports.updatePhoto = async (req, res, next) => {
 }
 
 exports.deletePhoto = async (req, res, next) => {
+	try {
 	const photo = await Photo.findByIdAndDelete(req.params.id);
 	if (!photo) {
 		return res.status(404).json({
@@ -164,10 +172,29 @@ exports.deletePhoto = async (req, res, next) => {
 		})
 	}
 
+	if (photo.images && photo.images.length > 0) {
+		for (const images of photo.images) {
+			if (images.public_id) {
+				await cloudinary.v2.uploader.destroy(images.public_id);
+			}
+		}
+	}
+	
+    await Photo.findByIdAndDelete(req.params.id);
 	res.status(200).json({
 		success: true,
-		message: 'PRODUCT REMOVED'
-	})
+		message: 'PHOTO REMOVED'
+	});
+	} catch (error) {
+		// Log the error for debugging purposes
+		console.error(error);
+
+		// Send an error response
+		res.status(500).json({
+			success: false,
+			message: 'INTERNAL SERVER ERROR'
+		});
+	}
 }
 
 exports.getAdminPhotos = async (req, res, next) => {

@@ -47,7 +47,7 @@ const NewPhoto = () => {
         });
     };
 
-    const newPhoto = async (formData) => {
+    const newPhoto = async (photoData) => {
         try {
             const config = {
                 headers: {
@@ -56,7 +56,7 @@ const NewPhoto = () => {
                 }
             };
 
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/admin/photo/new`, formData, config);
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/admin/photo/new`, photoData, config);
             setLoading(false);
             setSuccess(data.success);
             setPhoto(data.photo);
@@ -142,6 +142,7 @@ const NewPhoto = () => {
                                         name='images'
                                         className='custom-file-input'
                                         id='customFile'
+                                        accept="images/*"
                                         onChange={onChange}
                                         multiple
                                     />
@@ -151,7 +152,8 @@ const NewPhoto = () => {
                                 </div>
                                 <div className="image-preview-container mt-3">
                                     {imagesPreview.map(img => (
-                                        <img src={img} key={img} alt="Images Preview" className="mr-2" width="100" height="100" />
+                                        <img src={img} key={img} alt="Images Preview" 
+                                        className="mr-2" width="100" height="100" />
                                     ))}
                                 </div>
                             </div>

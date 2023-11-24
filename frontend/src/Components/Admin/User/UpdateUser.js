@@ -10,79 +10,84 @@ import axios from 'axios';
 import Sidebar from '../Sidebar'
 
 const UpdateUser = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [role, setRole] = useState('')
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const [user, setUser] = useState(true)
-    const [isUpdated, setIsUpdated] = useState(false)
-    let navigate = useNavigate();
-
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [user, setUser] = useState(null);  // Initialize with null
+    const [isUpdated, setIsUpdated] = useState(false);
+    const navigate = useNavigate();
     const { id } = useParams();
     const config = {
         headers: {
             'Content-Type': 'application/json', 
             'Authorization': `Bearer ${getToken()}`
         }
-    }
+    };
+
     const getUserDetails = async (id) => {
-    
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`,config)
-            setUser(data.user)
-            setLoading(false)
-            
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
+            setUser(data.user);
+            setLoading(false);
         } catch (error) {
-            setError(error.response.data.message)
+            setError(error.response.data.message);
         }
-    }
+    };
 
     const updateUser = async (id, userData) => {
         try {
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, userData, config)
-            setIsUpdated(data.success)
-            setLoading(false)
-            
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, userData, config);
+            setIsUpdated(data.success);
+            setLoading(false);
         } catch (error) {
-           setError(error.response.data.message)
+            setError(error.response.data.message);
         }
-    }
+    };
 
     useEffect(() => {
-        if (user && user._id !== id) {
-            getUserDetails(id);
-        } else if (user) {
+        const fetchData = async () => {
+            try {
+                await getUserDetails(id);
+            } catch (error) {
+                // Handle error if needed
+            }
+        };
+
+        if (!user || user._id !== id) {
+            fetchData();
+        } else {
             setName(user.name);
             setEmail(user.email);
             setRole(user.role);
         }
-    
+
         if (error) {
             errMsg(error);
             setError('');
         }
-    
+
         if (isUpdated) {
             successMsg('USER INFORMATION UPDATED SUCCESSFULLY');
             navigate('/admin/users');
         }
     }, [id, user, error, isUpdated, navigate]);
+
     const submitHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.set('name', name);
         formData.set('email', email);
         formData.set('role', role);
-        updateUser(user._id, formData)
-    }
+        updateUser(user._id, formData);
+    };
 
     return (
         <Fragment>
             <MetaData title={`Update User`} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{  height: '90vh', overflow: 'scroll initial' }}>
 
                     <Sidebar />
                 </div>
@@ -138,7 +143,6 @@ const UpdateUser = () => {
                     </div>
                     </div>
                 </div>
-            </div>
         </Fragment>
     )
 }
