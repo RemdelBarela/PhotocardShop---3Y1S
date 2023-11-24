@@ -1,3 +1,4 @@
+
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import MetaData from '../../Layout/MetaData'
@@ -81,11 +82,11 @@ const UpdateUser = () => {
             <MetaData title={`Update User`} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                {/* <div style={{  height: '90vh', overflow: 'scroll initial' }}> */}
+                <div style={{  height: '90vh', overflow: 'scroll initial' }}>
 
                     <Sidebar />
                 </div>
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10"style={{ marginBottom: '100px' }}>
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
                             <form className="shadow-lg" onSubmit={submitHandler}>
@@ -135,7 +136,7 @@ const UpdateUser = () => {
                             </form>
                         </div>
                     </div>
-                    {/* </div> */}
+                    </div>
                 </div>
             </div>
         </Fragment>
