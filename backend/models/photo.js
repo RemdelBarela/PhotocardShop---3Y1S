@@ -63,6 +63,11 @@ const photoSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    material: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Material',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now

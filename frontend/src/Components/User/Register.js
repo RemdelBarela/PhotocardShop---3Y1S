@@ -27,7 +27,9 @@ const Register = () => {
     };
 
     const handleModalConfirm = () => {
+        setIsAuthenticated(false);
         setShowModal(false);
+      
         if (profile) {
             console.log(profile.accessToken);
             try {
@@ -47,7 +49,9 @@ const Register = () => {
 
     const handleModalReject = () => {
         setShowModal(false);
-    };
+        // Reset isAuthenticated state to allow for multiple logins
+        setIsAuthenticated(false);
+      };
 
         let navigate = useNavigate()
         useEffect(() => {
@@ -115,7 +119,7 @@ const Register = () => {
             console.log(error)
         }
     }
-    
+
     return (
         <Fragment>
                 <MetaData title={'REGISTER'} />

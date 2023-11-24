@@ -1,6 +1,6 @@
 const Photocard = require('../models/photocard')
-// const Photo = require('../models/photo')
-// const Material = require('../models/material')
+const Photo = require('../models/photo')
+const Material = require('../models/material')
 // const Order = require('../models/order')
 
 const APIFeatures = require('../utils/apiFeatures')
@@ -213,6 +213,20 @@ exports.getAdminPhotocards = async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		photocards
+	})
+}
+
+exports.getAllMaterials = async (req, res, next) => {
+	const allmaterials = await Material.find();
+	if (!allmaterials) {
+		return res.status(404).json({
+			success: false,
+			message: 'MATERIALS NOT FOUND'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		allmaterials
 	})
 }
 

@@ -8,6 +8,10 @@ import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
 import ListReviews from '../Photo/Review/ListReviews'
+import { MDBRadio } from 'mdb-react-ui-kit';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import AllMaterials from './AllMaterials';
 
 
 const PhotoDetails = ({ cartItems, addItemToCart }) => {
@@ -23,10 +27,16 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [success, setSuccess] = useState('')
     const [user, setUser] = useState(getUser())
 
+
     let { id } = useParams()
     let navigate = useNavigate()
     // const alert = useAlert();
     // const { cartItems } = state
+
+
+    const [selectedMaterial, setSelectedMaterial] = useState('');
+    const [material, setMaterials] = useState([]);
+
 
     const PhotoDetails = async (id) => {
         let link = `http://localhost:4000/api/v1/photo/${id}`
@@ -46,6 +56,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         }
 
     }
+
     const increaseQty = () => {
         const count = document.querySelector('.count')
         if (count.valueAsNumber >= photo.stock) return;
@@ -142,6 +153,30 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
     // console.log(state.cartItems)
     // console.log(cart)
+
+    
+    useEffect(() => {
+        // Fetch materials from the backend API
+        const chooseMaterial = async () => {
+          try {
+            const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/allmaterials`);
+            console.log(response.data); // Log the fetched data
+            // setMaterials(response.data);
+          } catch (error) {
+            console.error('Error getting materials:', error);
+          }
+        };
+    
+        chooseMaterial();
+      }, []);
+    
+      const handleMaterialChange = (material) => {
+        setSelectedMaterial(material);
+      };
+
+
+      console.log(material);
+
      return (
         <Fragment>
 
@@ -170,6 +205,34 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                             </div>
                             <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
 
+                            <hr />
+
+                            {/* <div> */}
+                            {/* <p id="material_name">Choose Material: {selectedMaterial}</p>
+                                <div className="material-picker">
+                                {Array.isArray(material) && material.map((material) =>  (
+                                    <div key={material._id}>
+                                        <input
+                                        type="radio"
+                                        id={`matRadio${material._id}`}
+                                        name="matRadio"
+                                        value={material.name}
+                                        checked={selectedMaterial === material.name}
+                                        onChange={() => handleMaterialChange(material.name)}
+                                        disabled={material.disabled}
+                                        />
+                                        <label htmlFor={`matRadio${material._id}`}>
+                                        {material.name}
+                                        </label>
+                                    </div>
+                                    ))}
+                                </div>
+                            </div> */}
+                            <div>
+                            <AllMaterials handleMaterialChange={handleMaterialChange} />
+                            <p>Selected Material: {selectedMaterial}</p>
+                            {/* Other content */}
+                            </div>
                             <hr />
 
                             <p id="photo_price">${photo.price}</p>
