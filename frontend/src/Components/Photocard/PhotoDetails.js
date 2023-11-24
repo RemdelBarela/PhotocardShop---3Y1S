@@ -329,16 +329,20 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
           <MDBContainer className="py-5 h-100">
             <MDBRow className="justify-content-center my-4">
               <MDBCol md="8">
-                <MDBCard className="mb-4">
-                  <MDBCardHeader className="py-3">
+                <MDBCard className="mb-0">
+                  <MDBCardHeader className="py-3 custom-header">
                     <MDBTypography tag="h5" className="mb-0">
-                    <h1><strong>{photo.name}</strong></h1>
-                    <h6 id="photo_id">Photo# {photo._id}</h6>
+                    <h1 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <strong>{photo.name} </strong>
+                        <span>₱{photo.price}</span>
+                    </h1>
+                    <h6 id="photo_id">Photo#: {photo._id}</h6>
+                    <h6>Description: {photo.description}</h6>
                     </MDBTypography>
                   </MDBCardHeader>
                   <MDBCardBody>
                     <MDBRow>
-                      <MDBCol lg="4" md="15" className="mb-4 mb-lg-0">
+                      <MDBCol lg="4" md="15" className="mb-4 mb-lg-0 mt-0">
                         <MDBRipple rippleTag="div" rippleColor="light"
                           className="bg-image rounded hover-zoom hover-overlay">
                           {/* <img
@@ -362,35 +366,131 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                       </MDBCol>
 
                       <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
-                            <br /> <br /> <br />
-                            <div>
+                            <br /> <br /> 
+                            {/* <div>
                                 <h5 className="mt-2"><strong>Description:</strong></h5>
                                 <p>{photo.description}</p><br />
-                            </div>
-
-                            
-
-                      </MDBCol>
-                      
-
-                      <MDBCol lg="3" md="12" className=" mb-4 mb-lg-0">
-                            <br /> <br /> <br />
+                            </div> */}
                             <div>
                             <AllMaterials handleMaterialChange={handleMaterialChange} />
                             {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
                             <p>Available Stock: {selectedMaterial.stock || 'None selected'}</p>
                             </div>
+                      </MDBCol>
+                      
 
-                             <div className="stockCounter d-inline">
+                      <MDBCol lg="3" md="12" className=" mb-4 mb-lg-0">
+                      <br /><br /><br />
+                      <h5 className="mt-2"><strong>Total Reviews:</strong></h5>
+                      <div className="rating-outer inline">
+                            <div className="rating-inner d-inline align-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+                            </div>
+                            <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
+
+                            <div className="review-button-container inline ml-3 align-center">
+                            {user ? (
+                                <button
+                                id="review_btn"
+                                type="button"
+                                className="btn btn-primary mt-1"
+                                data-toggle="modal"
+                                data-target="#ratingModal"
+                                onClick={setUserRatings}
+                                >
+                                MAKE REVIEW
+                                </button>
+                            ) : (
+                                <div className="alert alert-danger mt-2" type="alert">
+                                KINDLY SIGN IN TO SHARE YOUR REVIEW.
+                                </div>
+                            )}
+                        </div>
+                            
+                        <br /><br /><br />
+                        <h5 className="mt-1"><strong>Quantity:</strong></h5>
+                             <div className="d-flex mb-4">
                                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
 
-                                <input type="number" className="form-control count d-inline" value={quantity} readOnly />
+                                <input type="number" className="form-control count d-inline text-center" value={quantity} readOnly />
 
                                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                             </div>
-                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
+                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4 align-center" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
 
                       </MDBCol>
+
+                       <MDBRow className="offset-lg-0 mt-3">
+                        <hr/>
+                            <h5><strong>Photo Reviews:</strong></h5>
+                            <div className="row mt-2 mb-5">
+                                 <div className="rating w-100">
+                                     <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                                         <div className="modal-dialog" role="document">
+                                         <div className="modal-content">
+                                                 <div className="modal-header">
+                                                     <h5 className="modal-title" id="ratingModalLabel">SUBMIT REVIEW</h5>
+                                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                         <span aria-hidden="true">&times;</span>
+                                                     </button>
+                                                 </div>
+                                                 <div className="modal-body">
+
+                                                     <ul className="stars" >
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                     </ul>
+
+                                                     <textarea
+                                                         name="review"
+                                                         id="review" className="form-control mt-3"
+                                                         value={comment}
+                                                         onChange={(e) => setComment(e.target.value)}
+                                                     >
+                                                     </textarea>
+
+                                                     <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>SUBMIT</button>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                 </div>
+                         </div>
+                             {photo.reviews && photo.reviews.length > 0 && (
+                                 <ListReviews reviews={photo.reviews} />
+                             )}
+                        </MDBRow>
+
+                      {/* <MDBRow className="offset-lg-0">
+                        <hr />
+                      <h5 className="mt-2"><strong>Total Reviews:</strong></h5>
+                      <div className="rating-outer inline">
+                            <div className="rating-inner d-inline align-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+                            </div>
+                            <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
+
+                            <div className="review-button-container inline ml-3 align-center">
+                            {user ? (
+                                <button
+                                id="review_btn"
+                                type="button"
+                                className="btn btn-primary mt-1"
+                                data-toggle="modal"
+                                data-target="#ratingModal"
+                                onClick={setUserRatings}
+                                >
+                                MAKE REVIEW
+                                </button>
+                            ) : (
+                                <div className="alert alert-danger mt-2" type="alert">
+                                SIGN IN TO MAKE YOUR REVIEW.
+                                </div>
+                            )}
+                        </div>
+                      </MDBRow> */}
                       
 
                       {/* <MDBRow>
@@ -423,7 +523,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                       </MDBRow> */}
 
                     
-                    <div className="row mt-2 mb-5">
+                        {/* <div className="row mt-2 mb-5">
                                  <div className="rating w-50">
 
                                      <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
@@ -463,7 +563,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                          </div>
                              {photo.reviews && photo.reviews.length > 0 && (
                                  <ListReviews reviews={photo.reviews} />
-                             )}
+                             )} */}
+                   
 
 
                     </MDBRow>
