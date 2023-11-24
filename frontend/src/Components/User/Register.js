@@ -12,7 +12,6 @@ import { gapi } from 'gapi-script';
 const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleusercontent.com";
 const Register = () => {
 
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -132,7 +131,6 @@ const Register = () => {
         } catch (error) {
             setIsAuthenticated(false)
             setLoading(false)
-            // setUser(null)
             setError(error)
             console.log(error)
         }

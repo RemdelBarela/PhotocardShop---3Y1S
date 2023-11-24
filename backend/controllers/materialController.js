@@ -154,6 +154,7 @@ exports.updateMaterial = async (req, res, next) => {
 }
 
 exports.deleteMaterial = async (req, res, next) => {
+	try {
 	const material = await Material.findByIdAndDelete(req.params.id);
 	if (!material) {
 		return res.status(404).json({
@@ -162,10 +163,31 @@ exports.deleteMaterial = async (req, res, next) => {
 		})
 	}
 
+	if (material.images && material.images.length > 0) {
+		for (const images of material.images) {
+			if (images.public_id) {
+				await cloudinary.v2.uploader.destroy(images.public_id);
+			}
+		}
+	}
+
+	await Material.findByIdAndDelete(req.params.id);
 	res.status(200).json({
 		success: true,
 		message: 'MATERIAL REMOVED'
-	})
+	});
+	} catch (error) {
+		// Log the error for debugging purposes
+		console.error(error);
+
+		// Send an error response
+		res.status(500).json({
+			success: false,
+			message: 'INTERNAL SERVER ERROR'
+		});
+	}
+
+	
 }
 
 exports.getAdminMaterials = async (req, res, next) => {

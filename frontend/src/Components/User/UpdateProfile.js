@@ -35,11 +35,10 @@ const UpdateProfile = () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me/`, config);
       setUser(data.user);
-      setName(data.user.name); // Set the user's name in the state
-      setEmail(data.user.email); // Set the user's email in the state
+      setName(data.user.name);
+      setEmail(data.user.email);
       setOldAvatar(data.user.oldAvatar || []);
       setAvatarPreview(data.user.avatar.url);
-      // setOldAvatar(data.user.OldAvatar || []);
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
@@ -56,7 +55,8 @@ const UpdateProfile = () => {
             }
         };
         const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config);
-        setIsUpdated(data.success);
+        setIsUpdated(data.success)
+        setLoading(false)
     } catch (error) {
         setError(error.response.data.message);
     }
@@ -90,11 +90,10 @@ const UpdateProfile = () => {
     formData.set('email', email);
 
     avatar.forEach(avatars => {
-        formData.append('avatar', avatars); // Removed [index] from here
+        formData.append('avatar', avatars); 
     });
     updateProfile(formData)
-};
-
+}
 
   const onChange = e => {
     const files = Array.from(e.target.files)
@@ -113,11 +112,14 @@ const UpdateProfile = () => {
   })
 }
 
+
+ 
+
   return (
     <Fragment>
       <MetaData title={'Update Profile'} />
 
-      <div className="row wrapper">
+      <div className="row wrapper" id="upcon">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
             <h1 className="mt-2 mb-5">Update Profile</h1>
@@ -174,7 +176,7 @@ const UpdateProfile = () => {
 
             {/* ... (other form elements) */}
 
-            <button type="submit" className="btn update-btn btn-block mt-4 mb-3" disabled={loading ? true : false} >
+            <button type="submit" className="btn update-btn btn-block mt-4 mb-3" id="upbut" disabled={loading ? true : false} >
               Update
             </button>
           </form>

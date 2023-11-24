@@ -3,30 +3,49 @@
     justify-content: center !important;
     margin-bottom: 50px !important;
 }
+
 #profbutton
 {
  background-color: black !important;
  border: none !important;
  margin: 10px !important;
- width: 200px;
+ /* width: 200px; */
 }
 
 #profbutton:hover
 {
  background-color: #c51d1d !important;
- 
 }
 
 #proflink
 {
     color: white !important;
     text-decoration: none !important;
-    
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 
 #proflink:hover
 {
     color: white !important;
     text-decoration: none !important;
+}
+
+#upcon
+{
+    margin-bottom: 125px !important;
+    justify-content: center !important;
+}
+
+#upbut
+{
+ background-color: black !important;
+ border: none !important;
+ font-size: 20px;
+}
+
+#upbut:hover
+{
+ background-color: #c51d1d !important;
 }
 

@@ -16,8 +16,6 @@ exports.registerUser = async (req, res, next) => {
     let avatarLinks = [];
 
     if (avatar && avatar.length) {
-        
-     
       
     for (let i = 0; i < avatar.length; i++) {
         let avatarDataUri = avatar[i];
@@ -265,21 +263,47 @@ exports.getUserDetails = async (req, res, next) => {
 }
 
 exports.deleteUser = async (req, res, next) => {
-    const user = await User.findById(req.params.id);
+    try {
+        // Delete user from the database
+        const user = await User.findByIdAndDelete(req.params.id);
 
-    if (!user) {
-        return res.status(401).json({ message: `THE USER WITH THE SPECIFIED ID WAS NOT FOUND: ${req.params.id}` })
-        // return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `THE USER WITH THE SPECIFIED ID WAS NOT FOUND: ${req.params.id}`
+            });
+        }
+
+        // Check if the user has an avatar property before accessing it
+        if (user.avatar && user.avatar.length > 0) {
+            // Loop through each avatar and remove it from cloudinary
+            for (const avatar of user.avatar) {
+                if (avatar.public_id) {
+                    await cloudinary.v2.uploader.destroy(avatar.public_id);
+                }
+            }
+        }
+
+        // Remove user from the database
+        await User.findByIdAndDelete(req.params.id);
+
+        // Send success response after all operations are completed
+        res.status(200).json({
+            success: true,
+            message: 'USER REMOVED'
+        });
+    } catch (error) {
+        // Log the error for debugging purposes
+        console.error(error);
+
+        // Send an error response
+        res.status(500).json({
+            success: false,
+            message: 'INTERNAL SERVER ERROR'
+        });
     }
+};
 
-    // Remove avatar from cloudinary
-    const image_id = user.avatar.public_id;
-    await cloudinary.v2.uploader.destroy(image_id);
-    await User.findByIdAndRemove(req.params.id);
-    return res.status(200).json({
-        success: true,
-    })
-}
 
 exports.updateUser = async (req, res, next) => {
     const newUserData = {
