@@ -8,11 +8,26 @@ import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
 import ListReviews from '../Photo/Review/ListReviews'
-import { MDBRadio } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import AllMaterials from './AllMaterials';
-
+import {
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardImage,
+    MDBCol,
+    MDBContainer,
+    MDBIcon,
+    MDBInput,
+    MDBListGroup,
+    MDBListGroupItem,
+    MDBRipple,
+    MDBRow,
+    MDBTooltip,
+    MDBTypography,
+    } from "mdb-react-ui-kit";
 
 const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
@@ -172,71 +187,201 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     
       const handleMaterialChange = (material) => {
         setSelectedMaterial(material);
+        console.log('Selected Material:', material.name);
+        console.log('Available Stock:', material.stock);
       };
 
+    //  return (
+    //     <Fragment>
 
-      console.log(material);
+    //         {loading ? <Loader /> : (
+    //             <Fragment>
+    //                 <MetaData title={photo.name} />
+    //                 <div className="row d-flex justify-content-around">
+    //                     <div className="col-12 col-lg-5 img-fluid" id="photo_image">
+    //                         <Carousel pause='hover'>
+    //                             {photo.images && photo.images.map(image => (
+    //                                 <Carousel.Item key={image.public_id}>
+    //                                     <img className="d-block w-100" src={image.url} alt={photo.title} />
+    //                                 </Carousel.Item>
+    //                             ))}
+    //                         </Carousel>
+    //                     </div>
 
-     return (
-        <Fragment>
+    //                     <div className="col-12 col-lg-5 mt-5">
+    //                         <h3>{photo.name}</h3>
+    //                         <p id="photo_id">photo # {photo._id}</p>
 
-            {loading ? <Loader /> : (
-                <Fragment>
-                    <MetaData title={photo.name} />
-                    <div className="row d-flex justify-content-around">
-                        <div className="col-12 col-lg-5 img-fluid" id="photo_image">
-                            <Carousel pause='hover'>
-                                {photo.images && photo.images.map(image => (
-                                    <Carousel.Item key={image.public_id}>
-                                        <img className="d-block w-100" src={image.url} alt={photo.title} />
-                                    </Carousel.Item>
-                                ))}
-                            </Carousel>
-                        </div>
+    //                         <hr />
 
-                        <div className="col-12 col-lg-5 mt-5">
-                            <h3>{photo.name}</h3>
-                            <p id="photo_id">photo # {photo._id}</p>
+    //                         <div className="rating-outer">
+    //                             <div className="rating-inner" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+    //                         </div>
+    //                         <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
 
-                            <hr />
+    //                         <hr />
 
-                            <div className="rating-outer">
-                                <div className="rating-inner" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+                            // {/* <div> */}
+                            // {/* <p id="material_name">Choose Material: {selectedMaterial}</p>
+                            //     <div className="material-picker">
+                            //     {Array.isArray(material) && material.map((material) =>  (
+                            //         <div key={material._id}>
+                            //             <input
+                            //             type="radio"
+                            //             id={`matRadio${material._id}`}
+                            //             name="matRadio"
+                            //             value={material.name}
+                            //             checked={selectedMaterial === material.name}
+                            //             onChange={() => handleMaterialChange(material.name)}
+                            //             disabled={material.disabled}
+                            //             />
+                            //             <label htmlFor={`matRadio${material._id}`}>
+                            //             {material.name}
+                            //             </label>
+                            //         </div>
+                            //         ))}
+                            //     </div>
+                            // </div> */}
+                            // <div>
+                            // <AllMaterials handleMaterialChange={handleMaterialChange} />
+                            // {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
+                            // <p>Available Stock: {selectedMaterial.stock || 'None selected'}</p>
+                            // </div>
+                            // <hr />
+
+    //                         <p id="photo_price">₱{photo.price}</p>
+                            // <div className="stockCounter d-inline">
+                            //     <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
+
+                            //     <input type="number" className="form-control count d-inline" value={quantity} readOnly />
+
+                            //     <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
+                            // </div>
+                            // <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
+
+                            // {/* <hr /> */}
+
+    //                         {/* <p>STATUS: <span id="stock_status" className={photo.stock > 0 ? 'greenColor' : 'redColor'} >{photo.stock > 0 ? 'In Stock' : 'Out of Stock'}</span></p> */}
+
+    //                         <hr />
+
+    //                         <h4 className="mt-2">DESCRIPTION:</h4>
+    //                         <p>{photo.description}</p>
+    //                         <hr />
+    //                         {/* <p id="photo_seller mb-3">Sold by: <strong>{photo.seller}</strong></p> */}
+
+                            // {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
+                            // KINDLY SUBMIT YOUR REVIEW
+                            // </button> : <div className="alert alert-danger mt-5" type='alert'>KINDLY SIGN IN TO SHARE YOUR REVIEW.</div>}
+
+    //                         <div className="row mt-2 mb-5">
+    //                             <div className="rating w-50">
+
+    //                                 <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+    //                                     <div className="modal-dialog" role="document">
+    //                                         <div className="modal-content">
+    //                                             <div className="modal-header">
+    //                                                 <h5 className="modal-title" id="ratingModalLabel">SUBMIT REVIEW</h5>
+    //                                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+    //                                                     <span aria-hidden="true">&times;</span>
+    //                                                 </button>
+    //                                             </div>
+    //                                             <div className="modal-body">
+
+    //                                                 <ul className="stars" >
+    //                                                     <li className="star"><i className="fa fa-star"></i></li>
+    //                                                     <li className="star"><i className="fa fa-star"></i></li>
+    //                                                     <li className="star"><i className="fa fa-star"></i></li>
+    //                                                     <li className="star"><i className="fa fa-star"></i></li>
+    //                                                     <li className="star"><i className="fa fa-star"></i></li>
+    //                                                 </ul>
+
+    //                                                 <textarea
+    //                                                     name="review"
+    //                                                     id="review" className="form-control mt-3"
+    //                                                     value={comment}
+    //                                                     onChange={(e) => setComment(e.target.value)}
+    //                                                 >
+    //                                                 </textarea>
+
+    //                                                 <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>SUBMIT</button>
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>
+
+    //                             </div>
+    //                         </div>
+    //                         {photo.reviews && photo.reviews.length > 0 && (
+
+    //                             <ListReviews reviews={photo.reviews} />
+
+    //                         )}
+    //                     </div>
+    //                 </div>
+    //             </Fragment>
+    //         )}
+    //     </Fragment>
+    // )
+
+    return (
+        <section className="h-100 gradient-custom">
+          <MDBContainer className="py-5 h-100">
+            <MDBRow className="justify-content-center my-4">
+              <MDBCol md="8">
+                <MDBCard className="mb-4">
+                  <MDBCardHeader className="py-3">
+                    <MDBTypography tag="h5" className="mb-0">
+                    <h1><strong>{photo.name}</strong></h1>
+                    <h6 id="photo_id">Photo# {photo._id}</h6>
+                    </MDBTypography>
+                  </MDBCardHeader>
+                  <MDBCardBody>
+                    <MDBRow>
+                      <MDBCol lg="4" md="15" className="mb-4 mb-lg-0">
+                        <MDBRipple rippleTag="div" rippleColor="light"
+                          className="bg-image rounded hover-zoom hover-overlay">
+                          {/* <img
+                            src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
+                            className="w-100" />
+                          <a href="#!">
+                            <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" , }}>
                             </div>
-                            <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
+                          </a> */}
+                          
+                        <div>
+                             <Carousel pause='hover'>
+                                 {photo.images && photo.images.map(image => (
+                                     <Carousel.Item key={image.public_id}>
+                                         <img className="d-block w-100" src={image.url} alt={photo.title} />
+                                     </Carousel.Item>
+                                 ))}
+                             </Carousel>
+                        </div>
+                        </MDBRipple>
+                      </MDBCol>
 
-                            <hr />
+                      <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
+                            <br /> <br /> <br />
+                            <div>
+                                <h5 className="mt-2"><strong>Description:</strong></h5>
+                                <p>{photo.description}</p><br />
+                            </div>
 
-                            {/* <div> */}
-                            {/* <p id="material_name">Choose Material: {selectedMaterial}</p>
-                                <div className="material-picker">
-                                {Array.isArray(material) && material.map((material) =>  (
-                                    <div key={material._id}>
-                                        <input
-                                        type="radio"
-                                        id={`matRadio${material._id}`}
-                                        name="matRadio"
-                                        value={material.name}
-                                        checked={selectedMaterial === material.name}
-                                        onChange={() => handleMaterialChange(material.name)}
-                                        disabled={material.disabled}
-                                        />
-                                        <label htmlFor={`matRadio${material._id}`}>
-                                        {material.name}
-                                        </label>
-                                    </div>
-                                    ))}
-                                </div>
-                            </div> */}
+                            
+
+                      </MDBCol>
+                      
+
+                      <MDBCol lg="3" md="12" className=" mb-4 mb-lg-0">
+                            <br /> <br /> <br />
                             <div>
                             <AllMaterials handleMaterialChange={handleMaterialChange} />
-                            <p>Selected Material: {selectedMaterial}</p>
-                            {/* Other content */}
+                            {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
+                            <p>Available Stock: {selectedMaterial.stock || 'None selected'}</p>
                             </div>
-                            <hr />
 
-                            <p id="photo_price">${photo.price}</p>
-                            <div className="stockCounter d-inline">
+                             <div className="stockCounter d-inline">
                                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
 
                                 <input type="number" className="form-control count d-inline" value={quantity} readOnly />
@@ -245,70 +390,91 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                             </div>
                             <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
 
-                            <hr />
+                      </MDBCol>
+                      
 
-                            <p>STATUS: <span id="stock_status" className={photo.stock > 0 ? 'greenColor' : 'redColor'} >{photo.stock > 0 ? 'In Stock' : 'Out of Stock'}</span></p>
-
-                            <hr />
-
+                      {/* <MDBRow>
+                        <MDBCol MDBCol lg="20" md="15" className="mb-4 mb-lg-0">
                             <h4 className="mt-2">DESCRIPTION:</h4>
                             <p>{photo.description}</p>
-                            <hr />
-                            {/* <p id="photo_seller mb-3">Sold by: <strong>{photo.seller}</strong></p> */}
+                        </MDBCol>
 
-                            {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
-                            KINDLY SUBMIT YOUR REVIEW
-                            </button> : <div className="alert alert-danger mt-5" type='alert'>KINDLY SIGN IN TO SHARE YOUR REVIEW.</div>}
+                            <MDBCol lg="3" md="" className=" mb-4 mb-lg-0">
+                            <div className="d-flex mb-4" style={{ maxWidth: "250px" }}>
+                            <MDBBtn className="px-3 me-2" onClick={decreaseQty}>
+                                <MDBIcon fas icon="minus" />
+                            </MDBBtn>
+            
 
-                            <div className="row mt-2 mb-5">
-                                <div className="rating w-50">
-
-                                    <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog" role="document">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="ratingModalLabel">SUBMIT REVIEW</h5>
-                                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div className="modal-body">
-
-                                                    <ul className="stars" >
-                                                        <li className="star"><i className="fa fa-star"></i></li>
-                                                        <li className="star"><i className="fa fa-star"></i></li>
-                                                        <li className="star"><i className="fa fa-star"></i></li>
-                                                        <li className="star"><i className="fa fa-star"></i></li>
-                                                        <li className="star"><i className="fa fa-star"></i></li>
-                                                    </ul>
-
-                                                    <textarea
-                                                        name="review"
-                                                        id="review" className="form-control mt-3"
-                                                        value={comment}
-                                                        onChange={(e) => setComment(e.target.value)}
-                                                    >
-                                                    </textarea>
-
-                                                    <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>SUBMIT</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <MDBInput defaultValue={1} min={0} type="number" className="form-control count d-inline text-center" value={quantity} readOnly />
+            
+                            <MDBBtn className="px-3 ms-2" onClick={increaseQty}>
+                                <MDBIcon fas icon="plus" />
+                            </MDBBtn>
                             </div>
-                            {photo.reviews && photo.reviews.length > 0 && (
+                        
+                            <p className="text-start text-md-center">
+                            <p id="photo_price">₱{photo.price}</p>
+                            </p>
 
-                                <ListReviews reviews={photo.reviews} />
+                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
 
-                            )}
-                        </div>
-                    </div>
-                </Fragment>
-            )}
-        </Fragment>
-    )
+                            </MDBCol>
+                      </MDBRow> */}
+
+                    
+                    <div className="row mt-2 mb-5">
+                                 <div className="rating w-50">
+
+                                     <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                                         <div className="modal-dialog" role="document">
+                                         <div className="modal-content">
+                                                 <div className="modal-header">
+                                                     <h5 className="modal-title" id="ratingModalLabel">SUBMIT REVIEW</h5>
+                                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                         <span aria-hidden="true">&times;</span>
+                                                     </button>
+                                                 </div>
+                                                 <div className="modal-body">
+
+                                                     <ul className="stars" >
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                         <li className="star"><i className="fa fa-star"></i></li>
+                                                     </ul>
+
+                                                     <textarea
+                                                         name="review"
+                                                         id="review" className="form-control mt-3"
+                                                         value={comment}
+                                                         onChange={(e) => setComment(e.target.value)}
+                                                     >
+                                                     </textarea>
+
+                                                     <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>SUBMIT</button>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                 </div>
+                         </div>
+                             {photo.reviews && photo.reviews.length > 0 && (
+                                 <ListReviews reviews={photo.reviews} />
+                             )}
+
+
+                    </MDBRow>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </section>
+        );
+        
 
 }
 export default PhotoDetails
