@@ -173,8 +173,7 @@ const UpdatePhoto = () => {
                             type="submit"
                             className="btn btn-block btn-primary py-3"
                             disabled={loading ? true : false}
-                            style={{ marginTop: '20px' }}
-                        >
+                            style={{ marginTop: '20px' }}>
                             UPDATE
                         </button>
                     </form>

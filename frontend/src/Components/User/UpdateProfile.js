@@ -35,33 +35,16 @@ const UpdateProfile = () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me/`, config);
       setUser(data.user);
-      setName(data.user.name); // Set the user's name in the state
-      setEmail(data.user.email); // Set the user's email in the state
+      setName(data.user.name);
+      setEmail(data.user.email);
       setOldAvatar(data.user.oldAvatar || []);
       setAvatarPreview(data.user.avatar.url);
-      // setOldAvatar(data.user.OldAvatar || []);
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
     }
   };
 
-  const onChange = e => {
-    const files = Array.from(e.target.files)
-    setAvatarPreview([]);
-    setAvatar([])
-    setOldAvatar([])
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-          if (reader.readyState === 2) {
-            setAvatarPreview(oldArray => [...oldArray, reader.result])
-            setAvatar(oldArray => [...oldArray, reader.result])
-          }
-      }
-      reader.readAsDataURL(file)
-  })
-}
 
   const updateProfile = async (userData) => {
     try {
@@ -72,7 +55,8 @@ const UpdateProfile = () => {
             }
         };
         const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config);
-        setIsUpdated(data.success);
+        setIsUpdated(data.success)
+        setLoading(false)
     } catch (error) {
         setError(error.response.data.message);
     }
@@ -106,10 +90,27 @@ const UpdateProfile = () => {
     formData.set('email', email);
 
     avatar.forEach(avatars => {
-        formData.append('avatar', avatars); // Removed [index] from here
+        formData.append('avatar', avatars); 
     });
     updateProfile(formData)
-};
+}
+
+  const onChange = e => {
+    const files = Array.from(e.target.files)
+    setAvatarPreview([]);
+    setAvatar([])
+    setOldAvatar([])
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(oldArray => [...oldArray, reader.result])
+            setAvatar(oldArray => [...oldArray, reader.result])
+          }
+      }
+      reader.readAsDataURL(file)
+  })
+}
 
 
  
