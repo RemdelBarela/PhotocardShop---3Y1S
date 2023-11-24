@@ -1,30 +1,32 @@
 .gradient-custom-2
 {
-    justify-content: center;
-    margin-bottom: 50px;
+    justify-content: center !important;
+    margin-bottom: 50px !important;
 }
 #profbutton
 {
- background-color: black;
- border: none;
- margin-left: 10px;
- margin-right: 10px;
+ background-color: black !important;
+ border: none !important;
+ margin: 10px !important;
+ width: 200px;
 }
 
 #profbutton:hover
 {
- background-color: #c51d1d;
+ background-color: #c51d1d !important;
  
 }
 
 #proflink
 {
-    color: white;
-    text-decoration: none;
+    color: white !important;
+    text-decoration: none !important;
+    
 }
 
 #proflink:hover
 {
-    color: white;
-    text-decoration: none;
+    color: white !important;
+    text-decoration: none !important;
 }
+

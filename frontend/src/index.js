@@ -7,7 +7,7 @@ import './Design/Login.css';
 import './Design/Register.css';
 import "./Design/Header.scss";
 import "./Design/Header.css";
-import './Design/Facebook.css';
+import "./Design/Facebook.css";
 import './Design/App.css';
 import './Design/Photo.css';
 import './Design/Profile.css';
