@@ -72,9 +72,6 @@ const Photo = ({ photo }) => {
           </MDBCard>
         </MDBCol>
       </MDBRow>
-      
-      
-            
     </MDBContainer>
     )
 }

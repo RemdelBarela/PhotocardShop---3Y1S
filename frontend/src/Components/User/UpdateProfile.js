@@ -46,6 +46,22 @@ const UpdateProfile = () => {
     }
   };
 
+  const onChange = e => {
+    const files = Array.from(e.target.files)
+    setAvatarPreview([]);
+    setAvatar([])
+    setOldAvatar([])
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(oldArray => [...oldArray, reader.result])
+            setAvatar(oldArray => [...oldArray, reader.result])
+          }
+      }
+      reader.readAsDataURL(file)
+  })
+}
 
   const updateProfile = async (userData) => {
     try {
@@ -96,22 +112,7 @@ const UpdateProfile = () => {
 };
 
 
-  const onChange = e => {
-    const files = Array.from(e.target.files)
-    setAvatarPreview([]);
-    setAvatar([])
-    setOldAvatar([])
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-          if (reader.readyState === 2) {
-            setAvatarPreview(oldArray => [...oldArray, reader.result])
-            setAvatar(oldArray => [...oldArray, reader.result])
-          }
-      }
-      reader.readAsDataURL(file)
-  })
-}
+ 
 
   return (
     <Fragment>
