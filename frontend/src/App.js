@@ -9,7 +9,7 @@ import Footer from './Components/Layout/Footer'
 import ProtectedRoute from "./Components/Route/ProtectedRoute";
 
 import Home from './Components/Home';
-import PhotoDetails from "./Components/Photo/PhotoDetails";
+// import PhotoDetails from "./Components/Photo/PhotoDetails";
 
 import Login from "./Components/User/Login";
 import Register from './Components/User/Register';
@@ -26,6 +26,9 @@ import UpdatePhoto from "./Components/Admin/Photo/UpdatePhoto";
 import MaterialsList from "./Components/Admin/Material/MaterialsList";
 import NewMaterial from "./Components/Admin/Material/NewMaterial";
 import UpdateMaterial from "./Components/Admin/Material/UpdateMaterial";
+
+import PhotoDetails from "./Components/Photocard/PhotoDetails";
+import ListReviews from "./Components/Photo/Review/ListReviews";
 
 // import Cart from "./Components/Cart/Cart";
 // import Shipping from "./Components/Cart/Shipping";
@@ -117,7 +120,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           {/* <Route path="/photo/:id" element={<PhotoDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" /> */}
+          
           <Route path="/photo/:id" element={<PhotoDetails />} exact="true" />
+          
           <Route path="/search/:keyword" element={<Home />} exact="true" />
 
           <Route path="/login" element={<Login />} exact="true" />
@@ -128,6 +133,8 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
 
+          {/* <Route path="/photocard/new" element={<PhotocardDetails />} exact="true" /> */}
+          <Route path="/review/:id" element={<ListReviews />} exact="true" />
           {/* <Route path="/cart"
             element={<Cart
               cartItems={state.cartItems}

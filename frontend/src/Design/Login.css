@@ -169,6 +169,54 @@
   margin: 0 0 20px 0;
 }
 /* YourComponent.css */
+/* YourComponent.css */
+
+/* YourComponent.css */
+
+/* YourComponent.css */
+
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000; /* Set a high z-index value */
+}
+
+.custom-overlay {
+  background-color: white;
+}
+
+.modal-content {
+  text-align: center;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button.yes {
+  background-color: green;
+  color: white;
+}
+
+.modal-content button.no {
+  background-color: red;
+  color: white;
+}
+
 
 .custom-facebook-button {
   background: transparent;

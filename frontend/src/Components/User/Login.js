@@ -8,21 +8,41 @@ import axios from 'axios';
 import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
 import { FaFacebook} from 'react-icons/fa';
-import { FcGoogle} from 'react-icons/fc';
-import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login'
+import { LoginSocialFacebook } from 'reactjs-social-login';
 
+import Modal from 'react-modal' // Replace with your modal library
 
+    const Login = () => {
+        
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+        const [loading, setLoading] = useState(false)
+        const navigate = useNavigate()
+        let location = useLocation();
+        const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
+        const [showModal, setShowModal] = useState(false);
+    const [profile, setProfile] = useState(null);
 
-const Login = () => {
-    
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
-    let location = useLocation();
-    const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
-   
+    const handleLoginClick = () => {
+        // Show the modal before proceeding with Facebook login
+        setShowModal(true);
+    };
+
+    const handleModalConfirm = () => {
+        // User confirmed, proceed with Facebook login
+        setShowModal(false);
+        //setProfile(response.data);
+        if (profile) {
+            console.log(profile.accessToken);
+            login(profile.email, profile.id);
+        }
+    };
+
+    const handleModalReject = () => {
+        setShowModal(false);
+    };
+
     const handleFacebookLogin = (response) => {
         // Handle the Facebook login response
        
@@ -34,7 +54,7 @@ const Login = () => {
           }
       };
     
-      const responseGoogle = (response) => {
+    const responseGoogle = (response) => {
         // Handle the response from Google, e.g., send it to your server for authentication
         console.log(response);
       };
@@ -65,6 +85,7 @@ const Login = () => {
              navigate(`/${redirect}`)
         }
     }, [])
+
 
     return (
         <Fragment>
@@ -104,29 +125,41 @@ const Login = () => {
                                     <div className="links">
           
                                     <div className="social-icon facebook" id="flink">
+                                 <div>
                                     
-                                    <FaFacebook/>
-                                    <FacebookLogin
-                                    appId="3675250786095175"
-                                    autoLoad={false}
-                                    fields="name,email,picture"
-                                    callback={handleFacebookLogin}
-                                    textButton={false}
-                                    className="custom-facebook-button" // Add a custom CSS class
-                                    >
-                                    <div className="facebook-button-content">
-                                        <FaFacebook />
-                                        <span>Facebook</span>
-                                    </div>
-                                    </FacebookLogin>
-                                                                    
-                                    </div>
-              
 
- 
+                                    <LoginSocialFacebook
+                                            appId='3675250786095175'
+                                            onResolve={(response) => {
+                                            setProfile(response.data);
+                                            handleLoginClick();
+                                            }}
+                                            onReject={(response) => {
+                                            console.log(response);
+                                            }}
+                                        >
+                                            <FaFacebook />
+                                        </LoginSocialFacebook>
 
-    
-                                        <div className="social-icon gmail" id="glink">
+                                        {/* Modal for confirmation */}
+                                        
+                                            <Modal
+                                            isOpen={showModal}
+                                            onRequestClose={handleModalReject}
+                                            contentLabel="Login Confirmation"
+                                            className="custom-modal" // Add a custom class for styling
+                                            overlayClassName="custom-overlay" // Add a custom class for overlay styling
+                                        >
+                                                <div className="modal-content">
+                                            <p>Are you sure you want to log in with Facebook?</p>
+                                            <button className="yes" onClick={handleModalConfirm}>Yes</button>
+                                            <button className="no" onClick={handleModalReject}>No</button>
+                                            </div>
+                                        
+                                        </Modal>
+                                    </div>
+                                    </div>
+                                <div className="social-icon gmail" id="glink">
                                           
                                             <GoogleLogin
                                             clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
