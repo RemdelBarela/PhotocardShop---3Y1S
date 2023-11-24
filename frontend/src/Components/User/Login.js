@@ -58,6 +58,7 @@ import Modal from 'react-modal' // Replace with your modal library
         // Handle the response from Google, e.g., send it to your server for authentication
         console.log(response);
       };
+      
     const login = async (email, password) => {
         try {
             const config = {
