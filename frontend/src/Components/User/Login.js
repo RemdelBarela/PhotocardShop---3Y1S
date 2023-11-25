@@ -11,7 +11,10 @@ import { FaFacebook} from 'react-icons/fa';
 import { GoogleLogin } from 'react-google-login'
 import { LoginSocialFacebook } from 'reactjs-social-login';
 
+import { FcGoogle} from 'react-icons/fc';
 import Modal from 'react-modal' // Replace with your modal library
+
+const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleusercontent.com";
 
     const Login = () => {
         
@@ -123,66 +126,82 @@ import Modal from 'react-modal' // Replace with your modal library
                                         </div>
                                     </form>
                                     <div class="login">OR LOGIN WITH</div>
-                                    <div className="links">
-          
-                                    <div className="social-icon facebook" id="flink">
-                                 <div>
-                                    
-
-                                    <LoginSocialFacebook
-                                            appId='3675250786095175'
-                                            onResolve={(response) => {
-                                            setProfile(response.data);
-                                            handleLoginClick();
-                                            }}
-                                            onReject={(response) => {
-                                            console.log(response);
-                                            }}
-                                        >
-                                            <FaFacebook />
-                                        </LoginSocialFacebook>
-
-                                        {/* Modal for confirmation */}
-                                        
-                                            <Modal
-                                            isOpen={showModal}
-                                            onRequestClose={handleModalReject}
-                                            contentLabel="Login Confirmation"
-                                            className="custom-modal" // Add a custom class for styling
-                                            overlayClassName="custom-overlay" // Add a custom class for overlay styling
-                                        >
-                                                <div className="modal-content">
-                                            <p>Are you sure you want to log in with Facebook?</p>
-                                            <button className="yes" onClick={handleModalConfirm}>Yes</button>
-                                            <button className="no" onClick={handleModalReject}>No</button>
+                                        <div className="links">
+                                            <div className="social-icon facebook" id="flink">
+                                                <div>
+                                                    <LoginSocialFacebook
+                                                        appId='3675250786095175'
+                                                        onResolve={(response) => {
+                                                        setProfile(response.data);
+                                                        handleLoginClick();
+                                                        }}
+                                                        onReject={(response) => {
+                                                        console.log(response);
+                                                        }}
+                                                    >
+                                                        <FaFacebook />
+                                                    </LoginSocialFacebook>
+                                                
+                                                    <Modal
+                                                        isOpen={showModal}
+                                                        onRequestClose={handleModalReject}
+                                                        contentLabel="Login Confirmation"
+                                                        className="custom-modal" // Add a custom class for styling
+                                                        overlayClassName="custom-overlay" >
+                                                        
+                                                        <div className="modal-content">
+                                                            <p>Are you sure you want to log in with Facebook?</p>
+                                                            <button className="yes" onClick={handleModalConfirm}>Yes</button>
+                                                            <button className="no" onClick={handleModalReject}>No</button>
+                                                        </div>
+                                                    </Modal>
+                                                </div>
                                             </div>
-                                        
-                                        </Modal>
-                                    </div>
-                                    </div>
-                                <div className="social-icon gmail" id="glink">
-                                          
-                                            <GoogleLogin
-                                            clientId="553880286485-o027ps3rfhi9r9p50ghnjiu1j562t5fn.apps.googleusercontent.com"
-                                            buttonText="Login with Google"
-                                            onSuccess={responseGoogle}
-                                            onFailure={responseGoogle}
-                                             cookiePolicy={'none'}
-                                              >
-                                    <div >
-                                   
-                                        <span>Google</span>
-                                    </div>
-                                    </GoogleLogin>
-                                            
+                                            <div className="social-icon gmail" id="glink" >
+                                                <div>       
+                                                    < GoogleLogin
+                                                        clientId={clientID}
+                                                        onSuccess={(response) => {
+                                                            console.log(response);
+                                                            setProfile(response);
+
+                                                            if (profile) {
+                                                                console.log(profile.accessToken);
+                                                                try {
+                                                        
+                                                                    login(profile.profileObj.email, profile.profileObj.googleId);
+                                                            
+                                                                } catch (error) {
+                                                                console.error('Registration error:', error);
+                                                                }
+                                                            }
+                                                        
+                                                            }}
+                                                            onFailure={(response) => {
+                                                                console.log(response);
+                                                            }}
+                                                            cookiePolicy={'single_host_origin'}
+                                                            isSignedIn={true}
+
+                                                            render={(renderProps) => (
+                                                                
+                                                                <button
+                                                                onClick={renderProps.onClick}
+                                                                disabled={renderProps.disabled}
+                                                                className='social-icon gmail' id="glink2"
+                                                                
+                                                                >
+                                                                <FcGoogle id="glink"/> </button>
+                                                            )}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="signup">DON'T HAVE ACCOUNT?
+                                                    <a href="/register"> SIGNUP NOW</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="signup">DON'T HAVE ACCOUNT?
-                                        <a href="/register"> SIGNUP NOW</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </Fragment>
             )}

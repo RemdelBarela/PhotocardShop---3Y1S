@@ -24,7 +24,7 @@ const AllMaterials = ({ handleMaterialChange }) => {
 
   return (
     <div>
-      <h2>Choose Material:</h2>
+      <h5><strong>Choose Material:</strong></h5>
       {loading ? (
         <p>Loading materials...</p>
       ) : error ? (
@@ -38,7 +38,7 @@ const AllMaterials = ({ handleMaterialChange }) => {
                 id={`matRadio${material._id}`}
                 name="matRadio"
                 value={material.name}
-                onChange={() => handleMaterialChange(material.name)}
+                onChange={() => handleMaterialChange(material)}
               />
               <label htmlFor={`matRadio${material._id}`}>{material.name}</label>
             </div>

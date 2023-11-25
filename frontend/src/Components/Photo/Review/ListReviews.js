@@ -1,26 +1,20 @@
-import React from 'react'
+import React from 'react';
 
 const ListReviews = ({ reviews }) => {
     return (
         <div className="reviews w-75">
-
-            <h3>Other's Reviews:</h3>
-            <hr />
+            <h5 className="no-indent"><strong>Photo Reviews:</strong></h5>
             {reviews && reviews.map(review => (
-                <div key={review._id} class="review-card my-3">
+                <div key={review._id} className="review-card my-3">
                     <div className="rating-outer">
                         <div className="rating-inner" style={{ width: `${(review.rating / 5) * 100}%` }}></div>
                     </div>
-                    <p class="review_user">by {review.name}</p>
-                    <p class="review_comment">{review.comment}</p>
-                    <hr />
+                    <p className="review-user">by {review.name}: {review.comment}</p>
+                    <p className="review-comment"></p>        
                 </div>
             ))}
         </div>
-    )
+    );
+};
 
-}
-
-
-
-export default ListReviews
+export default ListReviews;
