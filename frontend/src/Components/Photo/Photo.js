@@ -49,18 +49,18 @@ const Photo = ({ photo }) => {
                   </MDBRipple>
                 </MDBCol>
                 <MDBCol md="6" >
-                <h5 style={{ marginLeft: '20px' }}>{photo.name}</h5>
+                <h3 style={{ marginLeft: '20px',  color: 'maroon' }}>{photo.name}</h3>
 
-                  <div className="ratings mt-auto"style={{marginLeft: '20px'}}>
+                  <div className="ratings mt-auto"style={{marginLeft: '20px', color: 'black' }}>
                     <div className="rating-outer">
                       <div
                         className="rating-inner"
                         style={{ width: `${(photo.ratings / 5) * 100}%` }}
                       ></div>
                     </div>
-                    <span id="no_of_reviews">({photo.numOfReviews} reviews)</span>
+                    <span id="no_of_reviews">({photo.numOfReviews} Reviews)</span>
                   </div>
-                  <p className="text-truncate mb-4 mb-md-0"style={{marginLeft: '20px'}}>
+                  <p className="text-truncate mb-4 mb-md-0"style={{marginLeft: '20px',  color: 'black'}}>
                     {photo.description}
                   </p>
                 </MDBCol>
