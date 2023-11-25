@@ -76,7 +76,11 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
             <MDBRow className="justify-content-between align-items-center">
               <MDBCol md="2" lg="2" xl="2">
                 
-           
+              {item.images && item.images.map(image => (
+                                         <img className="d-block w-100" src={image.url} alt={item.title} />
+                                     
+                                 ))}
+
 
                 <MDBCardImage className="rounded-3" fluid
                   src={item.images}

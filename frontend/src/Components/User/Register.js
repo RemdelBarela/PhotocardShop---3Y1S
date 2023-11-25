@@ -71,12 +71,13 @@ const Register = () => {
             e.preventDefault();
 
             const formData = new FormData();
+              avatar.forEach(avatars => {
+                formData.append('avatar', avatars);
+            });
             formData.set('name', name);
             formData.set('email', email);
             formData.set('password', password);
-            avatar.forEach(avatars => {
-                formData.append('avatar', avatars);
-            });
+          
             
             register(formData)
         }
@@ -95,8 +96,8 @@ const Register = () => {
                     }
                     reader.readAsDataURL(file)
             
-            })
-    }
+            });
+    };
 
 
     // useEffect(() => {
@@ -202,7 +203,7 @@ const Register = () => {
                                                     type='file'
                                                     name='avatar'
                                                     className='custom-file-input'
-                                                    id='customFile'
+                                                 id='customFile'
                                                     accept="images/*"
                                                     onChange={onChange}
                                                     multiple
