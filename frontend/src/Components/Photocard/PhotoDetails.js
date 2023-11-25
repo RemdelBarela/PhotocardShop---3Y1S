@@ -106,7 +106,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             console.log(data);
             setLoading(false);
             setSuccess(data.success);
-            setPhotocard(data.photocard);
+            // setPhotocard(data.photocard);
 
 
 
@@ -314,7 +314,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                             </div>
-                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4 align-center" disabled={photo.stock === 0} onClick={addToCart}>ADD TO CART</button>
+                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4 align-center" disabled={photo.stock === 0} onClick={addToPhotocard}>ADD TO CART</button>
 
                       </MDBCol>
 
