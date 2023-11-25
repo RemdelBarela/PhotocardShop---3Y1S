@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
-    MDBBtn,
-    MDBCard,
-    MDBCardBody,
-    MDBCardImage,
-    MDBCol,
-    MDBContainer,
-    MDBIcon,
-    MDBInput,
-    MDBRow,
-    MDBTypography,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardHeader,
+  MDBCardImage,
+  MDBCol,
+  MDBContainer,
+  MDBIcon,
+  MDBInput,
+  MDBListGroup,
+  MDBListGroupItem,
+  MDBRipple,
+  MDBRow,
+  MDBTooltip,
+  MDBTypography,
   } from "mdb-react-ui-kit";
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const navigate = useNavigate()
@@ -38,139 +43,118 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
     return (
-        <section className="h-100" style={{ backgroundColor: "#eee" }}>
-        <MDBContainer className="py-5 h-100">
-          <MDBRow className="justify-content-center align-items-center h-100">
-            <MDBCol md="10">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
-                  Shopping Cart
-                </MDBTypography>
-
-         
-                <div>
-                  <p className="mb-0">
-                    <span className="text-muted">Sort by:</span>
-                    <a href="#!" className="text-body">
-                      price <i className="fas fa-angle-down mt-1"></i>
-                    </a>
-                  </p>
-                </div>
-              </div>
-       
-            
-           
-
-
-              {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
-                <Fragment>
-                      {cartItems.map(item => (
-
-                                
-                                <Fragment>
-                           
-                          
-                      
-        <MDBCard className="rounded-3 mb-4">
-          <MDBCardBody className="p-4">
-            <MDBRow className="justify-content-between align-items-center">
-              <MDBCol md="2" lg="2" xl="2">
-                
-              {item.images && item.images.map(image => (
-                                         <img className="d-block w-100" src={image.url} alt={item.title} />
-                                     
-                                 ))}
-
-
-                <MDBCardImage className="rounded-3" fluid
-                  src={item.images}
-                  alt="Cotton T-shirt" />
-              </MDBCol>
-              <MDBCol md="3" lg="3" xl="3">
-                <p className="lead fw-normal mb-2">
-                    
-                <div className="col-5 col-lg-3">
-                                                <Link to={`/products/${item.product}`}>{item.name}</Link>
-                                            </div>
-
-
-                </p>
-                <p>
-                  <span className="text-muted">Size: </span>M{" "}
-                  <span className="text-muted">Color: </span>Grey
-                </p>
-              </MDBCol>
-              <MDBCol md="3" lg="3" xl="2"
-                className="d-flex align-items-center justify-content-around">
-                <MDBBtn color="link" className="px-2">
-                <span  onClick={() => decreaseQty(item.product, item.quantity)}>
-                                            
-                  <MDBIcon fas icon="minus" />
-
-                  </span>
-                </MDBBtn>
-
-                <MDBInput min={0} defaultValue={item.quantity} type="number" size="lg" />
-
-                <MDBBtn color="link" className="px-2">
-                  <span  onClick={() => increaseQty(item.product, item.quantity, item.stock)}>
-                  <MDBIcon fas icon="plus" />
-                </span>
-
-                </MDBBtn>
-              </MDBCol>
-              <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
+      <section className="h-100 gradient-custom">
+      <MDBContainer className="py-5 h-100">
+        <MDBRow className="justify-content-center my-4">
+          <MDBCol md="8">
+            <MDBCard className="mb-4">
+              <MDBCardHeader className="py-3">
                 <MDBTypography tag="h5" className="mb-0">
-                ${item.price}
+                  Cart - 2 items
                 </MDBTypography>
-              </MDBCol>
-              <MDBCol md="1" lg="1" xl="1" className="text-end">
-                <i id="delete_cart_item" className="text-danger" onClick={() => removeCartItemHandler(item.product)} >
-                                         
-                  <MDBIcon fas icon="trash text-danger" size="lg" />
-                </i>
-              </MDBCol>
-            </MDBRow>
-          </MDBCardBody>
-        </MDBCard>
-
-                                 
-                                </Fragment>
-                            ))}
-
-                      
-
-
-
-                        <MDBCard>
-                <MDBCardBody>
-                     <div id="order_summary">
-                                <h4>Order Summary</h4>
-                                <hr />
-                                <p>Subtotal:  <span className="order-summary-values">{cartItems.reduce((acc, item) => (acc + Number(item.quantity)), 0)} (Units)</span></p>
-                                <p>Est. total: <span className="order-summary-values">${cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}</span></p>
-
-
-                                <hr />
-                                <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkoutHandler}>Check out</button>
-                                {/*<button id="checkout_btn" className="btn btn-primary btn-block" >Check out</button>*/}
-                            </div>
-                 
-                </MDBCardBody>
-              </MDBCard>
-
-
-                   
-                </Fragment>
-            )}
-            
-
+              </MDBCardHeader>
+              <MDBCardBody>
+         
+    
               
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </section>
-      );
-}
+                <MDBRow>
+                  <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
+                    <MDBRipple rippleTag="div" rippleColor="light"
+                      className="bg-image rounded hover-zoom hover-overlay">
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
+                        className="w-100" />
+                      <a href="#!">
+                        <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" , }}>
+                        </div>
+                      </a>
+                    </MDBRipple>
+                  </MDBCol>
+    
+                  <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
+                    <p>
+                      <strong>Red hoodie</strong>
+                    </p>
+                    <p>Color: red</p> 
+    
+                    <MDBTooltip wrapperProps={{ size: "sm" }} wrapperClass="me-1 mb-2"
+                      title="Remove item">
+                      <MDBIcon fas icon="trash" />
+                    </MDBTooltip>
+    
+                     
+                  </MDBCol>
+                  <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
+                    <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
+                      <MDBBtn className="px-3 me-2">
+                        <MDBIcon fas icon="minus" />
+                      </MDBBtn>
+    
+                      <MDBInput defaultValue={1} min={0} type="number" label="Quantity" />
+    
+                      <MDBBtn className="px-3 ms-2">
+                        <MDBIcon fas icon="plus" />
+                      </MDBBtn>
+                    </div>
+    
+                    <p className="text-start text-md-center">
+                      <strong>$17.99</strong>
+                    </p>
+                  </MDBCol>
+                </MDBRow>
 
+                <hr className="my-4" />
+    
+
+    
+              </MDBCardBody>
+            </MDBCard>
+    
+
+    
+         
+          </MDBCol>
+          <MDBCol md="4">
+            <MDBCard className="mb-4">
+              <MDBCardHeader>
+                <MDBTypography tag="h5" className="mb-0">
+                  Summary
+                </MDBTypography>
+              </MDBCardHeader>
+              <MDBCardBody>
+                <MDBListGroup flush>
+                  <MDBListGroupItem
+                    className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Products
+                    <span>$53.98</span>
+                  </MDBListGroupItem>
+                  <MDBListGroupItem className="d-flex justify-content-between align-items-center px-0">
+                    Shipping
+                    <span>Gratis</span>
+                  </MDBListGroupItem>
+                  <MDBListGroupItem
+                    className="d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                      <strong>Total amount</strong>
+                      <strong>
+                        <p className="mb-0">(including VAT)</p>
+                      </strong>
+                    </div>
+                    <span>
+                      <strong>$53.98</strong>
+                    </span>
+                  </MDBListGroupItem>
+                </MDBListGroup>
+    
+                <MDBBtn block size="lg">
+                  Go to checkout
+                </MDBBtn>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </section>
+    );
+    }
 export default Cart
