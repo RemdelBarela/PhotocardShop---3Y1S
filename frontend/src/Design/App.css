@@ -619,3 +619,11 @@ ul.CTAs a {
   background-color: black !important;
   color: white;
 }
+
+.no-indent {
+  margin-left: 0;
+}
+
+.review-card {
+  margin-left: 40px;
+}

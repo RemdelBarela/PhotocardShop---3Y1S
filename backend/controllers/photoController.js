@@ -219,24 +219,24 @@ exports.createPhotoReview = async (req, res, next) => {
 		rating: Number(rating),
 		comment
 	}
-	const Photo = await Photo.findById(photoId);
-	const isReviewed = Photo.reviews.find(
+	const photo = await Photo.findById(photoId);
+	const isReviewed = photo.reviews.find(
 		r => r.user.toString() === req.user._id.toString()
 	)
 	if (isReviewed) {
-		Photo.reviews.forEach(review => {
+		photo.reviews.forEach(review => {
 			if (review.user.toString() === req.user._id.toString()) {
 				review.comment = comment;
 				review.rating = rating;
 			}
 		})
 	} else {
-		Photo.reviews.push(review);
-		Photo.numOfReviews = Photo.reviews.length
+		photo.reviews.push(review);
+		photo.numOfReviews = photo.reviews.length
 	}
-	Photo.ratings = Photo.reviews.reduce((acc, item) => item.rating + acc, 0) / Photo.reviews.length
-	await Photo.save({ validateBeforeSave: false });
-	if (!Photo)
+	photo.ratings = photo.reviews.reduce((acc, item) => item.rating + acc, 0) / photo.reviews.length
+	await photo.save({ validateBeforeSave: false });
+	if (!photo)
 		return res.status(400).json({
 			success: false,
 			message: 'FAILED TO SUBMIT REVIEW'
@@ -247,19 +247,19 @@ exports.createPhotoReview = async (req, res, next) => {
 }
 
 exports.getPhotoReviews = async (req, res, next) => {
-    const Photo = await Photo.findById(req.query.id);
+    const photo = await Photo.findById(req.query.id);
     res.status(200).json({
         success: true,
-        reviews: Photo.reviews
+        reviews: photo.reviews
     })
 }
 
 exports.deleteReview = async (req, res, next) => {
-    const Photo = await Photo.findById(req.query.photoId);
-    const reviews = Photo.reviews.filter(review => review._id.toString() !== req.query.id.toString());
+    const photo = await Photo.findById(req.query.photoId);
+    const reviews = photo.reviews.filter(review => review._id.toString() !== req.query.id.toString());
     const numOfReviews = reviews.length;
 
-    const ratings = Photo.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
+    const ratings = photo.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
 
     await Photo.findByIdAndUpdate(req.query.photoId, {
         reviews,
