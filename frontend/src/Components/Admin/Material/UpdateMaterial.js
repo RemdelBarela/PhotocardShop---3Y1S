@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import MetaData from '../../Layout/MetaData'
-// import Sidebar from './SideBar'
+import Sidebar from '../Sidebar'
 import { getToken } from '../../../utils/helpers';
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ const UpdateMaterial = () => {;
            
             const config = {
                 headers: {
-                    'Content-Type': 'application/json', 
+                    'Content-Type':   'multipart/form-data', 
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
@@ -122,9 +122,9 @@ const UpdateMaterial = () => {;
         <Fragment>
             <MetaData title={'Update Material'} />
             <div className="row">
-                {/* <div className="col-12 col-md-2">
+                <div className="col-12 col-md-2">
                     <Sidebar />
-                </div> */}
+                </div>
                 <div className="col-12 col-md-10">
                     <Fragment>
                         <div className="wrapper my-5">

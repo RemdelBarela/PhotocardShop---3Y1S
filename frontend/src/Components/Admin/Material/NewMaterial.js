@@ -51,7 +51,7 @@ const NewMaterial = () => {
         try {
             const config = {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${getToken()}`
                 }
             };
@@ -135,6 +135,7 @@ const NewMaterial = () => {
                                         name='images'
                                         className='custom-file-input'
                                         id='customFile'
+                                        accept="images/*"
                                         onChange={onChange}
                                         multiple
                                     />

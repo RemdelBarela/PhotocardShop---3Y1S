@@ -46,15 +46,27 @@ exports.newPhotocard = async (req, res, next) => {
 
 
 exports.getSinglePhotocard = async (req, res, next) => {
-	const photocard = await Photocard.findById(req.params.id);
-	if (!photocard) {
-		return res.status(404).json({
-			success: false,
-			message: 'NO PHOTOCARD FOUND'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		photocard
-	})
-}
+    try {
+      const photocard = await Photocard.findById(req.params.id)
+        .populate('photo') // Populate the 'photo' field (reference to Photo model)
+        .populate('material')
+
+      if (!photocard) {
+        return res.status(404).json({
+          success: false,
+          message: 'NO PHOTOCARD FOUND'
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        photocard
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Error fetching photocard',
+        error: error.message
+      });
+    }
+  };

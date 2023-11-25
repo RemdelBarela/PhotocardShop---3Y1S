@@ -21,7 +21,7 @@ const UpdateUser = () => {
     const { id } = useParams();
     const config = {
         headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type':  'multipart/form-data', 
             'Authorization': `Bearer ${getToken()}`
         }
     };
@@ -141,7 +141,8 @@ const UpdateUser = () => {
                                         name='role'
                                         value={role}
                                         onChange={(e) => setRole(e.target.value)}
-                                    >
+                                   
+                                   >
                                         <option value="user">USER</option>
                                         <option value="admin">ADMIN</option>
                                     </select>

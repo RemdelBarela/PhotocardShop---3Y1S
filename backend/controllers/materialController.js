@@ -77,8 +77,10 @@ exports.newMaterial = async (req, res, next) => {
 
 	let imagesLinks = [];
 
+	
+    if (images && images.length) {
 	for (let i = 0; i < images.length; i++) {
-		let imageDataUri = images[i]
+		let imageDataUri = images[i];
 		// console.log(imageDataUri)
 		try {
 			const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
@@ -96,7 +98,7 @@ exports.newMaterial = async (req, res, next) => {
 			console.log(error)
 		}
 
-	}
+	}}
 
 	req.body.images = imagesLinks
 	req.body.user = req.user.id;

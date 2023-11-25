@@ -86,10 +86,43 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         setQuantity(qty)
     }
 
+    const addToPhotocard = async () => {
+        try {
+            // Make a request to create a new photocard
 
-    const addToCart = async () => {
-        await addItemToCart(id, quantity);
-    }
+            if (!selectedMaterial || !selectedMaterial._id) {
+                toast.error('PLEASE SELECT A MATERIAL');
+                return;
+              }
+
+              const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/photocard/new/${id}/${selectedMaterial._id}`, config)
+            console.log(data);
+            setLoading(false);
+            setSuccess(data.success);
+            setPhotocard(data.photocard);
+
+
+
+            const photocardId = data.photocard._id;
+
+            await addToCart(photocardId); 
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    };
+
+    
+    const addToCart = async (photocardId) => {
+        await addItemToCart(photocardId, quantity);
+    };
+
     function setUserRatings() {
         const faces = document.querySelectorAll('.face');
         faces.forEach((face, index) => {

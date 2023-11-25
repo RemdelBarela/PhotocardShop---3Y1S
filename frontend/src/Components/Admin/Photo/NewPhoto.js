@@ -51,7 +51,7 @@ const NewPhoto = () => {
         try {
             const config = {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type':   'multipart/form-data',
                     'Authorization': `Bearer ${getToken()}`
                 }
             };
@@ -59,7 +59,7 @@ const NewPhoto = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/admin/photo/new`, photoData, config);
             setLoading(false);
             setSuccess(data.success);
-            setPhoto(data.photo);
+            // setPhoto(data.photo);
         } catch (error) {
             setError(error.response.data.message);
 

@@ -67,11 +67,17 @@ function App() {
 
       const item = {
         photocard: data.photocard._id,
-        photo: data.photo_id,
-        material: data.material_id,
-        quantity: quantity
+        photo: data.photocard.photo._id,
+        material: data.photocard.material._id,
+        quantity: quantity,
+        images: data.photocard.photo.images,
+        Pname: data.photocard.photo.name,
+        Mname: data.photocard.material.name,
+        price: data.photocard.photo.price,
         // Add other necessary details of the photocard here based on your requirement
       };
+
+      console.log(item)
 
       const isItemExist = state.cartItems.find(i => i.photocard === item.photocard)
 
