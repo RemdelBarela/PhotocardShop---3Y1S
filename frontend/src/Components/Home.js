@@ -57,13 +57,13 @@ const Home = () => {
                 <MetaData title={'Buy Best Photos Online'} />
                 <div className="container container-fluid">
                     <h1 id="photos_heading">Latest Photos</h1>
-                    <section id="photos" className="container mt-5">
+                    <section id="photos" className="container mt 1">
                         <div className="row">
                             {keyword ? (
                                 <Fragment>
                                     
                                     <div className="col-6 col-md-9">
-                                        <div className="row">
+                                        <div className="row" >
                                             {photos.map(photo => (
                                                 <Photo key={photo._id} photo={photo} col={4} />
                                             ))}
@@ -78,7 +78,7 @@ const Home = () => {
                         </div>
                     </section>
                     {resPerPage <= count && (
-                        <div className="d-flex justify-content-center mt-5">
+                        <div className="d-flex justify-content-center mt-5" style={{marginBottom: '80px'}}>
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={resPerPage}
