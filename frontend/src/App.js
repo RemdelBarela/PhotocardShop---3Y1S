@@ -29,6 +29,7 @@ import UpdateMaterial from "./Components/Admin/Material/UpdateMaterial";
 
 import PhotoDetails from "./Components/Photocard/PhotoDetails";
 import ListReviews from "./Components/Photo/Review/ListReviews";
+import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
 
 // import Cart from "./Components/Cart/Cart";
 // import Shipping from "./Components/Cart/Shipping";
@@ -214,12 +215,12 @@ function App() {
             }
           />*/}
 
-          {/* <Route
+          <Route
             path="/admin/reviews"
             element={
               <ProtectedRoute isAdmin={true} >
                 <PhotoReviews />
-              </ProtectedRoute>} />  */}
+              </ProtectedRoute>} /> 
 
         </Routes>
       </Router>

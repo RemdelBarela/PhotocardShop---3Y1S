@@ -53,7 +53,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [material, setMaterials] = useState([]);
 
 
-    const PhotoDetails = async (id) => {
+    const photoDetails = async (id) => {
         let link = `http://localhost:4000/api/v1/photo/${id}`
         try {
             let res = await axios.get(link)
@@ -148,7 +148,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
     }
     useEffect(() => {
-        PhotoDetails(id)
+        photoDetails(id)
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.TOP_LEFT
@@ -421,7 +421,9 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                        <MDBRow className="offset-lg-0 mt-3">
                         <hr/>
-                            <h5><strong>Photo Reviews:</strong></h5>
+                            {photo.reviews && photo.reviews.length > 0 && (
+                                 <ListReviews reviews={photo.reviews} />
+                             )}
                             <div className="row mt-2 mb-5">
                                  <div className="rating w-100">
                                      <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
@@ -459,9 +461,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                                  </div>
                          </div>
-                             {photo.reviews && photo.reviews.length > 0 && (
-                                 <ListReviews reviews={photo.reviews} />
-                             )}
+                            
                         </MDBRow>
 
                       {/* <MDBRow className="offset-lg-0">
