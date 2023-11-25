@@ -7,7 +7,7 @@ const auth = require('./routes/auth')
 const photos = require('./routes/photo')
 const material = require('./routes/material')
 const photocard = require('./routes/photocard')
-// const order = require('./routes/order')
+const order = require('./routes/order')
 
 app.use(cors())
 app.use(express.json({limit:'50mb'}));
@@ -19,6 +19,6 @@ app.use('/api/v1', auth);
 app.use('/api/v1', photos);
 app.use('/api/v1', material);
 app.use('/api/v1', photocard);
-// app.use('/api/v1', order);
+app.use('/api/v1', order);
 
 module.exports = app

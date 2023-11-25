@@ -38,6 +38,10 @@ import NewMaterial from "./Components/Admin/Material/NewMaterial";
 import UpdateMaterial from "./Components/Admin/Material/UpdateMaterial";
 
 import Cart from "./Components/Cart/Cart";
+import Shipping from "./Components/Cart/Shipping";
+import ConfirmOrder from "./Components/Cart/ConfirmOrder";
+import Payment from "./Components/Cart/Payment";
+import OrderSuccess from "./Components/Cart/OrderSuccess";
 
 function App() {
   const [state, setState] = useState({
@@ -54,9 +58,9 @@ function App() {
         return [];
       }
     })(),
-    // shippingInfo: localStorage.getItem('shippingInfo')
-    //   ? JSON.parse(localStorage.getItem('shippingInfo'))
-    //   : {},
+    shippingInfo: localStorage.getItem('shippingInfo')
+      ? JSON.parse(localStorage.getItem('shippingInfo'))
+      : {},
   })
 
   const addItemToCart = async (photocardId, quantity) => { // Modified to accept photocard_id
@@ -74,6 +78,7 @@ function App() {
         Pname: data.photocard.photo.name,
         Mname: data.photocard.material.name,
         price: data.photocard.photo.price,
+        stock: data.photocard.material.stock,
         // Add other necessary details of the photocard here based on your requirement
       };
 
@@ -111,14 +116,13 @@ function App() {
     })
   }
 
-  // const saveShippingInfo = async (data) => {
-  //   setState({
-  //     ...state,
-  //     shippingInfo: data
-  //   })
-  //   localStorage.setItem('shippingInfo', JSON.stringify(data))
-  // }
-
+  const saveShippingInfo = async (data) => {
+    setState({
+      ...state,
+      shippingInfo: data
+    })
+    localStorage.setItem('shippingInfo', JSON.stringify(data))
+  }
 
   return (
     <div className="App">
@@ -186,6 +190,11 @@ function App() {
               addItemToCart={addItemToCart}
               removeItemFromCart={removeItemFromCart}
             />} exact="true" />
+          
+          <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
+          <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
+          <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
+          <Route path="/success" element={<OrderSuccess />} />
         </Routes>
       </Router>
       <Footer />

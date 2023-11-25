@@ -3,6 +3,21 @@ import { Link, useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import CheckoutSteps from './CheckoutSteps'
 import { getUser } from '../../utils/helpers'
+import { Carousel } from 'react-bootstrap'
+import {
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBCardText,
+    MDBCol,
+    MDBContainer,
+    MDBIcon,
+    MDBInput,
+    MDBRow,
+    MDBTypography,
+    } from "mdb-react-ui-kit";
+
 const ConfirmOrder = ({cartItems, shippingInfo}) => {
     const [user, setUser] = useState(getUser() ? getUser() : {})
     let navigate = useNavigate();
@@ -38,29 +53,47 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
                     <hr />
                     <h4 className="mt-4">Your Cart Items:</h4>
 
-                    {cartItems.map(item => (
+                    <hr className="my-4" />
+                  {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
+                    <Fragment>
+                      {cartItems.map(item => (
                         <Fragment>
-                            <hr />
-                            <div className="cart-item my-1" key={item.product}>
-                                <div className="row">
-                                    <div className="col-4 col-lg-2">
-                                        <img src={item.image} alt="Laptop" height="45" width="65" />
-                                    </div>
+                           
+                  <MDBRow className="mb-4 d-flex justify-content-between align-items-center">
+                    <MDBCol md="2" lg="2" xl="2">
+                      {/* <MDBCardImage> */}
+                        <Carousel pause='hover'>
+                            {item.images && item.images.map(image => (
+                                <Carousel.Item key={image.public_id}>
+                                    <img className="d-block w-100" src={image.url} alt={item.name} />
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
+                      {/* </MDBCardImage> */}
+                    </MDBCol>
+                    <MDBCol md="3" lg="3" xl="3">
+                      <MDBTypography tag="h6" className="text-muted">
+                        {item.Mname}
+                      </MDBTypography>
+                      <MDBTypography tag="h4" className="text-black mb-0">
+                      {item.Pname}
+                      </MDBTypography>
+                    </MDBCol>
+                    <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
+                      <span>{item.quantity} x {item.price}</span>
+                    </MDBCol>
+                    <MDBCol md="3" lg="2" xl="2" className="text-end">
+                      <MDBTypography tag="h6" className="mb-0">
+                        ₱ {item.price}
+                      </MDBTypography>
+                    </MDBCol>
+                   
+                  </MDBRow>
 
-                                    <div className="col-5 col-lg-6">
-                                        <Link to={`/product/${item.product}`}>{item.name}</Link>
-                                    </div>
-
-
-                                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-                                        <p>{item.quantity} x ${item.price} = <b>${(item.quantity * item.price).toFixed(2)}</b></p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <hr />
-                        </Fragment>
-                    ))}
+                  </Fragment>
+                            ))}    
+                            </Fragment>
+                            )}
 
                 </div>
 
