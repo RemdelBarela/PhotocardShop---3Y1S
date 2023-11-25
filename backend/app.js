@@ -4,11 +4,9 @@ const cookie = require('cookie-parser')
 const cors = require('cors')
 
 const auth = require('./routes/auth')
-
 const photos = require('./routes/photo')
 const material = require('./routes/material')
 const photocard = require('./routes/photocard')
-// const photos = require('./routes/product');
 // const order = require('./routes/order')
 
 app.use(cors())
@@ -21,7 +19,6 @@ app.use('/api/v1', auth);
 app.use('/api/v1', photos);
 app.use('/api/v1', material);
 app.use('/api/v1', photocard);
-// app.use('/api/v1', photos);
 // app.use('/api/v1', order);
 
 module.exports = app
