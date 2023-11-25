@@ -123,7 +123,7 @@ footer {
 
 /* Ratings */
 
-.rating-outer {
+/* .rating-outer {
   display: inline-block;
   position: relative;
   font-family: FontAwesome;
@@ -146,6 +146,50 @@ footer {
 .rating-inner::before {
   content: '\f005 \f005 \f005 \f005 \f005';
   color: #f8ce0b;
+} */
+
+.rating-outer {
+  display: inline-block;
+  position: relative;
+  font-family: 'Segoe UI Emoji', sans-serif;
+}
+
+.rating-box {
+  border: 10px solid #000; 
+  padding: 5px; 
+  position: relative;
+}
+
+.rating-outer::before {
+  content: '1 2 3 4 5'; 
+  font-size: 20px;
+}
+
+.rating-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 80%;
+  height: 100%; 
+}
+
+.rating-inner::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.rating-inner::before {
+  content: '\2585\2585\2585\2585\2585';
+  color: transparent;
+  font-size: 20px;
 }
 
 /* Product Details Page */
@@ -216,7 +260,7 @@ footer {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotaFte(360deg);
   }
 }
 
@@ -579,18 +623,18 @@ ul.CTAs a {
 
 /* Reviews */
 
-.rating {
+/* .rating {
   margin-top: 10rem;
 }
 
-.stars {
+.faces {
   height: 100px;
   display: flex;
   align-items: center;
   padding-left: 0;
 }
 
-.star {
+.face {
   display: inline;
   list-style: none;
   font-size: 3rem;
@@ -598,16 +642,56 @@ ul.CTAs a {
   color: #e3e3e3;
 }
 
-.star:first-child {
+.face:first-child {
   padding-left: 0;
 }
 
-.orange {
-  color: #fa9c23;
+.face-rating {
+  display: flex;
+  align-items: center;
 }
 
-.yellow {
-  color: #fdcc0d;
+.black {
+  color: black;
+}
+
+.gray {
+  color: grey;
+} */
+
+
+.rating {
+  margin-top: 10rem;
+}
+
+.faces {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+}
+
+.face {
+  font-size: 3rem;
+  margin-left: 0.9rem;
+  color: #e3e3e3;
+}
+
+.face:first-child {
+  margin-left: 0;
+}
+
+.face-rating {
+  display: flex;
+  align-items: center;
+}
+
+.grey {
+  color: grey;
+}
+
+.red {
+  color: red;
 }
 
 .review_user {
@@ -615,6 +699,8 @@ ul.CTAs a {
   color: grey;
 }
 
+
+/* Details */
 .custom-header {
   background-color: black !important;
   color: white;
@@ -626,4 +712,16 @@ ul.CTAs a {
 
 .review-card {
   margin-left: 40px;
+}
+
+#review_btn
+{
+    color: white;
+    background-color: black;
+}
+
+#review_btn:hover
+{
+    color: white;
+    background-color: #c51d1d;
 }

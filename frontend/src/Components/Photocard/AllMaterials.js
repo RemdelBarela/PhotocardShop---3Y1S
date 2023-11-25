@@ -13,8 +13,8 @@ const AllMaterials = ({ handleMaterialChange }) => {
         setMaterials(response.data.allmaterials);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching materials:', error);
-        setError('Error fetching materials. Please try again.');
+        console.error('ERROR FETCHING MATERIALS:', error);
+        setError('ERROR FETCHING MATERIALS. PLEASE TRY AGAIN.');
         setLoading(false);
       }
     };
