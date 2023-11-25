@@ -62,25 +62,61 @@ const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleuserc
         console.log(response);
       };
       
+    // const login = async (email, password) => {
+    //     try {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         }
+    //         const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/login`, { email, password }, config)
+    //         console.log(data)
+    //         authenticate(data, () => navigate("/"))
+
+    //     } catch (error) {
+    //         toast.error("INVALID USER OR PASSWORD", {
+    //             position: toast.POSITION.BOTTOM_RIGHT
+    //         })
+    //     }
+    // }
+
+
     const login = async (email, password) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/login`, { email, password }, config)
-            console.log(data)
-            authenticate(data, () => navigate("/"))
-
+            };
+    
+            const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/login`, { email, password }, config);
+    
+            // If the request is successful, proceed with authentication
+            const data = response.data;
+            authenticate(data, () => navigate("/"));
         } catch (error) {
-            toast.error("INVALID USER OR PASSWORD", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+            console.log('Server response:', error.response);
+    
+            if (error.response && error.response.status === 400 && error.response.data.errors) {
+                // If the server returns validation errors, display them to the user
+                const validationErrors = error.response.data.errors;
+                validationErrors.forEach(errorMessage => {
+                    toast.error(errorMessage, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                });
+            } else {
+                // For other errors, show a generic message
+                toast.error("INVALID USER OR PASSWORD", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
         }
-    }
+    };
+
+    
     const submitHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault();   
         login(email, password)
     }
 
@@ -169,6 +205,7 @@ const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleuserc
                                                                 console.log(profile.accessToken);
                                                                 try {
                                                         
+                                                                
                                                                     login(profile.profileObj.email, profile.profileObj.googleId);
                                                             
                                                                 } catch (error) {

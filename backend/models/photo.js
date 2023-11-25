@@ -3,19 +3,19 @@ const mongoose = require('mongoose')
 const photoSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'PROVIDE PRODUCT NAME'],
+        required: [true, 'PROVIDE PHOTO NAME'],
         trim: true,
         maxLength: [50, 'ENSURE YOUR PRODUCT NAME HAS A MAXIMUM LENGTH OF 50 CHARACTERS']
     },
     price: {
         type: Number,
-        required: [true, 'PROVIDE PRODUCT PRICE'],
-        maxLength: [5, 'ENSURE YOUR PRODUCT PRICE HAS A MAXIMUM LENGTH OF 5 CHARACTERS'],
+        required: [true, 'PROVIDE PHOTO PRICE'],
+        maxLength: [5, 'ENSURE YOUR PHOTO PRICE HAS A MAXIMUM LENGTH OF 5 CHARACTERS'],
         default: 0.0
     },
     description: {
         type: String,
-        required: [true, 'PRODUCT DESCRIPTION REQUIRED'],
+        required: [true, 'PHOTO DESCRIPTION REQUIRED'],
     },
     ratings: {
         type: Number,

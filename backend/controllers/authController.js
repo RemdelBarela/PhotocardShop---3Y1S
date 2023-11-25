@@ -6,6 +6,19 @@ const cloudinary = require('cloudinary')
 
 exports.registerUser = async (req, res, next) => {
 
+
+    const {name, email, password } = req.body;
+
+    const userValidation = new User({ email, password,name });
+    const validationError = userValidation.validateSync();
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+
+    
     let avatar = [];
     if (typeof req.body.avatar === 'string') {
         avatar.push(req.body.avatar);
@@ -53,29 +66,52 @@ exports.registerUser = async (req, res, next) => {
 
     // sendToken(user, 200, res);
 }
-
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
-    // Checks if email and password is entered by user
-    if (!email || !password) {
-        return res.status(400).json({ error: 'PLEASE PROVIDE YOUR EMAIL AND PASSWORD TO PROCEED.' })
+    // Create an object with only the "email" and "password" fields for validation
+    const validationFields = { email, password };
+    const userValidation = new User(validationFields);
+
+    // Validate user input against the user schema requirements
+    let validationError = userValidation.validateSync();
+
+    // Exclude the "name" field from the validation errors
+    if (validationError && validationError.errors.name) {
+        delete validationError.errors.name;
+        if (Object.keys(validationError.errors).length === 0) {
+            // If all errors are removed, set validationError to null
+            validationError = null;
+        }
     }
-    // Finding user in database
-    const user = await User.findOne({ email }).select('+password')
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+    // Checks if email and password are entered by the user
+    if (!email || !password) {
+        return res.status(400).json({ error: 'PLEASE PROVIDE YOUR EMAIL AND PASSWORD TO PROCEED.' });
+    }
+
+    // Finding user in the database
+    const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-        return res.status(401).json({ message: 'INVALID EMAIL OR PASSWORD.' })
+        return res.status(401).json({ message: 'INVALID EMAIL OR PASSWORD.' });
     }
-    // Checks if password is correct or not
+
+    // Checks if the password is correct or not
     const isPasswordMatched = await user.comparePassword(password);
 
     if (!isPasswordMatched) {
-        return res.status(401).json({ message: 'ENSURE BOTH YOUR EMAIL AND PASSWORD ARE ENTERED CORRECTLY.' })
+        return res.status(401).json({ message: 'ENSURE BOTH YOUR EMAIL AND PASSWORD ARE ENTERED CORRECTLY.' });
     }
-   
-    sendToken(user, 200, res)
-}
+
+    // If everything is fine, send the token
+    sendToken(user, 200, res);
+};
 
 exports.logout = async (req, res, next) => {
     res.cookie('token', null, {
@@ -160,6 +196,8 @@ exports.getUserProfile = async (req, res, next) => {
 }
 
 exports.updatePassword = async (req, res, next) => {
+
+
     const user = await User.findById(req.user.id).select('password');
     // Check previous user password
     const isMatched = await user.comparePassword(req.body.oldPassword)
@@ -173,6 +211,30 @@ exports.updatePassword = async (req, res, next) => {
 }
 
 exports.updateProfile = async (req, res, next) => {
+
+    const { email, name } = req.body;
+
+    // Create an object with only the "email" and "name" fields for validation
+    const validationFields = { email, name };
+    const userValidation = new User(validationFields);
+
+    // Validate user input against the user schema requirements
+    let validationError = userValidation.validateSync();
+
+    // Exclude the "password" field from the validation errors
+    if (validationError && validationError.errors.password) {
+        delete validationError.errors.password;
+        if (Object.keys(validationError.errors).length === 0) {
+            // If all errors are removed, set validationError to null
+            validationError = null;
+        }
+    }
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
     let user = await User.findById(req.user.id);
 
     if (!user) {
@@ -306,6 +368,9 @@ exports.deleteUser = async (req, res, next) => {
 
 
 exports.updateUser = async (req, res, next) => {
+
+   
+
     const newUserData = {
         name: req.body.name,
         email: req.body.email,

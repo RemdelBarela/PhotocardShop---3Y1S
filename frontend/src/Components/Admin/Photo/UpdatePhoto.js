@@ -58,7 +58,15 @@ const UpdatePhoto = () => {
            
         } catch (error) {
             setUpdateError(error.response.data.message)
-            
+            if (error.response && error.response.status === 400 && error.response.data.errors) {
+                // If the server returns validation errors, display them to the user
+                const validationErrors = error.response.data.errors;
+                validationErrors.forEach(errorMessage => {
+                    toast.error(errorMessage, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                });
+            } 
         }
     }
     useEffect(() => {

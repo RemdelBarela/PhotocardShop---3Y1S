@@ -45,6 +45,19 @@ exports.getSinglePhoto = async (req, res, next) => {
 
 exports.newPhoto = async (req, res, next) => {
 
+
+	const {name, price, description } = req.body;
+
+    const userValidation = new Photo({ name, price, description });
+    const validationError = userValidation.validateSync();
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+
+
 	let images = []
 	if (typeof req.body.images === 'string') 
 	{
@@ -98,6 +111,21 @@ exports.newPhoto = async (req, res, next) => {
 }
 
 exports.updatePhoto = async (req, res, next) => {
+
+	
+	
+	const {name, price, description } = req.body;
+
+    const userValidation = new Photo({ name, price, description });
+    const validationError = userValidation.validateSync();
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+
+
 	let photo = await Photo.findById(req.params.id);
 	// console.log(req.body)
 	if (!photo) {

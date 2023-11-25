@@ -9,6 +9,7 @@ import { LoginSocialFacebook } from 'reactjs-social-login';
 import Modal from 'react-modal' 
 import { gapi } from 'gapi-script';
 
+import { toast } from 'react-toastify';
 const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleusercontent.com";
 const Register = () => {
 
@@ -132,7 +133,22 @@ const Register = () => {
             setIsAuthenticated(false)
             setLoading(false)
             setError(error)
-            console.log(error)
+            console.log('Server response:', error.response);
+    
+            if (error.response && error.response.status === 400 && error.response.data.errors) {
+                // If the server returns validation errors, display them to the user
+                const validationErrors = error.response.data.errors;
+                validationErrors.forEach(errorMessage => {
+                    toast.error(errorMessage, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                });
+            } else {
+                // For other errors, show a generic message
+                toast.error("INVALID USER OR PASSWORD", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
         }
     }
 

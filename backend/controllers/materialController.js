@@ -43,6 +43,31 @@ exports.getSingleMaterial = async (req, res, next) => {
 
 exports.newMaterial = async (req, res, next) => {
 
+
+	const { name, stock , user } = req.body;
+
+    // Create an object with only the "email" and "password" fields for validation
+    const validationFields = { name, stock , user };
+    const userValidation = new Material(validationFields);
+
+    // Validate user input against the user schema requirements
+    let validationError = userValidation.validateSync();
+
+    // Exclude the "name" field from the validation errors
+    if (validationError && validationError.errors.user) {
+        delete validationError.errors.user;
+        if (Object.keys(validationError.errors).length === 0) {
+            // If all errors are removed, set validationError to null
+            validationError = null;
+        }
+    }
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+
 	let images = []
 	if (typeof req.body.images === 'string') {
 		images.push(req.body.images)
@@ -89,6 +114,34 @@ exports.newMaterial = async (req, res, next) => {
 }
 
 exports.updateMaterial = async (req, res, next) => {
+
+
+	
+	const { name, stock , user } = req.body;
+
+    // Create an object with only the "email" and "password" fields for validation
+    const validationFields = { name, stock , user };
+    const userValidation = new Material(validationFields);
+
+    // Validate user input against the user schema requirements
+    let validationError = userValidation.validateSync();
+
+    // Exclude the "name" field from the validation errors
+    if (validationError && validationError.errors.user) {
+        delete validationError.errors.user;
+        if (Object.keys(validationError.errors).length === 0) {
+            // If all errors are removed, set validationError to null
+            validationError = null;
+        }
+    }
+
+    if (validationError) {
+        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+
+	
 	let material = await Material.findById(req.params.id);
 	// console.log(req.body)
 	if (!material) {
