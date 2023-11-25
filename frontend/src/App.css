@@ -131,7 +131,7 @@ footer {
 }
 
 .rating-outer::before {
-  content: '\f006 \f006 \f006 \f006 \f006';
+  content: '\25A0 \25A0 \25A0 \25A0 \25A0'; /* Unicode character for a filled rectangle */
 }
 
 .rating-inner {
@@ -144,8 +144,8 @@ footer {
 }
 
 .rating-inner::before {
-  content: '\f005 \f005 \f005 \f005 \f005';
-  color: #f8ce0b;
+  content: '\25A0 \25A0 \25A0 \25A0 \25A0'; /* Unicode character for a filled rectangle */
+  color: black;
 }
 
 /* Product Details Page */
@@ -575,51 +575,4 @@ ul.CTAs a {
 
 .card-font-size {
   font-size: 1.5rem;
-}
-
-/* Reviews */
-
-.rating {
-  margin-top: 10rem;
-}
-
-.stars {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  padding-left: 0;
-}
-
-.star {
-  display: inline;
-  list-style: none;
-  font-size: 3rem;
-  padding-left: 0.9rem;
-  color: #e3e3e3;
-}
-
-.star:first-child {
-  padding-left: 0;
-}
-
-.orange {
-  color: #fa9c23;
-}
-
-.yellow {
-  color: #fdcc0d;
-}
-
-.review_user {
-  font-size: 0.8rem;
-  color: grey;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.button-container .btn {
-  width: 100px; /* Set a fixed width for your buttons */
 }
