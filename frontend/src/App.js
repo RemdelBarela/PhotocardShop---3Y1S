@@ -69,7 +69,8 @@ function App() {
         photocard: data.photocard._id,
         photo: data.photo_id,
         material: data.material_id,
-        quantity: quantity
+        quantity: quantity,
+        images:data.photo.images
         // Add other necessary details of the photocard here based on your requirement
       };
 
