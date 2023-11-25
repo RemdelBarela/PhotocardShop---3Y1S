@@ -1,7 +1,4 @@
 const mongoose = require('mongoose')
-const Photo = require('../models/photo')
-const Material = require('../models/material')
-const Photocard = require('../models/photocard')
 
 const photocardSchema = new mongoose.Schema({
     photo: {
