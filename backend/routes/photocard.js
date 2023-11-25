@@ -6,14 +6,15 @@ const { newPhotocard, getPhotocards, getSinglePhotocard, updatePhotocard, delete
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
-router.post('/photocard/new', newPhotocard)
-router.get('/photocards', getPhotocards)
-router.get('/photocards/:id', getSinglePhotocard);
-router.route('photocards/:id', updatePhotocard).delete(deletePhotocard);
-router.get('/admin/photocards', isAuthenticatedUser, authorizeRoles('admin'), getAdminPhotocards);
-// router.put('/review', isAuthenticatedUser, createPhotoReview);
-// router.get('/reviews', isAuthenticatedUser, getPhotoReviews)
-// router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
-// router.get('/admin/photo-sales', productSales);
+// router.post('/photocard/new/:photo_id/:material_id', isAuthenticatedUser, newPhotocard);
+router.post('/photocard/new/:photo_id/:material_id', newPhotocard);
+// router.get('/photocards', getPhotocards)
+// router.get('/photocards/:id', getSinglePhotocard);
+// router.route('photocards/:id', updatePhotocard).delete(deletePhotocard);
+// router.get('/admin/photocards', isAuthenticatedUser, authorizeRoles('admin'), getAdminPhotocards);
+// // router.put('/review', isAuthenticatedUser, createPhotoReview);
+// // router.get('/reviews', isAuthenticatedUser, getPhotoReviews)
+// // router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
+// // router.get('/admin/photo-sales', productSales);
 
 module.exports = router;

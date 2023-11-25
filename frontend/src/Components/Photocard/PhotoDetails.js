@@ -7,10 +7,10 @@ import axios from 'axios'
 import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
-import ListReviews from '../Photo/Review/ListReviews'
+import ListReviews from './Review/ListReviews'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import AllMaterials from './AllMaterials';
+import AllMaterials from '../Photocard/AllMaterials';
 import {
     MDBBtn,
     MDBCard,
