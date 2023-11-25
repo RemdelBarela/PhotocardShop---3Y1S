@@ -131,8 +131,6 @@ const PhotoDetails = ({cartItems, addItemToCart }) => {
             setSuccess(data.success);
             setPhotocard(data.photocard);
 
-
-
             const photocardId = data.photocard._id;
 
             await addToCart(photocardId); 

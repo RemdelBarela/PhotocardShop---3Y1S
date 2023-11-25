@@ -13,7 +13,7 @@ function Header({ cartItems }) {
   const logoutUser = async () => {
     try {
         await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
-        setUser({})
+        setUser(null)
         logout(() => navigate('/login'))
     } catch (error) {
         toast.error(error.response.data.message)
@@ -22,6 +22,7 @@ function Header({ cartItems }) {
 
   const logoutHandler = () => {
     logoutUser();
+    navigate('/login')
     toast.success('LOG OUT', {
         position: toast.POSITION.BOTTOM_RIGHT
     });
@@ -39,6 +40,9 @@ function Header({ cartItems }) {
         </Link>
         
         <nav className="header__content__nav">
+            {/* <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+              <Search />
+            </div> */}
         {user ? (
           <ul>
             <li>
@@ -51,7 +55,7 @@ function Header({ cartItems }) {
             <li>
               <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
                 <Link to="/cart" style={{ textDecoration: 'none' }} >
-                  <span id="cart" className="ml-3">CART {cartItems.length}</span>
+                  <span id="cart" className="ml-3">CART{cartItems.length}</span>
                 </Link>
               </div>
             </li>

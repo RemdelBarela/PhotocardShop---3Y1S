@@ -17,8 +17,6 @@ exports.registerUser = async (req, res, next) => {
         return res.status(400).json({ errors: errorMessages });
     }
 
-
-    
     let avatar = [];
     if (typeof req.body.avatar === 'string') {
         avatar.push(req.body.avatar);

@@ -97,22 +97,6 @@ const Register = () => {
             
             })
     }
-
-
-    // useEffect(() => {
-    //     const start = async () => {
-    //         try {
-    //             await gapi.client.init({
-    //                 clientId: clientID,
-    //                 scope: "", // Add the required scope if needed
-    //             });
-    //         } catch (error) {
-    //             console.error('Error initializing Google API client:', error);
-    //         }
-    //     };
-    
-    //     gapi.load('client:auth2', start);
-    // }, []);
     
     const register = async (userData) => {
         try {

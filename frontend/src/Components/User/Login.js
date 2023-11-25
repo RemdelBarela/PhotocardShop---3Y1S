@@ -62,25 +62,6 @@ const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleuserc
         console.log(response);
       };
       
-    // const login = async (email, password) => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         }
-    //         const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/login`, { email, password }, config)
-    //         console.log(data)
-    //         authenticate(data, () => navigate("/"))
-
-    //     } catch (error) {
-    //         toast.error("INVALID USER OR PASSWORD", {
-    //             position: toast.POSITION.BOTTOM_RIGHT
-    //         })
-    //     }
-    // }
-
-
     const login = async (email, password) => {
         try {
             const config = {
@@ -124,7 +105,7 @@ const clientID = "526985758798-b5jsd5g1grsqi5k3g49vka6r1dmu29b2.apps.googleuserc
         if (getUser() && redirect === 'shipping' ) {
              navigate(`/${redirect}`)
         }
-    }, [])
+    }, [redirect])
 
 
     return (

@@ -44,91 +44,69 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
             <MDBCol md="10">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
-                  Shopping Cart
+                  SHOPPING CART
                 </MDBTypography>
-
-         
-                <div>
-                  <p className="mb-0">
-                    <span className="text-muted">Sort by:</span>
-                    <a href="#!" className="text-body">
-                      price <i className="fas fa-angle-down mt-1"></i>
-                    </a>
-                  </p>
-                </div>
               </div>
        
-            
-           
-
-
               {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
                 <Fragment>
-                      {cartItems.map(item => (
+                  {cartItems.map(item => (
+                    <Fragment>          
+                      <MDBCard className="rounded-3 mb-4">
+                        <MDBCardBody className="p-4">
+                          <MDBRow className="justify-content-between align-items-center">
+                            <MDBCol md="2" lg="2" xl="2">
+                              
+                        
 
-                                
-                                <Fragment>
-                           
-                          
-                      
-        <MDBCard className="rounded-3 mb-4">
-          <MDBCardBody className="p-4">
-            <MDBRow className="justify-content-between align-items-center">
-              <MDBCol md="2" lg="2" xl="2">
-                
-           
-
-                <MDBCardImage className="rounded-3" fluid
-                  src={item.images}
-                  alt="Cotton T-shirt" />
-              </MDBCol>
-              <MDBCol md="3" lg="3" xl="3">
-                <p className="lead fw-normal mb-2">
-                    
-                <div className="col-5 col-lg-3">
-                                                <Link to={`/products/${item.product}`}>{item.name}</Link>
-                                            </div>
+                              <MDBCardImage className="rounded-3" fluid
+                                src={item.images}
+                                alt="Cotton T-shirt" />
+                            </MDBCol>
+                            <MDBCol md="3" lg="3" xl="3">
+                              <p className="lead fw-normal mb-2">
+                                  
+                            
 
 
-                </p>
-                <p>
-                  <span className="text-muted">Size: </span>M{" "}
-                  <span className="text-muted">Color: </span>Grey
-                </p>
-              </MDBCol>
-              <MDBCol md="3" lg="3" xl="2"
-                className="d-flex align-items-center justify-content-around">
-                <MDBBtn color="link" className="px-2">
-                <span  onClick={() => decreaseQty(item.product, item.quantity)}>
-                                            
-                  <MDBIcon fas icon="minus" />
+                              </p>
+                              <p>
+                                <span className="text-muted">Material: {item.Mname}</span>
+                              </p>
+                            </MDBCol>
+                            <MDBCol md="3" lg="3" xl="2"
+                              className="d-flex align-items-center justify-content-around">
+                              <MDBBtn color="link" className="px-2">
+                              <span  onClick={() => decreaseQty(item.photocard, item.quantity)}>
+                                                          
+                                <MDBIcon fas icon="minus" />
 
-                  </span>
-                </MDBBtn>
+                                </span>
+                              </MDBBtn>
 
-                <MDBInput min={0} defaultValue={item.quantity} type="number" size="lg" />
+                              <MDBInput min={0} defaultValue={item.quantity} type="number" size="lg" />
 
-                <MDBBtn color="link" className="px-2">
-                  <span  onClick={() => increaseQty(item.product, item.quantity, item.stock)}>
-                  <MDBIcon fas icon="plus" />
-                </span>
+                              <MDBBtn color="link" className="px-2">
+                                <span  onClick={() => increaseQty(item.photocard, item.quantity, item.stock)}>
+                                <MDBIcon fas icon="plus" />
+                              </span>
 
-                </MDBBtn>
-              </MDBCol>
-              <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
-                <MDBTypography tag="h5" className="mb-0">
-                ${item.price}
-                </MDBTypography>
-              </MDBCol>
-              <MDBCol md="1" lg="1" xl="1" className="text-end">
-                <i id="delete_cart_item" className="text-danger" onClick={() => removeCartItemHandler(item.product)} >
-                                         
-                  <MDBIcon fas icon="trash text-danger" size="lg" />
-                </i>
-              </MDBCol>
-            </MDBRow>
-          </MDBCardBody>
-        </MDBCard>
+                              </MDBBtn>
+                            </MDBCol>
+                            <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
+                              <MDBTypography tag="h5" className="mb-0">
+                              ${item.price}
+                              </MDBTypography>
+                            </MDBCol>
+                            <MDBCol md="1" lg="1" xl="1" className="text-end">
+                              <i id="delete_cart_item" className="text-danger" onClick={() => removeCartItemHandler(item.photocard)} >
+                                                      
+                                <MDBIcon fas icon="trash text-danger" size="lg" />
+                              </i>
+                            </MDBCol>
+                          </MDBRow>
+                        </MDBCardBody>
+                      </MDBCard>
 
                                  
                                 </Fragment>
