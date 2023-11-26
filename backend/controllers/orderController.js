@@ -107,7 +107,13 @@ exports.updateOrder = async (req, res, next) => {
         if (order.orderStatus === 'Shipped') {
             const user = await User.findById(order.user);
             if (user) {
-                const message = `Your order with ID ${order._id} has been shipped. Thank you for shopping with us!`;
+                // Generate PDF link for the receipt
+                const pdfLink = `${req.protocol}://localhost:3000/print-receipt/${order._id}`
+    
+                // Create the email message with the PDF link
+                const message = `Your order with ID ${order._id} has been shipped. Thank you for shopping with us!\n\n<a href="${pdfLink}">Download Receipt</a>`;
+                
+                // Send the email notification
                 await sendEmail({
                     email: user.email,
                     subject: 'Order Shipped Notification',
@@ -132,6 +138,18 @@ exports.deleteOrder = async (req, res, next) => {
 
     res.status(200).json({
         success: true
+    })
+}
+
+exports.getReceipt = async (req, res, next) => {
+    const order = await Order.findById(req.params.id).populate('user', 'name email')
+
+    if (!order) {
+        return res.status(404).json({ message: `No Order found with this ID` })
+    }
+    res.status(200).json({
+        success: true,
+        order
     })
 }
 

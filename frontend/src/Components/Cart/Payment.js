@@ -101,7 +101,7 @@ const Payment = ({cartItems, shippingInfo}) => {
                             />
                         </div>
                         <button
-                            id="shipping_btn"
+                            id="pay_btn"
                             type="submit"
                             className="btn btn-block py-3"
                         >

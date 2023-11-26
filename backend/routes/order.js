@@ -7,6 +7,7 @@ const { newOrder,
 	    allOrders,
 	    updateOrder,
 	    deleteOrder,
+		getReceipt,
 		totalOrders,
 		totalSales,
 		customerSales,
@@ -21,6 +22,8 @@ router.get('/orders/me', isAuthenticatedUser, myOrders);
 router.get('/admin/orders/', isAuthenticatedUser, authorizeRoles('admin'), allOrders);
 
 router.route('/admin/order/:id').put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder).delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
+
+router.get('/print-receipt/:id', getReceipt);
 
 router.get('/admin/total-orders', totalOrders);
 router.get('/admin/total-sales', totalSales);
