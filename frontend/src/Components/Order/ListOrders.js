@@ -81,9 +81,11 @@ const ListOrders = () => {
                     ? <p style={{ color: 'green' }}>{order.orderStatus}</p>
                     : <p style={{ color: 'red' }}>{order.orderStatus}</p>,
                 actions:
-                    <Link to={`/order/${order._id}`} className="btn btn-primary">
-                        <i className="fa fa-eye"></i>
-                    </Link>
+                <div className="text-center">
+                <Link to={`/order/${order._id}`} className="btn btn-primary btn-sm">
+                    <i className="fa fa-eye"></i> View Order
+                </Link>
+            </div>  
             })
         })
 
@@ -92,17 +94,29 @@ const ListOrders = () => {
 
     return (
         <Fragment>
-            <MetaData title={'My Orders'} />
-            <h1 className="my-5">My Orders</h1>
-            {loading ? <Loader /> : (
-                <MDBDataTable
-                    data={setOrders()}
-                    className="px-3"
-                    bordered
-                    striped
-                    hover
-                />
-            )}
+          <div className="container mb-5">
+    <h1 className="my-5">My Orders</h1>
+    {loading ? (
+        <Loader message="Fetching your orders..." />
+    ) : error ? (
+        <div className="alert alert-danger" role="alert">
+            {error}
+            <button className="btn btn-link" onClick={myOrders}>
+                Retry
+            </button>
+        </div>
+    ) : (
+        <div className="table-responsive-md">
+            <MDBDataTable
+                data={setOrders()}
+                bordered
+                striped
+                hover
+            />
+        </div>
+    )}
+</div>
+
         </Fragment>
     )
 }
