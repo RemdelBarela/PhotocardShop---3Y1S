@@ -1,0 +1,123 @@
+/* Shipping.css */
+
+.shipping-form {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    position: relative;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5); /* Updated box shadow */
+  }
+  
+  .shipping-form h1 {
+    color: #ADD8E6;
+  }
+  
+  .shipping-form label {
+    display: block;
+    color: #ADD8E6;
+    margin-bottom: 8px;
+  }
+  
+  .step.active-step {
+    background-color: rgb(37, 118, 51);
+    border-radius: 50px; /* You can adjust the value to control the roundness of the corners */
+    padding: 10px; /* You can adjust the padding to control the size of the oblong shape */
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+
+  .step {
+    margin-top: 5px;
+    text-align: center;
+    line-height: 50px; /* Adjust the line height to vertically center the text */
+  }
+
+  
+  .shipping-form input,
+  .shipping-form select {
+    background-color: #001F3F;
+    color: #ADD8E6;
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+  }
+  
+  .shipping-form button {
+    background-color: #001F3F;
+    color: #ADD8E6;
+    border-radius: 10px;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .shipping-form button:hover {
+    background-color: #ff6565;
+  }
+  
+  /* Add shadow to the bottom */
+  .shipping-form::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* Adjust as needed */
+    left: 0;
+    width: 100%;
+    height: 10px; /* Adjust as needed */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Updated shadow to be slightly darker */
+    border-radius: 15px 15px 0 0; /* Adjust border radius */
+  }
+  
+
+  /* Add these styles to your CSS file */
+.checkout-progress a {
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .circular-link {
+    display: inline-block;
+   
+    overflow: hidden;
+  }
+  .circle-active,
+.circle-incomplete {
+  width: 30px; /* Adjust as needed */
+  height: 30px; /* Adjust as needed */
+  border-radius: 50%;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #007bff;
+  display: inline-block;
+  position: relative;
+}
+  
+  .circle-active {
+    background-color: rgb(97, 0, 0); /* Change this color to your desired active color */
+    display: inline-block;
+    position: relative;
+  }
+  
+  .circle-incomplete {
+    background-color: #00000064; /* Change this color to your desired incomplete color */
+  }
+  
+  .step {
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  .float-right {
+    float: right;
+  }
+  

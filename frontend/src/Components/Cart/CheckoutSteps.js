@@ -1,42 +1,56 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 
 const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
-    return (
-        <div className="checkout-progress d-flex justify-content-center mt-5">
+  return (
+    <div className="checkout-progress d-flex justify-content-center mt-5">
+      {shipping ? (
+        <Link to="shipping" className="float-right circular-link">
+          <div className="circle-active"></div>
+          <div className="step active-step"> <FontAwesomeIcon icon={faInfoCircle} size="3x"  /> </div>
+          <div className="circle-active"></div>
+        </Link>
+      ) : (
+        <Link to="#!" className="circular-link" disabled>
+          <div className="circle-incomplete"></div>
+          <div className="step incomplete"><FontAwesomeIcon icon={faInfoCircle} size="3x"  /></div>
+          <div className="circle-incomplete"></div>
+        </Link>
+      )}
 
-            {shipping ? <Link to='shipping' className="float-right">
-                <div className="triangle2-active"></div>
-                <div className="step active-step">Shipping</div>
-                <div className="triangle-active"></div>
-            </Link> : <Link to="#!" disabled>
-                    <div className="triangle2-incomplete"></div>
-                    <div className="step incomplete">Shipping</div>
-                    <div className="triangle-incomplete"></div>
-                </Link>}
+      {confirmOrder ? (
+        <Link to="/order/confirm" className="float-right circular-link">
+          <div className="circle-active"></div>
+          <div className="step active-step"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
+          <div className="circle-active"></div>
+        </Link>
+      ) : (
+        <Link to="#!" className="circular-link" disabled>
+          <div className="circle-incomplete"></div>
+          <div className="step incomplete"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
+          <div className="circle-incomplete"></div>
+        </Link>
+      )}
 
-            {confirmOrder ? <Link to='/order/confirm' className="float-right">
-                <div className="triangle2-active"></div>
-                <div className="step active-step">Confirm Order</div>
-                <div className="triangle-active"></div>
-            </Link> : <Link to="#!" disabled>
-                    <div className="triangle2-incomplete"></div>
-                    <div className="step incomplete">Confirm Order</div>
-                    <div className="triangle-incomplete"></div>
-                </Link>}
+      {payment ? (
+        <Link to="/payment" className="float-right circular-link">
+        
+          <div className="step active-step"><FontAwesomeIcon icon={faCreditCard} size="3x"  /></div>
+        
+        </Link>
+      ) : (
+        <Link to="#!" className="circular-link" disabled>
+          <div className="circle-incomplete"></div>
+          <div className="step incomplete"><FontAwesomeIcon icon={faCreditCard} size="3x"  /></div>
+       
+        </Link>
+      )}
+    </div>
+  );
+};
 
-            {payment ? <Link to='/payment' className="float-right">
-                <div className="triangle2-active"></div>
-                <div className="step active-step">Payment</div>
-                <div className="triangle-active"></div>
-            </Link> : <Link to="#!" disabled>
-                    <div className="triangle2-incomplete"></div>
-                    <div className="step incomplete">Payment</div>
-                    <div className="triangle-incomplete"></div>
-                </Link>}
-
-        </div>
-    )
-}
-
-export default CheckoutSteps
+export default CheckoutSteps;

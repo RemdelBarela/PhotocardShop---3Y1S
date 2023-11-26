@@ -18,6 +18,7 @@ const PhotosList = () => {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
     const [isDeleted, setIsDeleted] = useState(false)
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
 
     let navigate = useNavigate()
     const getAdminPhotos = async () => {
@@ -87,29 +88,43 @@ const PhotosList = () => {
         }
     }
 
+    const togglePhotoSelection = (id) => {
+        const isSelected = selectedPhotos.includes(id);
+        if (isSelected) {
+            setSelectedPhotos(selectedPhotos.filter((selectedId) => selectedId !== id));
+        } else {
+            setSelectedPhotos([...selectedPhotos, id]);
+        }
+    };
+
+
     const photosList = () => {
         const data = {
             columns: [
                 {
+                    label: 'Select',
+                    field: 'select',
+                    sort: 'asc',
+                },
+                {
                     label: 'ID',
                     field: 'id',
-                    sort: 'asc'
+                    sort: 'asc',
                 },
                 {
                     label: 'Images',
                     field: 'images',
-                    sort: 'asc'
+                    sort: 'asc',
                 },
                 {
                     label: 'Name',
                     field: 'name',
                     sort: 'asc',
-                    
                 },
                 {
                     label: 'Price',
                     field: 'price',
-                    sort: 'asc'
+                    sort: 'asc',
                 },
                 {
                     label: 'Actions',
@@ -117,34 +132,73 @@ const PhotosList = () => {
                 },
             ],
             rows: []
-        }
+        };
 
         photos.forEach(photo => {
             data.rows.push({
+                select: (
+                    <input
+                        type="checkbox"
+                        checked={selectedPhotos.includes(photo._id)}
+                        onChange={() => togglePhotoSelection(photo._id)}
+                    />
+                ),
                 id: photo._id,
                 images: photo.images.map((image, index) => (
                     <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
-                  )),
+                )),
                 name: photo.name,
                 price: `$${photo.price}`,
                 stock: photo.stock,
-                actions: <Fragment>
-                    <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
-                    </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deletePhotoHandler(photo._id)}>
-                        <i className="fa fa-trash"></i>
-                    </button>
-                </Fragment>
-            })
-        })
+                actions: (
+                    <Fragment>
+                        <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
+                            <i className="fa fa-pen"></i>
+                        </Link>
+                        <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deletePhotoHandler(photo._id)}>
+                            <i className="fa fa-trash"></i>
+                        </button>
+                    </Fragment>
+                )
+            });
+        });
 
         return data;
-    }
+    };
 
     const deletePhotoHandler = (id) => {
         deletePhoto(id)
     }
+
+
+    const deletePhotoHandler2 = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            // Send a request to delete multiple materials
+            const deleteRequests = selectedPhotos.map(async (id) => {
+                return axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/photo/${id}`, config);
+            });
+
+            // Wait for all delete requests to complete
+            const responses = await Promise.all(deleteRequests);
+
+            // Check if all requests were successful
+            const allSuccess = responses.every((response) => response.data.success);
+
+            setIsDeleted(allSuccess);
+            setLoading(false);
+        } catch (error) {
+            setDeleteError(error.response.data.message);
+        }
+    };
+
+
 
     return (
         <Fragment>
@@ -165,6 +219,16 @@ const PhotosList = () => {
                         <h1 className="my-5 text-center">All Photos</h1>
 
                         {loading ? <Loader /> : (
+                            <div>
+                                   <div>
+                                <button
+                                    className="btn btn-danger py-1 px-2 mb-2"
+                                    onClick={deletePhotoHandler2}
+                                    disabled={selectedPhotos.length === 0}
+                                >
+                                    Delete Selected
+                                </button>
+                            </div>
                             <MDBDataTable
                                 data={photosList()}
                                 className="px-3"
@@ -172,6 +236,7 @@ const PhotosList = () => {
                                 striped
                                 hover
                             />
+                            </div>
                         )}
 </div>
                     </Fragment>
