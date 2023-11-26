@@ -14,10 +14,11 @@ const Home = () => {
   const [resPerPage, setResPerPage] = useState(0);
   const [filteredPhotosCount, setFilteredPhotosCount] = useState(0);
   const [price, setPrice] = useState([1, 1000]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   const sentinelRef = useRef(null);
 
   const getPhotos = async (page = 1, keyword = '', price) => {
-    let link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}`;
+    let link = `${process.env.REACT_APP_API}/api/v1/photos/?page=${page}&keyword=${keyword}`;
   
     try {
       let res = await axios.get(link);
@@ -42,6 +43,11 @@ const Home = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearchKeyword(e.target.value);
+    setCurrentPage(1); // Reset current page when search changes
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
@@ -56,11 +62,11 @@ const Home = () => {
     return () => {
       observer.disconnect();
     };
-  }, [loading]); 
+  }, [loading]);
 
   useEffect(() => {
     getPhotos(currentPage, keyword, price);
-  }, [currentPage, keyword, price]);
+  }, [currentPage, keyword, price, searchKeyword]);
 
   return (
     <>
@@ -71,11 +77,29 @@ const Home = () => {
           <MetaData title={'Buy Best Photos Online'} />
           <div className="container container-fluid">
             <h1 id="photos_heading">Latest Photos</h1>
-            <section id="photos" className="container mt 1">
+            <div className="row justify-content-end">
+              <div className="col-md-4 search-bar">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchKeyword}
+                  onChange={handleSearch}
+                />
+              </div>
+            </div>
+            <section id="photos" className="container mt-1">
               <div className="row">
-              {photos.map((photo) => (
-  <Photo key={`${photo._id}-${photo.name}-${photo.timestamp}`} photo={photo} col={1} />
-))}
+                {photos
+                  .filter((photo) =>
+                    photo.name.toLowerCase().includes(searchKeyword.toLowerCase())
+                  )
+                  .map((photo) => (
+                    <Photo
+                      key={`${photo._id}-${photo.name}-${photo.timestamp}`}
+                      photo={photo}
+                      col={1}
+                    />
+                  ))}
               </div>
               <div ref={sentinelRef} style={{ height: '100px', width: '1px' }} />
             </section>
