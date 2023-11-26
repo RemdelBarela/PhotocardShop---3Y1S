@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
 
-const Payment = ({cartItems, shippingInfo2}) => {
+const Payment = ({cartItems, shippingInfo}) => {
     const [loading, setLoading] = useState(true)
     let navigate = useNavigate();
     useEffect(() => {
@@ -16,7 +16,7 @@ const Payment = ({cartItems, shippingInfo2}) => {
 
     const order = {
         orderItems: cartItems,
-        shippingInfo2
+        shippingInfo
     }
 
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
