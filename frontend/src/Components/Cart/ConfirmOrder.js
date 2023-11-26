@@ -56,7 +56,7 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
                     <h4 className="mt-4">Your Cart Items:</h4>
 
                     <hr className="my-4" />
-                  {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
+                 
                     <Fragment>
                       {cartItems.map(item => (
                         <Fragment>
@@ -67,7 +67,8 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
                         <Carousel pause='hover'>
                             {item.images && item.images.map(image => (
                                 <Carousel.Item key={image.public_id}>
-                                    <img className="d-block w-100" src={image.url} alt={item.name} />
+                                    <img className="d-block w-100" src={item.images} alt={item.name} />
+                                    
                                 </Carousel.Item>
                             ))}
                         </Carousel>
@@ -95,8 +96,6 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
                   </Fragment>
                             ))}    
                             </Fragment>
-                            )}
-
                 </div>
 
                 <div className="col-12 col-lg-3 my-4">

@@ -10,9 +10,9 @@ import {
     ResponsiveContainer,
     Cell,
 } from "recharts";
-import { getToken } from "../../utils/helpers";
+import { getToken } from '../../../utils/helpers';
 import axios from "axios";
-import Loader from '../Layout/Loader';
+import Loader from '../../Layout/Loader';
 
 const UserSalesChart = ({ data }) => {
     const [sales, setSales] = useState('')
