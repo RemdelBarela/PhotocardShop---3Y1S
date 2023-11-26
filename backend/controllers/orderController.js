@@ -1,6 +1,8 @@
 const Order = require('../models/order');
+const User = require('../models/user');
 const Photocard = require('../models/photocard');
 const Material = require('../models/material');
+const sendEmail = require('../utils/sendEmail')
 
 exports.newOrder = async (req, res, next) => {
     const {
@@ -76,31 +78,47 @@ exports.allOrders = async (req, res, next) => {
         orders
     })
 }
+// Assuming you have a sendEmail function defined elsewhere
+
 exports.updateOrder = async (req, res, next) => {
-    const order = await Order.findById(req.params.id)
+    
+        const order = await Order.findById(req.params.id);
 
-    if (order.orderStatus === 'Delivered') {
-        return res.status(404).json({ message: `You have already delivered this order` })
-    }
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
 
-    order.orderItems.forEach(async item => {
-        await updateStock(item.photocard, item.quantity)
-    })
+        if (order.orderStatus === 'Delivered') {
+            return res.status(400).json({ message: 'This order has already been delivered' });
+        }
 
-    order.orderStatus = req.body.status
-    order.deliveredAt = Date.now()
-    await order.save()
+        // if (req.body.status === 'Delivered') {
+        //     // Iterate through order items to update stock
+        //     for (const item of order.orderItems) {
+        //         await updateStock(item.product, -item.quantity); // Deduct the sold quantity from stock
+        //     }
+        // }
 
-    res.status(200).json({
-        success: true,
-    })
-}
+        order.orderStatus = req.body.status;
+        order.deliveredAt = Date.now()
+        await order.save();
 
-async function updateStock(id, quantity) {
-    const material = await Material.findById(id);
-    material.stock = material.stock - quantity;
-    await material.save({ validateBeforeSave: false })
-}
+        // Send email notification when the order status changes to "Shipped"
+        if (order.orderStatus === 'Shipped') {
+            const user = await User.findById(order.user);
+            if (user) {
+                const message = `Your order with ID ${order._id} has been shipped. Thank you for shopping with us!`;
+                await sendEmail({
+                    email: user.email,
+                    subject: 'Order Shipped Notification',
+                    message
+                });
+            }
+        }
+
+        res.status(200).json({ success: true });
+  
+};
 
 exports.deleteOrder = async (req, res, next) => {
 

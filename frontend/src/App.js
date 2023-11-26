@@ -49,6 +49,8 @@ import OrderDetails from "./Components/Order/OrderDetails";
 import OrdersList from "./Components/Admin/Order/OrdersList";
 import ProcessOrder from "./Components/Admin/Order/ProcessOrder"
 
+import Shipped from "./Components/Admin/Receipt/Shipped"
+
 import Dashboard from "./Components/Admin/Chart/Dashboard";
 
 function App() {
@@ -217,6 +219,14 @@ function App() {
           <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} />
+
+          <Route
+            path="/admin/shipped-receipt"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Shipped />
+              </ProtectedRoute>
+            }/>
 
         <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
