@@ -146,7 +146,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
         <form className="shipping-form" onSubmit={submitHandler}>
-    <h1 className="mb-4">Shipping Info</h1>
+    <h1 className="mb-4">Shipping Information</h1>
             <div className="form-group">
               <label htmlFor="address_field" >
                 Address

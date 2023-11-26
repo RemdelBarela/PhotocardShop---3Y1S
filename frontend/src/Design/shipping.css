@@ -1,7 +1,7 @@
 /* Shipping.css */
 
 .shipping-form {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(0, 0, 0);
     padding: 20px;
     border-radius: 15px;
     margin-top: 20px;
@@ -10,17 +10,28 @@
   }
   
   .shipping-form h1 {
-    color: #ADD8E6;
-  }
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+#shipping_btn {
+    background-color: red;
+    color: white; /* Set the text color to white for better visibility */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for a smooth effect */
+}
+
+#shipping_btn:hover {
+    background-color: darkred; /* Change to a darker shade on hover if desired */
+}
+
   
   .shipping-form label {
     display: block;
-    color: #ADD8E6;
+    color: #ffffff;
     margin-bottom: 8px;
   }
   
   .step.active-step {
-    background-color: rgb(37, 118, 51);
+    background-color: #c51d1d;
     border-radius: 50px; /* You can adjust the value to control the roundness of the corners */
     padding: 10px; /* You can adjust the padding to control the size of the oblong shape */
     height: 80px;
@@ -41,8 +52,8 @@
   
   .shipping-form input,
   .shipping-form select {
-    background-color: #001F3F;
-    color: #ADD8E6;
+    background-color: #ffffff69;
+    color: #ffffff;
     border-radius: 5px;
     padding: 10px;
     border: none;
@@ -61,8 +72,8 @@
     transition: background-color 0.3s;
   }
   
-  .shipping-form button:hover {
-    background-color: #ff6565;
+  #shipping_btn button:hover {
+    background-color: #c51d1d;
   }
   
   /* Add shadow to the bottom */
@@ -90,26 +101,26 @@
    
     overflow: hidden;
   }
-  .circle-active,
-.circle-incomplete {
+  .active-step,
+.incomplete {
   width: 30px; /* Adjust as needed */
   height: 30px; /* Adjust as needed */
   border-radius: 50%;
-  margin-left: 20px;
-  margin-right: 20px;
-  background-color: #007bff;
+  margin-left: 40px;
+  margin-right: 40px; 
   display: inline-block;
   position: relative;
 }
-  
-  .circle-active {
-    background-color: rgb(97, 0, 0); /* Change this color to your desired active color */
-    display: inline-block;
-    position: relative;
-  }
-  
-  .circle-incomplete {
-    background-color: #00000064; /* Change this color to your desired incomplete color */
+ 
+  .incomplete {
+    background-color: rgb(0, 0, 0);/* Change this color to your desired incomplete color */
+    border-radius: 50px; /* You can adjust the value to control the roundness of the corners */
+    padding: 10px; /* You can adjust the padding to control the size of the oblong shape */
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .step {

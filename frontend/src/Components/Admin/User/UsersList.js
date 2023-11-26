@@ -16,6 +16,9 @@ const UsersList = () => {
     const [error, setError] = useState('')
     const [allUsers, setAllUsers] = useState([])
     const [isDeleted, setIsDeleted] = useState('')
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [deleteError, setDeleteError] = useState('');
+   
     let navigate = useNavigate();
     const config = {
         headers: {
@@ -23,6 +26,19 @@ const UsersList = () => {
             'Authorization': `Bearer ${getToken()}`
         }
     }
+
+
+    const toggleUserSelection = (id) => {
+        const isSelected = selectedUsers.includes(id);
+        if (isSelected) {
+            setSelectedUsers(selectedUsers.filter((selectedId) => selectedId !== id));
+        } else {
+            setSelectedUsers([...selectedUsers, id]);
+        }
+    };
+
+
+    
     const listUsers = async () => {
         try {
 
@@ -77,7 +93,12 @@ const UsersList = () => {
         const data = {
             columns: [
                 {
-                   label: 'User ID',
+                    checkbox: true,
+                    field: 'select',
+                    sort: 'asc',
+                },
+                {
+                    label: 'User ID',
                     field: 'id',
                     sort: 'asc'
                 },
@@ -110,6 +131,15 @@ const UsersList = () => {
         }
         allUsers.forEach(user => {
             data.rows.push({
+
+                select: (
+                    <input
+                        type="checkbox"
+                        checked={selectedUsers.includes(user._id)}
+                        onChange={() => toggleUserSelection(user._id)}
+                    />
+                ),
+
                 id: user._id,
                 avatar: user.avatar.map((avatars, index) => (
                     <img key={index} src={avatars.url} alt={`Avatar ${index}`} style={{ width: '50px', height: '50px' }} />
@@ -129,6 +159,34 @@ const UsersList = () => {
         })
         return data;
     }
+
+    const deleteUserHandler2 = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            // Send a request to delete multiple materials
+            const deleteRequests = selectedUsers.map(async (id) => {
+                return axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
+            });
+
+            // Wait for all delete requests to complete
+            const responses = await Promise.all(deleteRequests);
+
+            // Check if all requests were successful
+            const allSuccess = responses.every((response) => response.data.success);
+
+            setIsDeleted(allSuccess);
+            setLoading(false);
+        } catch (error) {
+            setDeleteError(error.response.data.message);
+        }
+    };
+
     return (
         <Fragment>
             <MetaData title={'All Users'} />
@@ -144,14 +202,24 @@ const UsersList = () => {
                     <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
                         <h1 className="my-5">LIST OF ALL USERS</h1>
                         {loading ? <Loader /> : (
-                            <MDBDataTable
+                              <div>
+                              <div>
+                                  <button
+                                      className="btn btn-danger py-1 px-2 mb-2"
+                                      onClick={deleteUserHandler2}
+                                      disabled={selectedUsers.length === 0}
+                                  >
+                                      Delete Selected
+                                  </button>
+                              </div>
+                           <MDBDataTable
                                 data={setUsers()}
                                 className="px-3"
                                 bordered
                                 striped
                                 hover
                             />
-                         
+                         </div>
                         )}
                            </div>
                     </Fragment>
