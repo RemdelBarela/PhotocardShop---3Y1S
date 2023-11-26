@@ -11,18 +11,7 @@ const photocardSchema = new mongoose.Schema({
         ref: 'Material',
         required: [true, 'PLEASE SELECT A MATERIAL TO BE ADDED TO CART'],
     },
-
-    quantity: {
-        type: Number,
-        required: [true, 'PROVIDE PHOTOCARD QUANTITY'],
-        minLength: [1, 'ENSURE YOUR QUANTITY HAS A MINIMUM VALUE OF 1 PHOTOCARD'],
-        default: 1
-    },
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: true
-    },  
+    
     createdAt: {
         type: Date,
         default: Date.now

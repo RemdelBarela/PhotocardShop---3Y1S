@@ -63,7 +63,8 @@ exports.myOrders = async (req, res, next) => {
     })
 }
 
-exports.allOrders = async (req, res, next) => {
+exports.allOrders = async (req, res, next) => 
+{
     const orders = await Order.find()
 
     let totalAmount = 0;
@@ -128,13 +129,12 @@ exports.updateOrder = async (req, res, next) => {
 
 exports.deleteOrder = async (req, res, next) => {
 
-    const order = await Order.findByIdAndRemove(req.params.id)
+    const order = await Order.findByIdAndDelete(req.params.id)
 
     if (!order) {
         return res.status(404).json({ message: `No Order found with this ID` })
 
     }
-
 
     res.status(200).json({
         success: true

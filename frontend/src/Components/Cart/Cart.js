@@ -16,7 +16,7 @@ import {
   MDBRow,
   MDBTypography,
   } from "mdb-react-ui-kit";
-const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
+const Cart = ({ addItemToCart, cartItems, checkoutItemRemoved, removeItemFromCart }) => {
   
     const navigate = useNavigate()
     const [selectedItems, setSelectedItems] = useState([]);
@@ -35,7 +35,7 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     }
 
     const removeCartItemHandler = (id) => {
-        removeItemFromCart(id)
+      removeItemFromCart(id)
     }
     // const checkoutHandler = () => {
     //     navigate('/login?redirect=shipping')
@@ -49,21 +49,21 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
           setSelectedItems([...selectedItems, id]);
       }
   };
+
   const checkoutHandler = () => {
     if (selectedItems.length > 0) {
       const selectedCartItems = cartItems.filter(item => selectedItems.includes(item.photocard));
-  
       const updatedCartItems = cartItems.filter(item => !selectedItems.includes(item.photocard));
   
       localStorage.setItem('cartItems', JSON.stringify(selectedCartItems));
   
-      console.log(selectedCartItems); // Log selectedCartItems to the console
-  
-      navigate('/login?redirect=shipping' );
+      console.log(updatedCartItems); // Log updatedCartItems to the console
+      console.log(selectedItems);
+      navigate('/login?redirect=shipping');
     } else {
       toast.error('PLEASE SELECT ITEMS BEFORE CHECKOUT', {
         position: toast.POSITION.BOTTOM_RIGHT
-    });
+      });
     }
   };
   

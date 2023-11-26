@@ -87,8 +87,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         const qty = count.valueAsNumber - 1;
         setQuantity(qty)
     }
-
-    const addToPhotocard = async () => {
+    
+    const addToCart = async () => {
         try {
             // Make a request to create a new photocard
 
@@ -96,33 +96,24 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                 toast.error('PLEASE SELECT A MATERIAL');
                 return;
               }
+            
+            const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/photocard/new/${id}/${selectedMaterial._id}`)
 
-              const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}`
-                }
-            };
-
-            const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/photocard/new/${id}/${selectedMaterial._id}`, config)
+            
             console.log(data);
             setLoading(false);
             setSuccess2(data.success2);
             // setPhotocard(data.photocard);
-
-
+            console.log(data)
 
             const photocardId = data.photocard._id;
 
-            await addToCart(photocardId); 
+        await addItemToCart(photocardId, quantity);
+
         } catch (error) {
             setError(error.response.data.message);
         }
-    };
-
-    
-    const addToCart = async (photocardId) => {
-        await addItemToCart(photocardId, quantity);
+        
     };
 
     function setUserRatings() {
@@ -186,7 +177,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         photoDetails(id)
         if (error) {
             toast.error(error, {
-                position: toast.POSITION.TOP_LEFT
+                position: toast.POSITION.BOTTOM_RIGHT
             });
             navigate('/')
         }
@@ -238,8 +229,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                         <strong>{photo.name} </strong>
                         <span>₱{photo.price}</span>
                     </h1>
-                    <h6 id="photo_id">Photo#: {photo._id}</h6>
-                    <h6>Description: {photo.description}</h6>
+                    <h6 id="photo_id">PHOTO#: {photo._id}</h6>
+                    <h6>DESCRIPTION: {photo.description}</h6>
                     </MDBTypography>
                   </MDBCardHeader>
                   <MDBCardBody>
@@ -247,13 +238,6 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                       <MDBCol lg="4" md="15" className="mb-4 mb-lg-0 mt-0">
                         <MDBRipple rippleTag="div" rippleColor="light"
                           className="bg-image rounded hover-zoom hover-overlay">
-                          {/* <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
-                            className="w-100" />
-                          <a href="#!">
-                            <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" , }}>
-                            </div>
-                          </a> */}
                           
                         <div>
                              <Carousel pause='hover'>
@@ -269,16 +253,13 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                       <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
                             <br />
-                            {/* <div>
-                                <h5 className="mt-2"><strong>Description:</strong></h5>
-                                <p>{photo.description}</p><br />
-                            </div> */}
+                
                             <div>
                                 <AllMaterials handleMaterialChange={handleMaterialChange} />
 
                                 <div className="text-center" style={{ border: '2px solid #ddd', paddingTop: '12px', borderRadius: '100px' }}>
-                                    {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
-                                    <p>Available Stock: {selectedMaterial.stock || 'None Selected'}</p>
+                                
+                                    <p>AVAILABLE STOCK: {selectedMaterial.stock || 'None Selected'}</p>
                                 </div>
                             </div>
 
@@ -286,11 +267,11 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                     
                       <MDBCol lg="3" md="12" className="mb-4 mb-lg-0 text-center">
                         <br />
-                        <h5 className="mt-2 text-left"><strong>Total Reviews:</strong></h5>
+                        <h5 className="mt-2 text-left"><strong>TOTAL REVIEWS:</strong></h5>
                         <div className="rating-outer inline">
                             <div className="rating-inner d-inline text-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
                         </div>
-                        <span id="no_of_reviews"><br/>({photo.numOfReviews} Reviews)</span>
+                        <span id="no_of_reviews"><br/>({photo.numOfReviews} REVIEWS)</span>
 
                         <div className="review-button-container inline ml-3">
                             {user ? (
@@ -312,13 +293,13 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                         </div>
 
                         <br />
-                        <h5 className="mt-1 text-left"><strong>Quantity:</strong></h5>
+                        <h5 className="mt-1 text-left"><strong>QUANTITY:</strong></h5>
                         <div className="d-flex mb-4 align-items-center">
                             <span className="btn minus" onClick={decreaseQty}>-</span>
                             <input type="number" className="form-control count d-inline text-center" value={quantity} readOnly />
                             <span className="btn plus" onClick={increaseQty}>+</span>
                         </div>
-                        <button type="button" id="cart_btn" className="btn ml-4 text-center" disabled={photo.stock === 0} onClick={addToPhotocard}>
+                        <button type="button" id="cart_btn" className="btn ml-4 text-center" disabled={selectedMaterial.stock === 0} onClick={addToCart}>
                             ADD TO CART
                         </button>
                     </MDBCol>

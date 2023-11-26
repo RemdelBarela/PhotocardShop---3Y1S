@@ -59,7 +59,7 @@ const Photo = ({ photo }) => {
                         style={{ width: `${(photo.ratings / 5) * 100}%` }}
                       ></div>
                     </div>
-                    <span id="no_of_reviews">({photo.numOfReviews} Reviews)</span>
+                    <span id="no_of_reviews">({photo.numOfReviews} REVIEWS)</span>
                   </div>
                   <p className="text-truncate mb-4 mb-md-0"style={{marginLeft: '20px',  color: 'black'}}>
                     {photo.description}
@@ -73,7 +73,7 @@ const Photo = ({ photo }) => {
                   <div className="d-flex flex-row align-items-center mb-1">
                     <h4 className="mb-1 me-1">₱ {photo.price}</h4>
                   </div>
-                  <h6 className="text-success">Free shipping</h6>
+                  <h6 className="text-success">FREE SHIPPING (MIN.1000)</h6>
                   <div className="d-flex flex-column mt-4">
                     <button
                       style={{

@@ -22,9 +22,6 @@ exports.newPhotocard = async (req, res, next) => {
        const photocard = await Photocard.create({
                 photo: req.params.photo_id,
                 material: req.params.material_id,
-                // user: req.user.id, 
-                user: '65583370a6b26c8d88afe942',
-                quantity: req.body.quantity || 1
             });
 
             console.log(req.user); // Log req.user to check its content
@@ -70,3 +67,17 @@ exports.getSinglePhotocard = async (req, res, next) => {
       });
     }
   };
+
+  exports.deletePhotocard = async (req, res, next) => {
+
+    const order = await Photocard.findByIdAndDelete(req.params.id)
+
+    if (!order) {
+        return res.status(404).json({ message: `NO PHOTOCARD FOUND` })
+
+    }
+
+    res.status(200).json({
+        success: true
+    })
+}

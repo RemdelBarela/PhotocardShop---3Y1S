@@ -16,10 +16,10 @@ const OrdersList = () => {
     const [allOrders, setAllOrders] = useState([])
     const [isDeleted, setIsDeleted] = useState(false)
     const errMsg = (message = '') => toast.error(message, {
-        position: toast.POSITION.BOTTOM_CENTER
+        position: toast.POSITION.BOTTOM_RIGHT
     });
     const successMsg = (message = '') => toast.success(message, {
-        position: toast.POSITION.BOTTOM_CENTER
+        position: toast.POSITION.BOTTOM_RIGHT
     });
 
     const listOrders = async () => {
@@ -60,7 +60,7 @@ const OrdersList = () => {
             setError('')
         }
         if (isDeleted) {
-            successMsg('Order deleted successfully');
+            successMsg('ORDER DELETED SUCCESFULLY');
             navigate('/admin/orders');
         }
     }, [error, isDeleted])
@@ -71,28 +71,28 @@ const OrdersList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Order ID',
+                    label: 'ORDER ID',
                     field: 'id',
                     sort: 'asc'
                 },
 
                 {
-                    label: 'No of Items',
+                    label: 'QUANTITY',
                     field: 'numofItems',
                     sort: 'asc'
                 },
                 {
-                    label: 'Amount',
+                    label: 'AMOUNT',
                     field: 'amount',
                     sort: 'asc'
                 },
                 {
-                    label: 'Status',
+                    label: 'STATUS',
                     field: 'status',
                     sort: 'asc'
                 },
                 {
-                    label: 'Actions',
+                    label: 'ACTIONS',
                     field: 'actions',
                 },
             ],
@@ -116,6 +116,7 @@ const OrdersList = () => {
                     </button>
                 </Fragment>
             })
+            console.log(order)
         })
         return data;
     }

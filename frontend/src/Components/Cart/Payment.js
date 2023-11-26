@@ -8,16 +8,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
 
-const Payment = ({cartItems, shippingInfo}) => {
+const Payment = ({shippingInfo}) => {
     const [loading, setLoading] = useState(true)
     let navigate = useNavigate();
+
+    const [cartItems, setCartItems] = useState([]);
+
     useEffect(() => {
-    }, [])
+      // Retrieve cartItems from localStorage
+      const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      setCartItems(storedCartItems);
+    //   console.log(cartItems);
+    }, []);
+
 
     const order = {
         orderItems: cartItems,
         shippingInfo
     }
+
+
+    // console.log(cartItems)
 
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
     if (orderInfo) {
@@ -27,6 +38,7 @@ const Payment = ({cartItems, shippingInfo}) => {
         order.totalPrice = orderInfo.totalPrice
     }
 
+    // console.log(cartItems)
     const createOrder = async (order) => {
         try {
             const config = {
@@ -41,8 +53,10 @@ const Payment = ({cartItems, shippingInfo}) => {
             toast.success('order created', {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
-           
+        //    console.log(cartItems)
             // sessionStorage.removeItem('orderInfo')
+        
+            // console.log(cartItems)
             navigate('/success')
     
         } catch (error) {
@@ -60,6 +74,7 @@ const Payment = ({cartItems, shippingInfo}) => {
             status: 'succeeded'
         }
         createOrder(order)
+        // localStorage.removeItem('cartItems');
        
       }
 

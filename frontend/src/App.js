@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { getToken } from './utils/helpers'
 
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
@@ -54,6 +55,10 @@ import Receipt from "./Components/Admin/Receipt/Receipt"
 import Dashboard from "./Components/Admin/Chart/Dashboard";
 
 function App() {
+  const [isDeleted, setIsDeleted] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
   const [state, setState] = useState({
     // cartItems: localStorage.getItem('cartItems')
     // ? JSON.parse(localStorage.getItem('cartItems'))
@@ -79,7 +84,7 @@ function App() {
       // Fetch details of the photocard using the photocard_id
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/photocard/${photocardId}`);
 
-      const item = {
+      const newItem = {
         photocard: data.photocard._id,
         photo: data.photocard.photo._id,
         material: data.photocard.material._id,
@@ -92,23 +97,31 @@ function App() {
         // Add other necessary details of the photocard here based on your requirement
       };
 
-      console.log(item)
+      // console.log(item)
 
-      const isItemExist = state.cartItems.find(i => i.photocard === item.photocard)
-
+      const isItemExist = state.cartItems.find(
+        item =>
+          item.photo === newItem.photo &&
+          item.material === newItem.material
+      );
+  
       if (isItemExist) {
         setState({
           ...state,
-          cartItems: state.cartItems.map(i => i.photocard === isItemExist.photocard ? item : i)
-        })
-      }
-      else {
+          cartItems: state.cartItems.map(item =>
+            item.photo === newItem.photo &&
+            item.material === newItem.material
+              ? { ...item, quantity: item.quantity + quantity } // Update quantity if item already exists
+              : item
+          ),
+        });
+      } else {
         setState({
           ...state,
-          cartItems: [...state.cartItems, item]
-        })
+          cartItems: [...state.cartItems, newItem],
+        });
       }
-
+  
       toast.success('PHOTOCARD ADDED TO CART', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -119,7 +132,30 @@ function App() {
     }
   };
 
+
   const removeItemFromCart = async (id) => {
+    try {
+          const config = {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${getToken()}`
+              }
+          }
+          const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/photocard/delete/${id}`, config)
+          setIsDeleted(data.success)
+          setLoading(false)
+      } catch (error) {
+          setError(error.response.data.message)
+
+      }
+
+    setState({
+      ...state,
+      cartItems: state.cartItems.filter(i => i.photocard !== id)
+    })
+  }
+
+  const checkoutItemRemoved = async (id) => {
     setState({
       ...state,
       cartItems: state.cartItems.filter(i => i.photocard !== id)
@@ -198,6 +234,7 @@ function App() {
             element={<Cart
               cartItems={state.cartItems}
               addItemToCart={addItemToCart}
+              checkoutItemRemoved={checkoutItemRemoved}
               removeItemFromCart={removeItemFromCart}
             />} exact="true" />
           
