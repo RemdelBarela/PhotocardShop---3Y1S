@@ -43,6 +43,14 @@ import ConfirmOrder from "./Components/Cart/ConfirmOrder";
 import Payment from "./Components/Cart/Payment";
 import OrderSuccess from "./Components/Cart/OrderSuccess";
 
+import ListOrders from "./Components/Order/ListOrders";
+import OrderDetails from "./Components/Order/OrderDetails";
+
+import OrdersList from "./Components/Admin/Order/OrdersList";
+import ProcessOrder from "./Components/Admin/Order/ProcessOrder"
+
+import Dashboard from "./Components/Admin/Chart/Dashboard";
+
 function App() {
   const [state, setState] = useState({
     // cartItems: localStorage.getItem('cartItems')
@@ -195,6 +203,22 @@ function App() {
           <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
           <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
           <Route path="/success" element={<OrderSuccess />} />
+
+          <Route path="/orders/me" element={<ListOrders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <OrdersList />
+              </ProtectedRoute>
+            }/>
+          <Route
+            path="/admin/order/:id"
+            element={<ProcessOrder />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
       <Footer />

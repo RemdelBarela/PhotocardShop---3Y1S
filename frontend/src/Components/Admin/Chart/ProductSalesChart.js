@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { getToken } from "../../utils/helpers";
+import { getToken } from '../../../utils/helpers';
 import axios from "axios";
-import Loader from '../Layout/Loader';
+import Loader from '../../Layout/Loader';
 
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 

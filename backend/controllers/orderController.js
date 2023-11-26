@@ -1,5 +1,6 @@
 const Order = require('../models/order');
 const Photocard = require('../models/photocard');
+const Material = require('../models/material');
 
 exports.newOrder = async (req, res, next) => {
     const {
@@ -83,7 +84,7 @@ exports.updateOrder = async (req, res, next) => {
     }
 
     order.orderItems.forEach(async item => {
-        await updateStock(item.product, item.quantity)
+        await updateStock(item.photocard, item.quantity)
     })
 
     order.orderStatus = req.body.status
@@ -96,9 +97,9 @@ exports.updateOrder = async (req, res, next) => {
 }
 
 async function updateStock(id, quantity) {
-    const product = await Product.findById(id);
-    product.stock = product.stock - quantity;
-    await product.save({ validateBeforeSave: false })
+    const material = await Material.findById(id);
+    material.stock = material.stock - quantity;
+    await material.save({ validateBeforeSave: false })
 }
 
 exports.deleteOrder = async (req, res, next) => {
