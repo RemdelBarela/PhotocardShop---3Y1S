@@ -272,51 +272,55 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                                 <p>{photo.description}</p><br />
                             </div> */}
                             <div>
-                            <AllMaterials handleMaterialChange={handleMaterialChange} />
-                            {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
-                            <p>Available Stock: {selectedMaterial.stock || 'None selected'}</p>
+                                <AllMaterials handleMaterialChange={handleMaterialChange} />
+
+                                <div className="text-center" style={{ border: '2px solid #ddd', paddingTop: '12px', borderRadius: '100px' }}>
+                                    {/* <p>Selected Material: {selectedMaterial.name || 'None selected'}</p> */}
+                                    <p>Available Stock: {selectedMaterial.stock || 'None Selected'}</p>
+                                </div>
                             </div>
+
                       </MDBCol>
                     
-                      <MDBCol lg="3" md="12" className=" mb-4 mb-lg-0">
-                      <br />
-                      <h5 className="mt-2"><strong>Total Reviews:</strong></h5>
-                      <div className="rating-outer inline">
-                            <div className="rating-inner d-inline align-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
-                            </div>
-                            <span id="no_of_reviews"> <br/>({photo.numOfReviews} Reviews)</span>
+                      <MDBCol lg="3" md="12" className="mb-4 mb-lg-0 text-center">
+                        <br />
+                        <h5 className="mt-2 text-left"><strong>Total Reviews:</strong></h5>
+                        <div className="rating-outer inline">
+                            <div className="rating-inner d-inline text-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+                        </div>
+                        <span id="no_of_reviews"><br/>({photo.numOfReviews} Reviews)</span>
 
-                            <div className="review-button-container inline ml-3 align-center">
+                        <div className="review-button-container inline ml-3">
                             {user ? (
                                 <button
-                                id="review_btn"
-                                type="button"
-                                className="btn btn-primary mt-1"
-                                data-toggle="modal"
-                                data-target="#ratingModal"
-                                onClick={setUserRatings}
+                                    id="review_btn"
+                                    type="button"
+                                    className="btn mt-1"
+                                    data-toggle="modal"
+                                    data-target="#ratingModal"
+                                    onClick={setUserRatings}
                                 >
-                                MAKE REVIEW
+                                    MAKE REVIEW
                                 </button>
                             ) : (
                                 <div className="alert alert-danger mt-2" type="alert">
-                                SIGN IN TO SHARE YOUR REVIEW.
+                                    SIGN IN TO SHARE YOUR REVIEW.
                                 </div>
                             )}
                         </div>
-                            
+
                         <br />
-                        <h5 className="mt-1"><strong>Quantity:</strong></h5>
-                             <div className="d-flex mb-4">
-                                <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
+                        <h5 className="mt-1 text-left"><strong>Quantity:</strong></h5>
+                        <div className="d-flex mb-4 align-items-center">
+                            <span className="btn minus" onClick={decreaseQty}>-</span>
+                            <input type="number" className="form-control count d-inline text-center" value={quantity} readOnly />
+                            <span className="btn plus" onClick={increaseQty}>+</span>
+                        </div>
+                        <button type="button" id="cart_btn" className="btn ml-4 text-center" disabled={photo.stock === 0} onClick={addToPhotocard}>
+                            ADD TO CART
+                        </button>
+                    </MDBCol>
 
-                                <input type="number" className="form-control count d-inline text-center" value={quantity} readOnly />
-
-                                <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
-                            </div>
-                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4 align-center" disabled={photo.stock === 0} onClick={addToPhotocard}>ADD TO CART</button>
-
-                      </MDBCol>
 
                        <MDBRow className="offset-lg-0 mt-3">
                         <hr/>

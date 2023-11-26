@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { getToken } from "../../utils/helpers";
+import { getToken } from '../../../utils/helpers';
 import axios from "axios";
-import Loader from '../Layout/Loader';
+import Loader from '../../Layout/Loader';
 
 export default function MonthlySalesChart() {
     const [sales, setSales] = useState('')

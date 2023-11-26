@@ -62,7 +62,7 @@ function Header({ cartItems }) {
             <li>
               
               <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-                <Link to="/dashboard" style={{ textDecoration: 'none' }} >
+                <Link to="/orders/me" style={{ textDecoration: 'none' }} >
                   <span id="myOrders" className="ml-3">ORDERS</span>
                 </Link>
               </div>
