@@ -10,30 +10,23 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
     <div className="checkout-progress d-flex justify-content-center mt-5">
       {shipping ? (
         <Link to="shipping" className="float-right circular-link">
-          <div className="circle-active"></div>
-          <div className="step active-step"> <FontAwesomeIcon icon={faInfoCircle} size="3x"  /> </div>
-          <div className="circle-active"></div>
-        </Link>
+             <div className="step active-step"> <FontAwesomeIcon icon={faInfoCircle} size="3x"  /> </div>
+             </Link>
       ) : (
         <Link to="#!" className="circular-link" disabled>
-          <div className="circle-incomplete"></div>
-          <div className="step incomplete"><FontAwesomeIcon icon={faInfoCircle} size="3x"  /></div>
-          <div className="circle-incomplete"></div>
+            <div className="step incomplete"><FontAwesomeIcon icon={faInfoCircle} size="3x"  /></div>
+           
         </Link>
       )}
 
       {confirmOrder ? (
         <Link to="/order/confirm" className="float-right circular-link">
-          <div className="circle-active"></div>
-          <div className="step active-step"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
-          <div className="circle-active"></div>
-        </Link>
+             <div className="step active-step"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
+           </Link>
       ) : (
         <Link to="#!" className="circular-link" disabled>
-          <div className="circle-incomplete"></div>
-          <div className="step incomplete"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
-          <div className="circle-incomplete"></div>
-        </Link>
+            <div className="step incomplete"><FontAwesomeIcon icon={faCheckCircle} size="3x"  /></div>
+             </Link>
       )}
 
       {payment ? (
@@ -44,8 +37,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
         </Link>
       ) : (
         <Link to="#!" className="circular-link" disabled>
-          <div className="circle-incomplete"></div>
-          <div className="step incomplete"><FontAwesomeIcon icon={faCreditCard} size="3x"  /></div>
+           <div className="step incomplete"><FontAwesomeIcon icon={faCreditCard} size="3x"  /></div>
        
         </Link>
       )}
