@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment , useState ,useEffect} from 'react'
 import MetaData from '../Layout/MetaData'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Carousel } from 'react-bootstrap'
@@ -17,8 +17,10 @@ import {
   MDBTypography,
   } from "mdb-react-ui-kit";
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
+  
     const navigate = useNavigate()
-
+    const [selectedItems, setSelectedItems] = useState([]);
+  
     const increaseQty = (id, quantity, stock) => {
         const newQty = quantity + 1;
         if (newQty > stock) return;
@@ -34,9 +36,41 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const removeCartItemHandler = (id) => {
         removeItemFromCart(id)
     }
-    const checkoutHandler = () => {
-        navigate('/login?redirect=shipping')
+    // const checkoutHandler = () => {
+    //     navigate('/login?redirect=shipping')
+    // }
+
+    const toggleItemSelection = (id) => {
+      const isSelected = selectedItems.includes(id);
+      if (isSelected) {
+          setSelectedItems(selectedItems.filter((selectedId) => selectedId !== id));
+      } else {
+          setSelectedItems([...selectedItems, id]);
+      }
+  };
+  const checkoutHandler = () => {
+    if (selectedItems.length > 0) {
+      const selectedCartItems = cartItems.filter(item => selectedItems.includes(item.photocard));
+  
+      const updatedCartItems = cartItems.filter(item => !selectedItems.includes(item.photocard));
+  
+      localStorage.setItem('cartItems', JSON.stringify(selectedCartItems));
+  
+      console.log(selectedCartItems); // Log selectedCartItems to the console
+  
+      navigate('/login?redirect=shipping' );
+    } else {
+      // Display a message or take appropriate action when no item is selected
     }
+  };
+  
+  
+  
+  useEffect(() => {
+    console.log(selectedItems);
+  }, [selectedItems]);
+  
+
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
     return (
@@ -67,6 +101,17 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                         <Fragment>
                            
                   <MDBRow className="mb-4 d-flex justify-content-between align-items-center">
+
+                                            <MDBCol md="1" lg="1" xl="1">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedItems.includes(item.photocard)}
+                                    onChange={() => toggleItemSelection(item.photocard)}
+                                />
+                            </div>
+                        </MDBCol>
+
                     <MDBCol md="2" lg="2" xl="2">
                       {/* <MDBCardImage> */}
                         <Carousel pause='hover'>

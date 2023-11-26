@@ -40,6 +40,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [comment, setComment] = useState('')
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
+    
+    const [success2, setSuccess2] = useState('')
     const [user, setUser] = useState(getUser())
 
 
@@ -105,7 +107,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/photocard/new/${id}/${selectedMaterial._id}`, config)
             console.log(data);
             setLoading(false);
-            setSuccess(data.success);
+            setSuccess2(data.success2);
             // setPhotocard(data.photocard);
 
 

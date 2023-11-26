@@ -118,21 +118,55 @@
 
 
 
-import React, { Fragment, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import React, { Fragment, useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { countries } from 'countries-list';
 import MetaData from '../Layout/MetaData';
 import CheckoutSteps from './CheckoutSteps';
 
-const Shipping = ({ shipping, saveShippingInfo }) => {
+const Shipping = ({  shipping, saveShippingInfo }) => {
+  // const countriesList = Object.values(countries);
+  // const [address, setAddress] = useState(shipping.address);
+  // const [city, setCity] = useState(shipping.city);
+  // const [postalCode, setPostalCode] = useState(shipping.postalCode);
+  // const [phoneNo, setPhoneNo] = useState(shipping.phoneNo);
+  // const [country, setCountry] = useState(shipping.country);
+  // const navigate = useNavigate();
+
+  // const { selectedCartItems } = location.state || { selectedCartItems: [] };
+
+  // useEffect(() => {
+  //   console.log(selectedCartItems);
+  // }, [selectedCartItems]);
+  
+
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   saveShippingInfo({ address, city, phoneNo, postalCode, country });
+  //   navigate('/confirm');
+  // };
+
+
   const countriesList = Object.values(countries);
   const [address, setAddress] = useState(shipping.address);
   const [city, setCity] = useState(shipping.city);
   const [postalCode, setPostalCode] = useState(shipping.postalCode);
   const [phoneNo, setPhoneNo] = useState(shipping.phoneNo);
   const [country, setCountry] = useState(shipping.country);
+
+  const location = useLocation();
   const navigate = useNavigate();
 
+  // Extracting selectedCartItems from the location state
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    // Retrieve cartItems from localStorage
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(storedCartItems);
+    console.log(storedCartItems);
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
     saveShippingInfo({ address, city, phoneNo, postalCode, country });
