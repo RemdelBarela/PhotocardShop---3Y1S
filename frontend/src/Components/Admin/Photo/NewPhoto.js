@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../Sidebar'
+
 const NewPhoto = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);

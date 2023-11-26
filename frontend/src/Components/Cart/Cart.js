@@ -2,7 +2,7 @@ import React, { Fragment , useState ,useEffect} from 'react'
 import MetaData from '../Layout/MetaData'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Carousel } from 'react-bootstrap'
-
+import { toast } from 'react-toastify';
 import {
   MDBBtn,
   MDBCard,
@@ -27,6 +27,7 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
         addItemToCart(id, newQty);
     }
 
+    
     const decreaseQty = (id, quantity) => {
         const newQty = quantity - 1;
         if (newQty <= 0) return;
@@ -60,7 +61,9 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
   
       navigate('/login?redirect=shipping' );
     } else {
-      // Display a message or take appropriate action when no item is selected
+      toast.error('PLEASE SELECT ITEMS BEFORE CHECKOUT', {
+        position: toast.POSITION.BOTTOM_RIGHT
+    });
     }
   };
   
@@ -102,7 +105,7 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                            
                   <MDBRow className="mb-4 d-flex justify-content-between align-items-center">
 
-                                            <MDBCol md="1" lg="1" xl="1">
+                            <MDBCol md="1" lg="1" xl="1">
                             <div>
                                 <input
                                     type="checkbox"
@@ -131,24 +134,26 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                       {item.Pname}
                       </MDBTypography>
                     </MDBCol>
-                    <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
-                      <MDBBtn color="link" className="px-2">
-                      <span  onClick={() => decreaseQty(item.photocard, item.quantity)}>
-                           
-                        <MDBIcon fas icon="minus" />
 
-                        </span>
-                      </MDBBtn>
+                   
+                         <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
+                
+                      <button class="btn btn-link px-2"
+                        onClick={() => decreaseQty(item.photocard, item.quantity)}>
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <input id="form1" min="0" name="quantity" value={item.quantity} type="number"
+                        class="form-control form-control-sm" />
+                   
+                      <button class="btn btn-link px-2"
+                        onClick={() => increaseQty(item.photocard, item.quantity, item.stock)}>
+                        <i class="fas fa-plus"></i>
+                      </button>
+                  
+                  
 
-                      <MDBInput type="number" min="0" defaultValue={item.quantity} size="sm" />
 
-                      <MDBBtn color="link" className="px-2">
-                      <span  onClick={() => increaseQty(item.photocard, item.quantity, item.stock)}>
-                           
-                        <MDBIcon fas icon="plus" />
 
-                        </span>
-                      </MDBBtn>
                     </MDBCol>
                     <MDBCol md="3" lg="2" xl="2" className="text-end">
                       <MDBTypography tag="h6" className="mb-0">
@@ -199,9 +204,9 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                     <MDBTypography tag="h5">${cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}</MDBTypography>
                   </div>
 
-                  <MDBBtn color="dark" block size="lg" onClick={checkoutHandler}>
-                    CHECKOUT
-                  </MDBBtn>
+                
+                  <button type="button" class="btn btn-dark btn-block btn-lg" onClick={checkoutHandler} data-mdb-ripple-color="dark">CHECKOUT</button>
+
                 </div>
               </MDBCol>
               
