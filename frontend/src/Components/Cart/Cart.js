@@ -17,30 +17,32 @@ import {
   MDBTypography,
   } from "mdb-react-ui-kit";
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
-  
+      
     const navigate = useNavigate()
     const [selectedItems, setSelectedItems] = useState([]);
   
     const increaseQty = (id, quantity, stock) => {
-        const newQty = quantity + 1;
-        if (newQty > stock) return;
-        addItemToCart(id, newQty);
-    }
+      const newQty = quantity + 1;
+      if (newQty > stock) {
+        toast.error('CANNOT ADD MORE, YOU REACH THE MAX STOCKS', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
+        return;
+      }
 
+      addItemToCart(id, newQty);
+    }
     
     const decreaseQty = (id, quantity) => {
-        const newQty = quantity - 1;
-        if (newQty <= 0) return;
-        addItemToCart(id, newQty);
+      const newQty = quantity - 1;
+      if (newQty <= 0) return;
+      addItemToCart(id, newQty);
     }
 
     const removeCartItemHandler = (id) => {
       removeItemFromCart(id)
     }
-    // const checkoutHandler = () => {
-    //     navigate('/login?redirect=shipping')
-    // }
-
+  
     const toggleItemSelection = (id) => {
       const isSelected = selectedItems.includes(id);
       if (isSelected) {
@@ -66,8 +68,6 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
       });
     }
   };
-  
-  
   
   useEffect(() => {
     console.log(selectedItems);

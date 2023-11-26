@@ -10,15 +10,18 @@ const OrderSuccess = () => {
       // Retrieve cartItems from localStorage
       const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       setCartItems(storedCartItems);
-    //   console.log(cartItems);
+
+      console.log(storedCartItems);
+      localStorage.removeItem('storedCartItems')
+      
     }, []);
 
-    sessionStorage.removeItem('orderInfo');
+    // sessionStorage.removeItem('orderInfo');
     
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('shippingInfo');
+    // localStorage.removeItem('cartItems');
+    // localStorage.removeItem('shippingInfo');
     // localStorage.clear();
-    console.log(cartItems)
+    // console.log(cartItems)
 
     
     return (

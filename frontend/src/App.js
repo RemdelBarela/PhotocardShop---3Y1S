@@ -84,7 +84,7 @@ function App() {
       // Fetch details of the photocard using the photocard_id
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/photocard/${photocardId}`);
 
-      const newItem = {
+      const item = {
         photocard: data.photocard._id,
         photo: data.photocard.photo._id,
         material: data.photocard.material._id,
@@ -97,29 +97,20 @@ function App() {
         // Add other necessary details of the photocard here based on your requirement
       };
 
-      // console.log(item)
+      const isItemExist = state.cartItems.find(i => i.photocard === item.photocard)
+      console.log(isItemExist, state)
 
-      const isItemExist = state.cartItems.find(
-        item =>
-          item.photo === newItem.photo &&
-          item.material === newItem.material
-      );
-  
       if (isItemExist) {
         setState({
           ...state,
-          cartItems: state.cartItems.map(item =>
-            item.photo === newItem.photo &&
-            item.material === newItem.material
-              ? { ...item, quantity: item.quantity + quantity } // Update quantity if item already exists
-              : item
-          ),
-        });
-      } else {
+          cartItems: state.cartItems.map(i => i.photocard === isItemExist.photocard ? item : i)
+        })
+      }
+      else {
         setState({
           ...state,
-          cartItems: [...state.cartItems, newItem],
-        });
+          cartItems: [...state.cartItems, item]
+        })
       }
   
       toast.success('PHOTOCARD ADDED TO CART', {

@@ -116,7 +116,7 @@ const OrdersList = () => {
                     </button>
                 </Fragment>
             })
-            console.log(order)
+            // console.log(order)
         })
         return data;
     }

@@ -76,14 +76,18 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
     const increaseQty = () => {
         const count = document.querySelector('.count')
-        if (count.valueAsNumber >= photo.stock) return;
         const qty = count.valueAsNumber + 1;
         setQuantity(qty)
+        if (qty === selectedMaterial.stock) {
+            toast.error('CANNOT ADD MORE, YOU REACH THE MAX STOCKS', {
+              position: toast.POSITION.BOTTOM_RIGHT
+            });
+            return;
+        }
     }
 
     const decreaseQty = () => {
         const count = document.querySelector('.count')
-        if (count.valueAsNumber <= 1) return;
         const qty = count.valueAsNumber - 1;
         setQuantity(qty)
     }
