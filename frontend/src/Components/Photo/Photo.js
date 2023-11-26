@@ -15,16 +15,17 @@ import {
 const Photo = ({ photo }) => {
   return (
     <MDBContainer fluid >
-      <MDBRow className="justify-content-center mb-0"  >
+      <MDBRow className="justify-content-center mb-0">
         <MDBCol md="12" xl="10"  style={{marginBottom: '10px'}}>
           <MDBCard className="shadow- border rounded-1 mt-4 mb-2" >
-            <MDBCardBody >
+            <MDBCardBody style={{marginBottom: '10px'}}>
               <MDBRow>
                 <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
                   <MDBRipple
                     rippleColor="light"
                     rippleTag="div"
                     className="bg-image rounded hover-zoom hover-overlay"
+                    style={{marginBottom: '10px'}}
                   >
                     <MDBCardImage 
                       src={photo.images[0].url}

@@ -1,0 +1,24 @@
+#receipt
+{
+    margin-bottom: 50px;
+}
+
+#tPrice
+{
+    justify-content: end;
+}
+
+#print
+{
+   padding: 15px 30px 15px 30px;
+   background-color: black;
+   color: white;
+   text-decoration: none;
+}
+
+#colprint
+{
+   justify-content: end;
+   text-align: right;
+}
+

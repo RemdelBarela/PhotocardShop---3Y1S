@@ -13,6 +13,7 @@ import './Design/Photo.css';
 import './Design/Profile.css';
 import './Design/User.css';
 import './Design/shipping.css';
+import './Design/Receipt.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

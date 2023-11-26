@@ -12,9 +12,5 @@ router.post('/admin/material/new', isAuthenticatedUser, upload.array('images'), 
 router.route('/admin/material/:id', isAuthenticatedUser,).put(upload.array('images'), updateMaterial).delete(deleteMaterial);
 router.get('/admin/materials', isAuthenticatedUser, authorizeRoles('admin'), getAdminMaterials);
 router.get('/allmaterials', getAllMaterials);
-// router.put('/review', isAuthenticatedUser, createPhotoReview);
-// router.get('/reviews', isAuthenticatedUser, getPhotoReviews)
-// router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
-// router.get('/admin/photo-sales', productSales);
 
 module.exports = router;

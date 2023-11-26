@@ -49,6 +49,8 @@ import OrderDetails from "./Components/Order/OrderDetails";
 import OrdersList from "./Components/Admin/Order/OrdersList";
 import ProcessOrder from "./Components/Admin/Order/ProcessOrder"
 
+import Receipt from "./Components/Admin/Receipt/Receipt"
+
 import Dashboard from "./Components/Admin/Chart/Dashboard";
 
 function App() {
@@ -214,9 +216,11 @@ function App() {
                 <OrdersList />
               </ProtectedRoute>
             }/>
-          <Route
-            path="/admin/order/:id"
+          <Route path="/admin/order/:id"
             element={<ProcessOrder />} />
+
+          <Route path="/print-receipt/:id"
+            element={<Receipt />}/>
 
         <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
