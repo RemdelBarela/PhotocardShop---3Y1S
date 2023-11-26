@@ -53,10 +53,7 @@ const Payment = ({shippingInfo}) => {
             toast.success('order created', {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
-        //    console.log(cartItems)
-            // sessionStorage.removeItem('orderInfo')
-        
-            // console.log(cartItems)
+
             navigate('/success')
     
         } catch (error) {
@@ -74,9 +71,30 @@ const Payment = ({shippingInfo}) => {
             status: 'succeeded'
         }
         createOrder(order)
-        // localStorage.removeItem('cartItems');
+
+        console.log(cartItems)
        
       }
+
+    // const submitHandler = async (e) => {
+    //     e.preventDefault();
+    //     document.querySelector('#pay_btn').disabled = true;
+    //     order.paymentInfo = {
+    //         id: 'pi_1DpdYh2eZvKYlo2CYIynhU32',
+    //         status: 'succeeded'
+    //     }
+    
+    //     // Remove purchased item(s) from cartItems
+    //     // For example, if you want to clear cartItems after payment:
+    //     const updatedCartItems = []; // Or any logic to remove purchased items
+    //     setCartItems(updatedCartItems); // Update the cartItems state
+    
+    //     // Update the localStorage as well, if needed
+    //     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    
+    //     createOrder(order);
+    //     // localStorage.removeItem('cartItems');
+    // };
 
     return (
         <Fragment>

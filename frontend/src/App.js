@@ -60,9 +60,9 @@ function App() {
   const [error, setError] = useState('')
 
   const [state, setState] = useState({
-    // cartItems: localStorage.getItem('cartItems')
-    // ? JSON.parse(localStorage.getItem('cartItems'))
-    // : [],
+  //   cartItems: localStorage.getItem('cartItems')
+  //   ? JSON.parse(localStorage.getItem('cartItems'))
+  //   : [],
 
     cartItems: (() => {
       try {
@@ -234,14 +234,13 @@ function App() {
             element={<Cart
               cartItems={state.cartItems}
               addItemToCart={addItemToCart}
-              checkoutItemRemoved={checkoutItemRemoved}
               removeItemFromCart={removeItemFromCart}
             />} exact="true" />
           
           <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
           <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
           <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
-          <Route path="/success" element={<OrderSuccess />} />
+          <Route path="/success" element={<OrderSuccess cartItems={state.cartItems} />} />
 
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />

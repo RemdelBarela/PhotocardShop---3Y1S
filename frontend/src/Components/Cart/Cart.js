@@ -16,7 +16,7 @@ import {
   MDBRow,
   MDBTypography,
   } from "mdb-react-ui-kit";
-const Cart = ({ addItemToCart, cartItems, checkoutItemRemoved, removeItemFromCart }) => {
+const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
   
     const navigate = useNavigate()
     const [selectedItems, setSelectedItems] = useState([]);
