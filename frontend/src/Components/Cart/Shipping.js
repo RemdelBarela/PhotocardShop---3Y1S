@@ -22,7 +22,7 @@ const Shipping = ({  shipping, saveShippingInfo }) => {
 
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     setCartItems(storedCartItems);
-    // console.log(storedCartItems);
+    console.log(storedCartItems);
   }, []);
   const submitHandler = (e) => {
     e.preventDefault();

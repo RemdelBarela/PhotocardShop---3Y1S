@@ -18,7 +18,7 @@ const Payment = ({shippingInfo}) => {
       // Retrieve cartItems from localStorage
       const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       setCartItems(storedCartItems);
-    //   console.log(cartItems);
+      console.log(storedCartItems);
     }, []);
 
 
@@ -71,9 +71,10 @@ const Payment = ({shippingInfo}) => {
             status: 'succeeded'
         }
         
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
 
         createOrder(order)
+
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
 
         console.log(cartItems)
        

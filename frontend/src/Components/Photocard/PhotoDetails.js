@@ -222,6 +222,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
       };
 
     return (
+        <Fragment>
+        <MetaData title={`Photo #${photo._id}`} />
         <section className="h-100 gradient-custom">
           <MDBContainer className="py-5 h-100">
             <MDBRow className="justify-content-center my-4">
@@ -360,6 +362,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             </MDBRow>
           </MDBContainer>
         </section>
+        /</Fragment>
         );
 }
 export default PhotoDetails
