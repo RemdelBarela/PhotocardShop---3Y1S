@@ -1,33 +1,33 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 
 import MetaData from '../../Layout/MetaData'
 import Loader from '../../Layout/Loader'
-import Sidebar from '../Sidebar'
-
+// import Sidebar from '../SideBar'
 import { getToken } from '../../../utils/helpers';
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserSalesChart from './UserSalesChart'
-import ProductSalesChart from './ProductSalesChart'
-import MonthlySalesChart from './MonthlySalesChart'
+
+import UserSalesChart from './UserSalesChart';
+import MaterialSalesChart from './MaterialSalesChart';
+import PhotoSalesChart from './PhotoSalesChart';
 
 const Dashboard = () => {
 
-    const [products, setProducts] = useState([])
+    const [photos, setPhotos] = useState([])
     const [error, setError] = useState('')
     const [users, setUsers] = useState([])
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
     const [totalAmount, setTotalAmount] = useState([])
     let outOfStock = 0;
-    products.forEach(product => {
-        if (product.stock === 0) {
+    photos.forEach(photo => {
+        if (photo.stock === 0) {
             outOfStock += 1;
         }
     })
-    const getAdminProducts = async () => {
+    const getAdminPhotos = async () => {
         try {
 
             const config = {
@@ -37,26 +37,26 @@ const Dashboard = () => {
                 }
             }
 
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/products`, config)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/photos`, config)
             console.log(data)
-            setProducts(data.products)
+            setPhotos(data.photos)
             setLoading(false)
         } catch (error) {
             setError(error.response.data.message)
+           
         }
     }
 
     useEffect(() => {
-        getAdminProducts()
-        // allOrders()
-        // allUsers()
+        getAdminPhotos()
+        
     }, [])
 
     return (
         <Fragment>
             <div className="row">
                 <div className="col-12 col-md-2">
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                 </div>
 
                 <div className="col-12 col-md-10">
@@ -81,10 +81,10 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-success o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Products<br /> <b>{products && products.length}</b></div>
+                                            <div className="text-center card-font-size">Photos<br /> <b>{photos && photos.length}</b></div>
                                         </div>
 
-                                        <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
+                                        <Link className="card-footer text-white clearfix small z-1" to="/admin/photos">
                                             <span className="float-left">View Details</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
@@ -126,28 +126,28 @@ const Dashboard = () => {
                                 </div>
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-warning o-hidden h-100">
+                                        {/*<div className="card-body">
+                                            <div className="text-center card-font-size">Out of Stock<br /> <b>0</b></div>
+                                        </div>*/}
+
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Out of Stock<br /> <b>{outOfStock}</b></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <Fragment>
-                                <UserSalesChart />
-                            </Fragment>
-                            <Fragment>
-                                <MonthlySalesChart />
-                            </Fragment>
-                            <Fragment>
-                                <ProductSalesChart />
-                            </Fragment>
-
                         </Fragment>
-
                     )}
-
                 </div>
-
+                <Fragment>
+                        <UserSalesChart />
+                    </Fragment>
+                    <Fragment>
+                        <MaterialSalesChart />
+                    </Fragment>
+                    <Fragment>
+                        {/* <PhotoSalesChart /> */}
+                    </Fragment>
             </div>
         </Fragment >
     )
