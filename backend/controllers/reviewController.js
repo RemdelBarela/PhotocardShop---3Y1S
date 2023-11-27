@@ -112,7 +112,9 @@ exports.getPhotoReview = async (req, res, next) => {
 		review
 	  });
 	} catch (err) {
+		console.error(err)
 	  return res.status(500).json({
+		
 		success: false,
 		message: 'Error retrieving photo and reviews'
 	  });
@@ -126,14 +128,28 @@ exports.getPhotoReview = async (req, res, next) => {
   
 	  const existingReview = await Review.findOne({
 		photo: photoId,
-		'rev.user': req.user._id // Check if the user has already submitted a review for this photo
+		'rev.user': req.user._id // Check if any review exists for this photo by the user
 	  });
   
+	  
+
 	  if (existingReview) {
-		// If the user has already submitted a review, update it
-		existingReview.rev.rating = Number(rating);
-		existingReview.rev.comment = comment;
-		await existingReview.save();
+		// Check if the existing review belongs to the current user
+	  
+		// Find the index of the review that belongs to the current user
+		const index = existingReview.rev.findIndex(
+		  review => String(review.user) === String(req.user._id)
+		);
+	  
+		if (index !== -1) {
+		  // If the user's review exists in the array, update it
+		  existingReview.rev[index].rating = Number(rating);
+		  existingReview.rev[index].comment = comment;
+	  
+		  await existingReview.save();
+	  
+		  console.log('Review Updated Successfully');
+		  console.log('Updated Review:', existingReview);}
 	  } else {
 		// If no review exists for the user, create a new review
 		const newReview = new Review({
@@ -148,7 +164,6 @@ exports.getPhotoReview = async (req, res, next) => {
 		await newReview.save();
 	  }
   
-	  // Update numOfReviews in the Review model for the particular photo
 	  const reviewCount = await Review.countDocuments({ photo: photoId });
 	  await Photo.findByIdAndUpdate(photoId, { numOfReviews: reviewCount });
   
@@ -164,6 +179,7 @@ exports.getPhotoReview = async (req, res, next) => {
 	  });
 	}
   };
+  
 
 exports.deleteReview = async (req, res, next) => {
 	try {

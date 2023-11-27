@@ -74,22 +74,6 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
     }
 
-      
-      const reviewDetails = async (id) => {
-        try {
-          // Fetch reviews using the reviewDetails function
-          let res = await axios.get(`http://localhost:4000/api/v1/review/photo/${id}`);
-          setReviews(res.data.reviews);
-          setLoading(false);
-        } catch (err) {
-          if (err.response && err.response.status === 404) {
-            // If no reviews available, handle it without error
-            setReviews([]);
-            setLoading(false);
-          } 
-        }
-      };//
-
     const increaseQty = () => {
         const count = document.querySelector('.count');
         const qty = count.valueAsNumber + 1;
@@ -194,7 +178,6 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     };
     useEffect(() => {
         photoDetails(id)
-        reviewDetails(id)
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.BOTTOM_RIGHT

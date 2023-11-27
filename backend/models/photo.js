@@ -17,7 +17,7 @@ const photoSchema = new mongoose.Schema({
         type: String,
         required: [true, 'PHOTO DESCRIPTION REQUIRED'],
     },
-    ratings: {
+    numOfReviews: {
         type: Number,
         default: 0
     },
@@ -33,11 +33,6 @@ const photoSchema = new mongoose.Schema({
             },
         }
     ],
-    numOfReviews: {
-        type: Number,
-        default: 0
-    },
-
     createdAt: {
         type: Date,
         default: Date.now
