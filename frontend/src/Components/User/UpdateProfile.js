@@ -105,22 +105,25 @@ const UpdateProfile = () => {
     updateProfile(formData)
 }
 
-  const onChange = e => {
-    const files = Array.from(e.target.files)
-    setAvatarPreview([]);
-    setAvatar([])
-    setOldAvatar([])
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-          if (reader.readyState === 2) {
-            setAvatarPreview(oldArray => [...oldArray, reader.result])
-            setAvatar(oldArray => [...oldArray, reader.result])
-          }
-      }
-      reader.readAsDataURL(file)
-  })
-}
+const onChange = (e) => {
+  const files = Array.from(e.target.files);
+
+  setAvatarPreview([]);
+  setAvatar([]);
+  setOldAvatar([]);
+
+  files.forEach((file) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      // You can directly set the state without checking reader.readyState
+      setAvatarPreview((oldArray) => [...oldArray, reader.result]);
+      setAvatar((oldArray) => [...oldArray, reader.result]);
+    };
+
+    reader.readAsDataURL(file);
+  });
+};
 
 
  
@@ -172,6 +175,7 @@ const UpdateProfile = () => {
                   CHOOSE IMAGES
                 </label>
               </div>
+              
               {oldAvatar && oldAvatar.map(img => (
                 <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
               ))}

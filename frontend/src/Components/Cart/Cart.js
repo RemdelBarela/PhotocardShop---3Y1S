@@ -17,7 +17,7 @@ import {
   MDBTypography,
   } from "mdb-react-ui-kit";
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
-      
+    const [selectAll, setSelectAll] = useState(false);
     const navigate = useNavigate()
     const [selectedItems, setSelectedItems] = useState([]);
   
@@ -43,6 +43,21 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
       removeItemFromCart(id)
     }
   
+
+  
+    // ... (existing functions)
+  
+    const toggleSelectAll = () => {
+      if (selectAll) {
+        setSelectedItems([]);
+      } else {
+        const allItemIds = cartItems.map(item => item.photocard);
+        setSelectedItems(allItemIds);
+      }
+      setSelectAll(!selectAll);
+    };
+
+
     const toggleItemSelection = (id) => {
       const isSelected = selectedItems.includes(id);
       if (isSelected) {
@@ -86,6 +101,7 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
         <MDBCard className="card-registration card-registration-2" style={{ borderRadius: "15px" }}>
           <MDBCardBody className="p-0">
             <MDBRow className="g-0">
+              
               <MDBCol lg="8">
                 <div className="p-5">
                   <div className="d-flex justify-content-between align-items-center mb-5">
@@ -96,7 +112,17 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                      
                     </MDBTypography>
                   </div>
-
+                  <MDBCol md="1" lg="1" xl="1">
+                  <div style={{ display: "flex", alignItems: "center" }}>
+      <input
+        type="checkbox"
+        id="selectAllCheckbox"  // Add an id for associating with the label
+        checked={selectAll}
+        onChange={toggleSelectAll}
+      />
+      <label htmlFor="selectAllCheckbox" style={{ marginLeft: "8px" }}>Select All</label>
+    </div>
+            </MDBCol>
                   <hr className="my-4" />
                   {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
                     <Fragment>
