@@ -1,5 +1,5 @@
 const Photo = require('../models/photo')
-// const Order = require('../models/order')
+const Order = require('../models/order')
 const Material = require('../models/material')
 
 const APIFeatures = require('../utils/apiFeatures')
@@ -318,117 +318,58 @@ exports.getAllMaterials = async (req, res, next) => {
 	})
 }
 
-
-// exports.photoSales = async (req, res, next) => {
-//     const totalSales = await Order.aggregate([
-//         {
-//             $group: {
-//                 _id: null,
-//                 total: { $sum: "$itemsPrice" }
-
-//             },
+exports.photoSales = async (req, res, next) => {
+    const totalSales = await Order.aggregate([
+        {
+            $group: {
+                _id: null,
+                total: { $sum: "$itemsPrice" }
+            },
             
-//         },
-//     ])
-//     console.log(totalSales)
-//     const sales = await Order.aggregate([
-//         { $project: { _id: 0, "orderItems": 1, totalPrice: 1 } },
-//         { $unwind: "$orderItems" },
-//         {
-//             $group: {
-//                 _id: { Photo: "$orderItems.name" },
-//                 total: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
-//             },
-//         },
-//     ])
-// 	console.log(sales)
+        },
+    ])
+    console.log(totalSales)
+    const sales = await Order.aggregate([
+        { $project: { _id: 0, "orderItems": 1, totalPrice: 1 } },
+        { $unwind: "$orderItems" },
+        {
+            $group: {
+                _id: { photo: "$orderItems.name" },
+                total: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+            },
+        },
+    ])
+	console.log("sales", sales)
     
-//     if (!totalSales) {
-// 		return res.status(404).json({
-// 			message: 'error sales'
-// 		})
+    if (!totalSales) {
+		return res.status(404).json({
+			message: 'error sales'
+		})
        
-//     }
-//     if (!sales) {
-// 		return res.status(404).json({
-// 			message: 'error sales'
-// 		})
+    }
+    if (!sales) {
+		return res.status(404).json({
+			message: 'error sales'
+		})
       
-//     }
+    }
     
-//     let totalPercentage = {}
-//     totalPercentage = sales.map(item => {
+    let totalPercentage = {}
+    totalPercentage = sales.map(item => {
          
-//         // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
-//         percent = Number (((item.total/totalSales[0].total) * 100).toFixed(2))
-//         total =  {
-//             name: item._id.Photo,
-//             percent
-//         }
-//         return total
-//     }) 
-//     // return console.log(totalPercentage)
-//     res.status(200).json({
-//         success: true,
-//         totalPercentage,
-//         sales,
-//         totalSales
-//     })
-
-// }
-
-// exports.photoSales = async (req, res, next) => {
-//     const totalSales = await Order.aggregate([
-//         {
-//             $group: {
-//                 _id: null,
-//                 total: { $sum: "$itemsPrice" }
-//             },
-            
-//         },
-//     ])
-//     console.log(totalSales)
-//     const sales = await Order.aggregate([
-//         { $project: { _id: 0, "orderItems": 1, totalPrice: 1 } },
-//         { $unwind: "$orderItems" },
-//         {
-//             $group: {
-//                 _id: { Photo: "$orderItems.name" },
-//                 total: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
-//             },
-//         },
-//     ])
-// 	console.log(sales)
-    
-//     if (!totalSales) {
-// 		return res.status(404).json({
-// 			message: 'error sales'
-// 		})
-       
-//     }
-//     if (!sales) {
-// 		return res.status(404).json({
-// 			message: 'error sales'
-// 		})
-      
-//     }
-    
-//     let totalPercentage = {}
-//     totalPercentage = sales.map(item => {
-         
-//         // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
-//         percent = Number (((item.total/totalSales[0].total) * 100).toFixed(2))
-//         total =  {
-//             name: item._id.Photo,
-//             percent
-//         }
-//         return total
-//     }) 
-//     // return console.log(totalPercentage)
-//     res.status(200).json({
-//         success: true,
-//         totalPercentage,
-//         sales,
-//         totalSales
-//     })
-// }
+        // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
+        percent = Number (((item.total/totalSales[0].total) * 100).toFixed(2))
+        total =  {
+            name: item._id.photo,
+            percent
+        }
+        return total
+    }) 
+    // return console.log(totalPercentage)
+    res.status(200).json({
+        success: true,
+        totalPercentage,
+        sales,
+        totalSales
+    })
+}
