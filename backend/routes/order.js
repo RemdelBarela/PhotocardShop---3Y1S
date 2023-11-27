@@ -11,8 +11,8 @@ const { newOrder,
 		totalOrders,
 		totalSales,
 		customerSales,
-		salesPerMonth
-
+		salesPerMonth,
+		orderStatusCounts
 	} = require('../controllers/orderController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
@@ -29,5 +29,6 @@ router.get('/admin/total-orders', totalOrders);
 router.get('/admin/total-sales', totalSales);
 router.get('/admin/customer-sales', customerSales);
 router.get('/admin/sales-per-month', salesPerMonth);
+router.get('/admin/order-status-counts', orderStatusCounts);
 
 module.exports = router;
