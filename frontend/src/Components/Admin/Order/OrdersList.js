@@ -107,14 +107,16 @@ const OrdersList = () => {
                 status: order.orderStatus && String(order.orderStatus).includes('Delivered')
                     ? <p style={{ color: 'green' }}>{order.orderStatus}</p>
                     : <p style={{ color: 'red' }}>{order.orderStatus}</p>,
-                actions: <Fragment>
-                    <Link to={`/admin/order/${order._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-eye"></i>
-                    </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
-                        <i className="fa fa-trash"></i>
-                    </button>
-                </Fragment>
+                    actions: (
+                        <div className="text-center">
+                          <Link to={`/admin/order/${order._id}`} className="btn btn-primary py-1 px-2">
+                            <i className="fa fa-eye"></i>
+                          </Link>
+                          <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
+                            <i className="fa fa-trash"></i>
+                          </button>
+                        </div>
+                      )
             })
             console.log(order)
         })
@@ -127,7 +129,7 @@ const OrdersList = () => {
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10" style={{ paddingLeft: "70px", marginBottom: "70px" }}>
                     <Fragment>
                         <h1 className="my-5">All Orders</h1>
                         {loading ? <Loader /> : (
@@ -143,7 +145,7 @@ const OrdersList = () => {
                 </div>
             </div>
         </Fragment>
-    )
-}
+    );
+};
 
-export default OrdersList
+export default OrdersList;

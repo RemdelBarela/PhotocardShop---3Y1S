@@ -151,14 +151,14 @@ const PhotosList = () => {
                 price: `$${photo.price}`,
                 stock: photo.stock,
                 actions: (
-                    <Fragment>
+                    <div className='text-center'>
                         <Link to={`/admin/photo/${photo._id}`} className="btn btn-primary py-1 px-2">
                             <i className="fa fa-pen"></i>
                         </Link>
                         <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deletePhotoHandler(photo._id)}>
                             <i className="fa fa-trash"></i>
                         </button>
-                    </Fragment>
+                    </div>
                 )
             });
         });
@@ -198,53 +198,42 @@ const PhotosList = () => {
         }
     };
 
-
-
     return (
         <Fragment>
-            <MetaData title={'All Photos'} />
-            <div className="row">
-                <div className="col-12 col-md-2">
-                <div style={{  height: '210vh', overflow: 'scroll initial' }}>
-    
-                    <Sidebar />
-                    </div>
-                </div>
-
-                <div className="col-12 col-md-8">
-                <div className="wrapper my-5">
-                <Fragment>
-                <div style={{ width: '100%', padding: '20px' }} >
-              
-                        <h1 className="my-5 text-center">All Photos</h1>
-
-                        {loading ? <Loader /> : (
-                            <div>
-                                   <div>
-                                <button
-                                    className="btn btn-danger py-1 px-2 mb-2"
-                                    onClick={deletePhotoHandler2}
-                                    disabled={selectedPhotos.length === 0}
-                                >
-                                    Delete Selected
-                                </button>
-                            </div>
-                            <MDBDataTable
-                                data={photosList()}
-                                className="px-3"
-                                bordered
-                                striped
-                                hover
-                            />
-                            </div>
-                        )}
-</div>
-                    </Fragment>
-                </div></div>
+          <MetaData title={'All Photos'} />
+          <div className="row">
+            <div className="col-12 col-md-2">
+              <Sidebar />
             </div>
-
+            <div className="col-12 col-md-10" style={{  paddingLeft: "70px", marginBottom: "70px" }}>
+              <Fragment>
+              <h1 className="my-5">All Photos</h1>
+              {loading ?  <Loader />  : (
+                <div>
+                  <div>
+                    <button
+                      className="btn btn-danger py-1 px-2 mb-1"
+                      onClick={deletePhotoHandler2}
+                      disabled={selectedPhotos.length === 0}
+                    >
+                      Delete Selected
+                    </button>
+                  </div>
+                  <MDBDataTable
+                    data={photosList()}
+                    className="px-3"
+                    bordered
+                    striped
+                    hover
+                  />
+                </div>
+              )}
+              </Fragment>
+            </div>
+          </div>
         </Fragment>
-    )
-}
+      );
+      
+};
 
 export default PhotosList

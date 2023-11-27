@@ -192,42 +192,36 @@ const UsersList = () => {
             <MetaData title={'All Users'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{  height: '210vh', overflow: 'scroll initial' }}>
-                        <Sidebar />
-                    </div>
+                    <Sidebar />
                 </div>
-                <div className="col-12 col-md-10">
-                    <div className="wrapper my-5">
+                <div className="col-12 col-md-10" style={{  paddingLeft: "70px", marginBottom: "70px" }}>
                     <Fragment>
-                    <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto'}} >
                         <h1 className="my-5">LIST OF ALL USERS</h1>
                         {loading ? <Loader /> : (
-                              <div>
-                              <div>
-                                  <button
-                                      className="btn btn-danger py-1 px-2 mb-2"
-                                      onClick={deleteUserHandler2}
-                                      disabled={selectedUsers.length === 0}
-                                  >
-                                      Delete Selected
-                                  </button>
-                              </div>
-                           <MDBDataTable
-                                data={setUsers()}
-                                className="px-3"
-                                bordered
-                                striped
-                                hover
-                            />
-                         </div>
+                            <div>
+                                <div>
+                                    <button
+                                        className="btn btn-danger py-1 px-2 mb-2"
+                                        onClick={deleteUserHandler2}
+                                        disabled={selectedUsers.length === 0}
+                                    >
+                                        Delete Selected
+                                    </button>
+                                </div>
+                                <MDBDataTable
+                                    data={setUsers()}
+                                    className="px-3"
+                                    bordered
+                                    striped
+                                    hover
+                                />
+                            </div>
                         )}
-                           </div>
                     </Fragment>
-                </div>
                 </div>
             </div>
         </Fragment>
-    )
-}
+    );
+};
 
 export default UsersList
