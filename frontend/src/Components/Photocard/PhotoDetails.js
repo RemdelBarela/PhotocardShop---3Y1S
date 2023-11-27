@@ -38,6 +38,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [cart, setCart] = useState([])
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
+    const [review, setReviews] = useState('');
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
     
@@ -56,11 +57,12 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
 
     const photoDetails = async (id) => {
-        let link = `http://localhost:4000/api/v1/photo/${id}`
+        // let link = `http://localhost:4000/api/v1/photo/${id}`
         try {
-            let res = await axios.get(link)
-            setPhoto(res.data.photo)
-            setLoading(false)
+            let res = await axios.get(`http://localhost:4000/api/v1/photo/${id}`);
+            setPhoto(res.data.photo);
+            setReviews(res.data.reviews); // Assuming the reviews are returned as part of the photo data
+            setLoading(false);
 
         } catch (err) {
             console.log(err)
@@ -159,24 +161,21 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getToken()}`
                 }
-            }
-
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/review`, reviewData, config)
-            setSuccess(data.success)
-
+            };
+    
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/review/new/${id}`, reviewData, config);
+            console.log(reviewData)
+            setSuccess(data.success);
         } catch (error) {
-            setErrorReview(error.response.data.message)
+            setErrorReview(error.response.data.message);
         }
-    }
+    };
 
     const reviewHandler = () => {
-        const formData = new FormData();
-        formData.set('rating', rating);
-        formData.set('comment', comment);
-        formData.set('photoId', id);
-        newReview(formData)
-
-    }
+        const reviewData = { rating, comment, photoId: id }; // Ensure 'id' is defined or passed appropriately
+        newReview(reviewData);
+        console.log(reviewData)
+    };
     useEffect(() => {
         photoDetails(id)
         if (error) {

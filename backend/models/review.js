@@ -6,19 +6,29 @@ const reviewSchema = new mongoose.Schema({
         ref: 'Photo',
         required: [true, 'PLEASE SELECT A PHOTO TO BE ADDED TO CART'],
     },
-    rating: {
-        type: Number,
-        required: true
-    },
-    comment: {
-        type: String,
-        required: true
-    },
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: true
-    },
+
+    rev: [
+        {
+            user: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            rating: {
+                type: Number,
+                required: true
+            },
+            comment: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    
     createdAt: {
         type: Date,
         default: Date.now

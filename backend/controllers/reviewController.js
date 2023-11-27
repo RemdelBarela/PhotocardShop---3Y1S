@@ -1,5 +1,4 @@
 const Review = require('../models/review')
-// const Photo = require('../models/photo')
 const Photo = require('../models/photo')
 // const Order = require('../models/order')
 
@@ -45,27 +44,61 @@ exports.getSingleReview = async (req, res, next) => {
 	})
 }
 
-exports.newReview = async (req, res, next) => {
-	const { photo, rating, comment } = req.body;
+exports.createPhotoReview = async (req, res, next) => {
+    try {
+        const { rating, comment } = req.body;
+		console.log(req.body)
+        const photoId = req.params.id; // Assuming 'id' is passed correctly in the request
 
-    const userValidation = new Review({ photo, rating, comment });
-    const validationError = userValidation.validateSync();
+        const newReview = new Review({
+            photo: photoId,
+            rev:{user: req.user._id,
+            name: req.user.name,
+            rating: Number(rating),
+            comment}
+        });
+        await newReview.save();
 
-    if (validationError) {
-        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
-        return res.status(400).json({ errors: errorMessages });
+        // Update numOfReviews in the Review model for the particular photo
+        const reviewCount = await Review.countDocuments({ photo: photoId });
+        await Photo.findByIdAndUpdate(photoId, { numOfReviews: reviewCount });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Review submitted successfully'
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to submit review'
+        });
     }
-	const review = await Review.create(req.body);
-	if (!review)
-		return res.status(400).json({
-			success: false,
-			message: 'FAILED TO CREATE REVIEW'
-		})
-	res.status(201).json({
-		success: true,
-		review
-	})
-}
+};
+
+
+
+// exports.newReview = async (req, res, next) => {
+// 	const { photo, rating, comment } = req.body;
+
+//     const userValidation = new Review({ photo, rating, comment });
+//     const validationError = userValidation.validateSync();
+
+//     if (validationError) {
+//         const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+//         return res.status(400).json({ errors: errorMessages });
+//     }
+// 	const review = await Review.create(req.body);
+// 	if (!review)
+// 		return res.status(400).json({
+// 			success: false,
+// 			message: 'FAILED TO CREATE REVIEW'
+// 		})
+// 	res.status(201).json({
+// 		success: true,
+// 		review
+// 	})
+// }
 
 exports.updateReview = async (req, res, next) => {
 	const { photo, rating, comment } = req.body;

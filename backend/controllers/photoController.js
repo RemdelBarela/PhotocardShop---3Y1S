@@ -239,41 +239,6 @@ exports.getAdminPhotos = async (req, res, next) => {
 	})
 }
 
-exports.createPhotoReview = async (req, res, next) => {
-	const { rating, comment, photoId } = req.body;
-	const review = {
-		user: req.user._id,
-		name: req.user.name,
-		rating: Number(rating),
-		comment
-	}
-	const photo = await Photo.findById(photoId);
-	const isReviewed = photo.reviews.find(
-		r => r.user.toString() === req.user._id.toString()
-	)
-	if (isReviewed) {
-		photo.reviews.forEach(review => {
-			if (review.user.toString() === req.user._id.toString()) {
-				review.comment = comment;
-				review.rating = rating;
-			}
-		})
-	} else {
-		photo.reviews.push(review);
-		photo.numOfReviews = photo.reviews.length
-	}
-	photo.ratings = photo.reviews.reduce((acc, item) => item.rating + acc, 0) / photo.reviews.length
-	await photo.save({ validateBeforeSave: false });
-	if (!photo)
-		return res.status(400).json({
-			success: false,
-			message: 'FAILED TO SUBMIT REVIEW'
-		})
-	return res.status(200).json({
-		success: true
-	})
-}
-
 exports.getPhotoReviews = async (req, res, next) => {
     const photo = await Photo.findById(req.query.id);
     res.status(200).json({
