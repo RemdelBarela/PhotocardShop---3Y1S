@@ -30,10 +30,6 @@ import PhotosList from "./Components/Admin/Photo/PhotosList";
 import NewPhoto from "./Components/Admin/Photo/NewPhoto";
 import UpdatePhoto from "./Components/Admin/Photo/UpdatePhoto";
 
-import ListReviews from "./Components/Photo/Review/ListReviews";
-
-import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
-
 import MaterialsList from "./Components/Admin/Material/MaterialsList";
 import NewMaterial from "./Components/Admin/Material/NewMaterial";
 import UpdateMaterial from "./Components/Admin/Material/UpdateMaterial";
@@ -53,6 +49,16 @@ import ProcessOrder from "./Components/Admin/Order/ProcessOrder"
 import Receipt from "./Components/Admin/Receipt/Receipt"
 
 import Dashboard from "./Components/Admin/Chart/Dashboard";
+// import PhotoSalesChart from "./Components/Admin/Chart/PhotoSalesChart";
+// import MaterialSalesChart from "./Components/Admin/Chart/MaterialSalesChart";
+// import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
+
+import ListReviews from "./Components/Photo/Review/ListReviews";
+import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
+import NewReview from "./Components/Review/NewReview";
+import ReviewsList from "./Components/Review/ReviewsList";
+
+
 
 function App() {
   const [isDeleted, setIsDeleted] = useState(false)
@@ -84,7 +90,7 @@ function App() {
       // Fetch details of the photocard using the photocard_id
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/photocard/${photocardId}`);
 
-      const newItem = {
+      const item = {
         photocard: data.photocard._id,
         photo: data.photocard.photo._id,
         material: data.photocard.material._id,
@@ -97,29 +103,20 @@ function App() {
         // Add other necessary details of the photocard here based on your requirement
       };
 
-      // console.log(item)
+      const isItemExist = state.cartItems.find(i => i.photocard === item.photocard)
+      console.log(isItemExist, state)
 
-      const isItemExist = state.cartItems.find(
-        item =>
-          item.photo === newItem.photo &&
-          item.material === newItem.material
-      );
-  
       if (isItemExist) {
         setState({
           ...state,
-          cartItems: state.cartItems.map(item =>
-            item.photo === newItem.photo &&
-            item.material === newItem.material
-              ? { ...item, quantity: item.quantity + quantity } // Update quantity if item already exists
-              : item
-          ),
-        });
-      } else {
+          cartItems: state.cartItems.map(i => i.photocard === isItemExist.photocard ? item : i)
+        })
+      }
+      else {
         setState({
           ...state,
-          cartItems: [...state.cartItems, newItem],
-        });
+          cartItems: [...state.cartItems, item]
+        })
       }
   
       toast.success('PHOTOCARD ADDED TO CART', {
@@ -212,12 +209,12 @@ function App() {
           
           
           <Route path="/review/:id" element={<ListReviews />} exact="true" />
-
+          <Route path="/review/new" element={<NewReview />} exact="true" />
           <Route
             path="/admin/reviews"
             element={
               <ProtectedRoute isAdmin={true} >
-                <PhotoReviews />
+                <ReviewsList />
               </ProtectedRoute>} /> 
 
           <Route
@@ -259,6 +256,38 @@ function App() {
             element={<Receipt />}/>
 
         <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Dashboard />
+              </ProtectedRoute>
+            }/> */}
+
+            {/* <Route
+            path="/admin/photo-sales"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <PhotoSalesChart />
+              </ProtectedRoute>
+            }/>
+
+            <Route
+            path="/admin/customer-sales"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UserSalesChart />
+              </ProtectedRoute>
+            }/>
+
+            <Route
+            path="/admin/material-sales"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <MaterialSalesChart />
+              </ProtectedRoute>
+            }/> */}
         </Routes>
       </Router>
       <Footer />

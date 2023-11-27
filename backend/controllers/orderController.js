@@ -2,7 +2,8 @@ const Order = require('../models/order');
 const User = require('../models/user');
 const Photocard = require('../models/photocard');
 const Material = require('../models/material');
-const sendEmail = require('../utils/sendEmail')
+const sendShippedEmail = require('../utils/sendShippedEmail')
+const sendDeliveredEmail = require('../utils/sendDeliveredEmail')
 
 exports.newOrder = async (req, res, next) => {
     const {
@@ -83,7 +84,10 @@ exports.allOrders = async (req, res, next) =>
 
 exports.updateOrder = async (req, res, next) => {
     
-        const order = await Order.findById(req.params.id);
+        const orderId = req.params.id;
+        const order = await Order.findById(orderId).populate('orderItems.photocard');
+
+        console.log('Retrieved Order:', order);
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
@@ -93,39 +97,67 @@ exports.updateOrder = async (req, res, next) => {
             return res.status(400).json({ message: 'This order has already been delivered' });
         }
 
-        // if (req.body.status === 'Delivered') {
-        //     // Iterate through order items to update stock
-        //     for (const item of order.orderItems) {
-        //         await updateStock(item.product, -item.quantity); // Deduct the sold quantity from stock
-        //     }
-        // }
-
+        // Update order status and deliveredAt time
         order.orderStatus = req.body.status;
-        order.deliveredAt = Date.now()
+        order.deliveredAt = Date.now();
         await order.save();
 
-        // Send email notification when the order status changes to "Shipped"
+        try {
+        // Send email notifications based on the updated order status
         if (order.orderStatus === 'Shipped') {
-            const user = await User.findById(order.user);
-            if (user) {
-                // Generate PDF link for the receipt
-                const pdfLink = `${req.protocol}://localhost:3000/print-receipt/${order._id}`
-    
-                // Create the email message with the PDF link
-                const message = `Your order with ID ${order._id} has been shipped. Thank you for shopping with us!\n\n<a href="${pdfLink}">Download Receipt</a>`;
-                
-                // Send the email notification
-                await sendEmail({
-                    email: user.email,
-                    subject: 'Order Shipped Notification',
-                    message
-                });
+            for (const orderItem of order.orderItems) {
+                const photocard = orderItem.photocard;
+
+                if (!photocard) {
+                    throw new Error('Photocard not found');
+                }
+
+                const material = await Material.findById(photocard.material);
+
+                if (!material) {
+                    throw new Error('Material not found');
+                }
+
+                // Deduct the quantity of the order item from the material stock
+                material.stock -= orderItem.quantity;
+                await material.save();
             }
         }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+        
+
+       
+            const user = await User.findById(order.user);
+
+            if (user) {
+                const pdfLink = `${req.protocol}://localhost:3000/print-receipt/${orderId}`;
+                let message = '';
+
+                if (order.orderStatus === 'Shipped') {
+                    message = `Your order with ID ${orderId} has been shipped. Thank you for shopping with us!\n\n<a href="${pdfLink}">Download Receipt</a>`;
+                    await sendShippedEmail({
+                        email: user.email,
+                        subject: 'Order Shipped Notification',
+                        message
+                    });
+                } else if (order.orderStatus === 'Delivered') {
+                    message = `The order with ID ${orderId} has been delivered. \n\n<a href="${pdfLink}">Download Receipt</a>`;
+                    await sendDeliveredEmail({
+                        email: user.email,
+                        subject: 'Order Completed Notification',
+                        message
+                    });
+                }
+            }
+        
 
         res.status(200).json({ success: true });
-  
+   
 };
+
+
 
 exports.deleteOrder = async (req, res, next) => {
 

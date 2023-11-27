@@ -18,8 +18,8 @@ const UserSalesChart = ({ data }) => {
     const [sales, setSales] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const userSales = async () => {
 
+    const userSales = async () => {
         try {
             const config = {
                 headers: {
@@ -35,14 +35,14 @@ const UserSalesChart = ({ data }) => {
             setError(error.response.data.message)
         }
     }
-    const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
+    const barColors = ["#FF0000", "#000000", "#800000"];
     useEffect(() => {
         userSales()
         // allUsers()
     }, [])
 
     return (
-        <ResponsiveContainer width="90%" height={600}>
+        <ResponsiveContainer width="70%" height={500}>
             {loading ? <Loader /> : (<BarChart
                 data={sales}
             >
@@ -62,8 +62,6 @@ const UserSalesChart = ({ data }) => {
                 </Bar>
             </BarChart>)}
         </ResponsiveContainer>
-
-
     );
 }
 export default UserSalesChart

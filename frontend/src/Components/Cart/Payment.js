@@ -70,31 +70,14 @@ const Payment = ({shippingInfo}) => {
             id: 'pi_1DpdYh2eZvKYlo2CYIynhU32',
             status: 'succeeded'
         }
+        
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+
         createOrder(order)
 
         console.log(cartItems)
        
       }
-
-    // const submitHandler = async (e) => {
-    //     e.preventDefault();
-    //     document.querySelector('#pay_btn').disabled = true;
-    //     order.paymentInfo = {
-    //         id: 'pi_1DpdYh2eZvKYlo2CYIynhU32',
-    //         status: 'succeeded'
-    //     }
-    
-    //     // Remove purchased item(s) from cartItems
-    //     // For example, if you want to clear cartItems after payment:
-    //     const updatedCartItems = []; // Or any logic to remove purchased items
-    //     setCartItems(updatedCartItems); // Update the cartItems state
-    
-    //     // Update the localStorage as well, if needed
-    //     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    
-    //     createOrder(order);
-    //     // localStorage.removeItem('cartItems');
-    // };
 
     return (
         <Fragment>
