@@ -94,8 +94,8 @@ const NewMaterial = () => {
             <MetaData title={'NEW MATERIAL'} />
             <div className="row">
 
-            <div className="col-12 col-md-2">
-            <div style={{  height: '90vh', overflow: 'scroll initial' }}>
+            <div className="col-12 col-md-2"style={{  marginBottom: "2px" }}>
+            <div style={{  height: '100vh', overflow: 'scroll initial' }}>
                 <Sidebar />
                 </div>
             </div>
