@@ -50,7 +50,7 @@ import Receipt from "./Components/Admin/Receipt/Receipt"
 
 import Dashboard from "./Components/Admin/Chart/Dashboard";
 import PhotoSalesChart from "./Components/Admin/Chart/PhotoSalesChart";
-import MaterialSalesChart from "./Components/Admin/Chart/MaterialSalesChart";
+import OrderStatusSalesChart from "./Components/Admin/Chart/OrderStatusSalesChart";
 import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
 
 import ListReviews from "./Components/Photo/Review/ListReviews";
@@ -281,10 +281,10 @@ function App() {
             }/>
 
             <Route
-            path="/admin/material-sales"
+            path="/admin/order-status-counts"
             element={
               <ProtectedRoute isAdmin={true}>
-                <MaterialSalesChart />
+                <OrderStatusSalesChart />
               </ProtectedRoute>
             }/>
         </Routes>

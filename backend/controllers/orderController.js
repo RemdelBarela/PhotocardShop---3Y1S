@@ -341,3 +341,46 @@ exports.salesPerMonth = async (req, res, next) => {
     })
 
 }
+
+exports.orderStatusCounts = async (req, res, next) => {
+    try {
+        const orderCounts = await Order.aggregate([
+            {
+                $group: {
+                    _id: "$orderStatus",
+                    count: { $sum: 1 }
+                },
+            },
+        ]);
+
+        if (!orderCounts) {
+            return res.status(404).json({
+                message: 'Error fetching order counts'
+            });
+        }
+
+        let totalCount = orderCounts.reduce((total, status) => total + status.count, 0);
+
+        let statusPercentage = orderCounts.map(item => {
+            percent = Number(((item.count / totalCount) * 100).toFixed(2));
+            total = {
+                status: item._id,
+                percent
+            };
+            return total;
+        });
+
+        res.status(200).json({
+            success: true,
+            statusPercentage,
+            orderCounts,
+            totalCount
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        });
+    }
+};

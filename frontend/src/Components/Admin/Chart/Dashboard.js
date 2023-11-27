@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import UserSalesChart from './UserSalesChart';
 import PhotoSalesChart from './PhotoSalesChart';
-import MaterialSalesChart from './MaterialSalesChart';
+import OrderStatusSalesChart from './OrderStatusSalesChart';
 
 const Dashboard = () => {
 
@@ -223,7 +223,7 @@ const Dashboard = () => {
                     </Fragment>
                     <Fragment>
                         
-                        <MaterialSalesChart />
+                        <OrderStatusSalesChart />
                     </Fragment>
                     <Fragment>
                        
