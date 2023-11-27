@@ -1,6 +1,9 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 
 const ListReviews = ({ reviews }) => {
+    useEffect(() => {
+        console.log('Received rev prop:', reviews);
+      }, [reviews]); 
     return (
         <div className="reviews w-75">
             <br /><h5 className="yes-indent"><strong>PHOTO FEEDBACKS</strong></h5>

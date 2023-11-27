@@ -58,7 +58,7 @@ const ReviewsList = () => {
         }
 
         if (isDeleted) {
-            toast.success('Reviews deleted successfully', {
+            toast.success('REVIEW/S DELETED SUCCESSFULLY', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             navigate('/admin/reviews');
@@ -107,32 +107,32 @@ const ReviewsList = () => {
                     sort: 'asc',
                 },
                 {
-                    label: 'ID',
-                    field: 'id',
-                    sort: 'asc',
-                },
-                // {
-                //     label: 'User',
-                //     field: 'user',
-                //     sort: 'asc',
-                // },
-                {
-                    label: 'Name',
-                    field: 'photo',
+                    label: 'REVIEW ID',
+                    field: 'reviewId',
                     sort: 'asc',
                 },
                 {
-                    label: 'Rating',
+                    label: 'PHOTO ID',
+                    field: 'photoId',
+                    sort: 'asc',
+                },
+                {
+                    label: 'NAME',
+                    field: 'name',
+                    sort: 'asc',
+                },
+                {
+                    label: 'RATING',
                     field: 'rating',
                     sort: 'asc',
                 },
                 {
-                    label: 'Comment',
+                    label: 'COMMENT',
                     field: 'comment',
                     sort: 'asc',
                 },
                 {
-                    label: 'Actions',
+                    label: 'ACTIONS',
                     field: 'actions',
                 },
             ],
@@ -148,17 +148,14 @@ const ReviewsList = () => {
                         onChange={() => toggleReviewSelection(review._id)}
                     />
                 ),
-                id: review._id,
-                images: review.images.map((image, index) => (
-                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
-                )),
-                name: review.photo,
-                // price: `$${review.price}`,
+                reviewId: review._id,
+                photoId: review.photo,
+                name: review.name,
                 rating: review.rating,
                 comment: review.comment,
                 actions: (
                     <Fragment>
-                        <Link to={`/admin/review/${review._id}`} className="btn btn-primary py-1 px-2">
+                        <Link to={`/photo/${review.photo}`} className="btn btn-primary py-1 px-2">
                             <i className="fa fa-pen"></i>
                         </Link>
                         <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteReviewHandler(review._id)}>

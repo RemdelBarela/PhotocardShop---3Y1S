@@ -208,8 +208,8 @@ function App() {
           <Route path="/admin/photo" element={<NewPhoto />} />
           <Route path="/admin/photo/:id" element={<UpdatePhoto />} />
           
-          
-          <Route path="/review/:id" element={<ListReviews />} exact="true" />
+{/*           
+          <Route path="/review/:id" element={<ListReviews />} exact="true" /> */}
 
           <Route
             path="/admin/reviews"
