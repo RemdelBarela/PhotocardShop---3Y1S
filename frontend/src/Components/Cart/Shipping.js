@@ -34,11 +34,11 @@ const Shipping = ({  shipping, saveShippingInfo }) => {
     <Fragment>
       <MetaData title={'Shipping Info'} />
       <CheckoutSteps shipping />
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
-        <form className="shipping-form" onSubmit={submitHandler}>
+      <div className="row wrapper"  style={{marginTop:"30px", marginBottom: "70px"}}>
+        <div className="col-10 col-lg-5" style={{marginBottom:"50px"}}>
+        <form className="shipping-form" onSubmit={submitHandler} >
     <h1 className="mb-4">SHIPPING DETAILS</h1>
-            <div className="form-group">
+            <div className="form-group" >
               <label htmlFor="address_field" >
                 ADDRESS
               </label>

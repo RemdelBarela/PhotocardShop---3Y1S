@@ -84,7 +84,7 @@ const Payment = ({shippingInfo}) => {
         <Fragment>
             <MetaData title={'Payment'} />
             <CheckoutSteps shipping confirmOrder payment />
-            <div className="row wrapper">
+            <div className="row wrapper" style={{marginTop: "10px",marginBottom:"100px"}}>
         <div className="col-10 col-lg-5">
         <form className="shipping-form" onSubmit={submitHandler}>
                    <h1 className="mb-4">Card Info</h1>
