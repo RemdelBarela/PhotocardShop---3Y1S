@@ -29,7 +29,7 @@ const Sidebar = () => {
         </CDBSidebarHeader> */}
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu style={{ backgroundColor: "black", color: "white" }}>
-            <NavLink exact to="/dashboard" activeClassName="activeClicked">
+            <NavLink exact to="/admin/dashboard" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="cube" >DASHBOARD</CDBSidebarMenuItem>
             </NavLink>
             
