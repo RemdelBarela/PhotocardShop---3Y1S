@@ -18,7 +18,8 @@ const Dashboard = () => {
     const [photos, setPhotos] = useState([])
     const [error, setError] = useState('')
     const [users, setUsers] = useState([])
-    const [reviews, setReviews] = useState([])
+    const [orders, setOrders] = useState([])
+    // const [reviews, setReviews] = useState([])
     const [materials, setMaterials] = useState([])
     const [loading, setLoading] = useState(true)
     const [totalAmount, setTotalAmount] = useState([])
@@ -88,24 +89,19 @@ const Dashboard = () => {
         }
     };
 
-    const getAdminReviews = async () => {
+    const listOrders = async () => {
         try {
-
             const config = {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/reviews`, config)
-            console.log(data)
-            setReviews(data.reviews)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/orders`, config)
+            setOrders(data.orders)
             setLoading(false)
         } catch (error) {
-
             setError(error.response.data.message)
-
         }
     }
 
@@ -114,7 +110,7 @@ const Dashboard = () => {
         getAdminPhotos()
         listUsers()
         getAdminMaterials()
-        getAdminReviews()
+        listOrders()
     }, [])
 
     return (
@@ -125,7 +121,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <h1 className="my-4">Dashboard</h1>
+                    <h1 className="my-4 text-center">DASHBOARD</h1>
 
                     {loading ? <Loader /> : (
                         <Fragment>
@@ -146,11 +142,11 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-success o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Photos<br /> <b>{photos && photos.length}</b></div>
+                                            <div className="text-center card-font-size">PHOTOS<br /> <b>{photos && photos.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/photos">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">VIEW DETAILS</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
@@ -161,11 +157,11 @@ const Dashboard = () => {
                                     <div className="card text-white bg-danger o-hidden h-100">
 
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Materials<br /> <b>{materials && materials.length}</b></div>
+                                            <div className="text-center card-font-size">MATERIALS<br /> <b>{materials && materials.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/materials">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">VIEW DETAILS</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
@@ -177,11 +173,11 @@ const Dashboard = () => {
                                     <div className="card text-white bg-info o-hidden h-100">
 
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Accounts<br /> <b>{users && users.length}</b></div>
+                                            <div className="text-center card-font-size">ACCOUNTS<br /> <b>{users && users.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">VIEW DETAILS</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
@@ -193,11 +189,11 @@ const Dashboard = () => {
                                     <div className="card text-white bg-warning o-hidden h-100">
 
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Reviews<br /> <b>{reviews && reviews.length}</b></div>
+                                            <div className="text-center card-font-size">ORDERS<br /> <b>{orders && orders.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">VIEW DETAILS</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
