@@ -11,9 +11,6 @@ router.get('/photos', getPhotos)
 router.get('/photo/:id', getSinglePhoto);
 router.route('/admin/photo/:id', isAuthenticatedUser, authorizeRoles('admin')).put(upload.array('images'), updatePhoto).delete(deletePhoto);
 router.get('/admin/photos', isAuthenticatedUser, authorizeRoles('admin'), getAdminPhotos);
-// router.put('/review', isAuthenticatedUser, createPhotoReview);
-// router.get('/reviews', isAuthenticatedUser, getPhotoReviews)
-// router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
 router.get('/allmaterials', getAllMaterials);
 router.get('/admin/photo-sales', photoSales);
 router.get('/admin/rating-stats', getRatingStats);

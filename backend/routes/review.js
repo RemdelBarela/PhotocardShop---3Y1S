@@ -12,8 +12,8 @@ router.get('/review/:id', getSingleReview);
 router.get('/review/photo/:id',  getPhotoReview);
 router.route('/admin/review/:id', isAuthenticatedUser, authorizeRoles('admin')).delete(deleteReview);
 // router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
-router.get('/admin/reviews', getAdminReviews);
-router.get('/allphotos', getAllPhotos);
+router.get('/admin/reviews', isAuthenticatedUser, authorizeRoles('admin'), getAdminReviews);
+// router.get('/allphotos', getAllPhotos);
 // router.get('/admin/photo-sales', photoSales);
 
 module.exports = router;

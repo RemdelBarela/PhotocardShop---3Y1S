@@ -38,7 +38,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [cart, setCart] = useState([])
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
-    const [reviews, setReviews] = useState('');
+    const [review, setReview] = useState('');
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
     
@@ -62,11 +62,31 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             let res = await axios.get(`http://localhost:4000/api/v1/photo/${id}`);
             setPhoto(res.data.photo);
             setLoading(false);
+            console.log(res)
 
         } catch (err) {
 
             // setLoading(false)
             setError('NO PHOTO AVAILABLE')
+            setLoading(false)
+            // toast.error(error)
+            // toast.error(err.response.data.message)
+        }
+
+    }
+
+    const reviewDetails = async (id) => {
+        // let link = `http://localhost:4000/api/v1/photo/${id}`
+        try {
+            let respo = await axios.get(`http://localhost:4000/api/v1/review/photo/${id}`);
+            setReview(respo.data.review);
+            console.log(review)
+            setLoading(false);
+
+        } catch (err) {
+
+            // setLoading(false)
+            setError('NO REVIEW AVAILABLE')
             setLoading(false)
             // toast.error(error)
             // toast.error(err.response.data.message)
@@ -106,11 +126,11 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/photocard/new/${id}/${selectedMaterial._id}`)
 
             
-            console.log(data);
+            // console.log(data);
             setLoading(false);
             setSuccess2(data.success2);
             // setPhotocard(data.photocard);
-            console.log(data)
+            // console.log(data)
 
             const photocardId = data.photocard._id;
 
@@ -177,7 +197,19 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         console.log(reviewData)
     };
     useEffect(() => {
-        photoDetails(id)
+        const fetchData = async () => {
+            try {
+                await photoDetails(id); // Fetch photo details
+
+                // Once photo details are fetched, fetch review details
+                await reviewDetails(id);
+            } catch (err) {
+                // Handle errors if needed
+            }
+        };
+
+        fetchData(); // Call fetchData function to fetch both photo and review details
+
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -194,18 +226,19 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
         }
     }, [id, error, success, errorReview]);
+
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
     // console.log(state.cartItems)
     // console.log(cart)
 
     
     useEffect(() => {
-        // Fetch materials from the backend API
+
         const chooseMaterial = async () => {
           try {
             const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/allmaterials`);
-            console.log(response.data); // Log the fetched data
-            // setMaterials(response.data);
+            console.log(response.data); 
+
           } catch (error) {
             console.error('ERROR GETTING MATERIALS:', error);
           }
@@ -248,7 +281,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                              <Carousel pause='hover'>
                                  {photo.images && photo.images.map(image => (
                                      <Carousel.Item key={image.public_id} style={{ height: '360px', overflow: 'hidden' }}>
-                                         <img className="d-block w-100 h-100 object-fit-cover" src={image.url} alt={photo.title} />
+                                         <img className="d-block w-100 h-100 object-fit-cover" src={image.url} alt={photo.name} />
                                      </Carousel.Item>
                                  ))}
                              </Carousel>
@@ -274,7 +307,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                         <br />
                         <h5 className="mt-2 text-left"><strong>TOTAL REVIEWS:</strong></h5>
                         <div className="rating-outer inline">
-                            <div className="rating-inner d-inline text-center" style={{ width: `${(reviews.rating / 5) * 100}%` }}></div>
+                            <div className="rating-inner d-inline text-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
                         </div>
                         <span id="no_of_reviews"><br/>({photo.numOfReviews} REVIEWS)</span>
 
@@ -312,8 +345,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                        <MDBRow className="offset-lg-0 mt-3">
                         <hr/>
-                            {photo.reviews && photo.reviews.length > 0 && (
-                                 <ListReviews reviews={photo.reviews} />
+                            {review && review.length > 0 && (
+                                 <ListReviews reviews={review}/>
                              )}
                             <div className="row mt-2 mb-5">
                                 <div className="rating w-100">

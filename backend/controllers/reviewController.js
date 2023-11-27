@@ -58,12 +58,12 @@ exports.getPhotoReview = async (req, res, next) => {
   
 	  // Assuming there's a relationship between Photo and Review models
 	  // and the Review model has a reference to the Photo ID
-	  const reviews = await Review.find({ photo: req.params.id });
+	  const review = await Review.find({ photo: req.params.id });
   
 	  res.status(200).json({
 		success: true,
 		photo,
-		reviews
+		review
 	  });
 	} catch (err) {
 	  return res.status(500).json({
@@ -71,102 +71,115 @@ exports.getPhotoReview = async (req, res, next) => {
 		message: 'Error retrieving photo and reviews'
 	  });
 	}
-  };
-
-
-  exports.createPhotoReview = async (req, res, next) => {
+}
+  
+exports.createPhotoReview = async (req, res, next) => {
 	try {
 	  const { rating, comment } = req.body;
 	  const photoId = req.params.id; // Assuming 'id' is passed correctly in the request
   
 	  const existingReview = await Review.findOne({
 		photo: photoId,
-		'rev.user': req.user._id // Check if any review exists for this photo by the user
+		user: req.user._id // Check if any review exists for this photo by the user
 	  });
   
-	  
-
 	  if (existingReview) {
-		// Check if the existing review belongs to the current user
-	  
-		// Find the index of the review that belongs to the current user
-		const index = existingReview.rev.findIndex(
-		  review => String(review.user) === String(req.user._id)
-		);
-	  
-		if (index !== -1) {
-		  // If the user's review exists in the array, update it
-		  existingReview.rev[index].rating = Number(rating);
-		  existingReview.rev[index].comment = comment;
-	  
-		  await existingReview.save();
-	  
-		  console.log('Review Updated Successfully');
-		  console.log('Updated Review:', existingReview);}
+		// Update the existing review
+		existingReview.rating = Number(rating);
+		existingReview.comment = comment;
+  
+		await existingReview.save();
+  
+		console.log('Review Updated Successfully');
+		console.log('Updated Review:', existingReview);
 	  } else {
 		// If no review exists for the user, create a new review
 		const newReview = new Review({
 		  photo: photoId,
-		  rev: {
-			user: req.user._id,
-			name: req.user.name,
-			rating: Number(rating),
-			comment
-		  }
+		  user: req.user._id,
+		  name: req.user.name,
+		  rating: Number(rating),
+		  comment
 		});
+
 		await newReview.save();
 	  }
   
-	  const reviewCount = await Review.countDocuments({ photo: photoId });
-	  await Photo.findByIdAndUpdate(photoId, { numOfReviews: reviewCount });
+	  	// Fetch reviews for the given photoId
+		const reviews = await Review.find({ photo: photoId });
+
+		// Calculate review count
+		const reviewCount = reviews.length;
+
+		// Calculate average rating
+		const totalRating = reviews.reduce((acc, item) => item.rating + acc, 0);
+		const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
+
+		// Update Photo document
+		await Photo.findByIdAndUpdate(photoId, {
+		numOfReviews: reviewCount,
+		ratings: averageRating
+		});
+
   
 	  return res.status(200).json({
 		success: true,
-		message: 'Review submitted successfully'
+		message: 'SUCCESSFULLY SUBMITTED YOUR REVIEW'
 	  });
 	} catch (err) {
 	  console.error(err);
 	  return res.status(500).json({
 		success: false,
-		message: 'Failed to submit review'
+		message: 'FAILED TO SUBMIT REVIEW'
 	  });
 	}
   };
   
-
-exports.deleteReview = async (req, res, next) => {
+  exports.deleteReview = async (req, res, next) => {
 	try {
-	const review = await review.findByIdAndDelete(req.params.id);
-	if (!review) {
+	  const review = await Review.findByIdAndDelete(req.params.id);
+  
+	  if (!review) {
 		return res.status(404).json({
-			success: false,
-			message: 'NO PRODUCT FOUND'
-		})
-	}
-
-    await Review.findByIdAndDelete(req.params.id);
-	res.status(200).json({
-		success: true,
-		message: 'REVIEW REMOVED'
-	});
-	} catch (error) {
-		// Log the error for debugging purposes
-		console.error(error);
-
-		// Send an error response
-		res.status(500).json({
-			success: false,
-			message: 'INTERNAL SERVER ERROR'
+		  success: false,
+		  message: 'Review not found'
 		});
+	  }
+  
+	  const reviews = await Review.find({ photo: review.photo });
+  
+	  // Calculate review count
+	  const reviewCount = reviews.length;
+  
+	  // Calculate average rating
+	  const totalRating = reviews.reduce((acc, item) => acc + item.rating, 0);
+	  const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
+  
+	  // Update Photo document
+	  await Photo.findByIdAndUpdate(review.photo, {
+		numOfReviews: reviewCount,
+		ratings: averageRating
+	  });
+  
+	  res.status(200).json({
+		success: true,
+		message: 'Review deleted successfully'
+	  });
+	} catch (err) {
+	  console.error(err);
+	  res.status(500).json({
+		success: false,
+		message: 'Server error'
+	  });
 	}
-}
+  };
 
 exports.getAdminReviews = async (req, res, next) => {
 	const reviews = await Review.find();
 	if (!reviews) {
 		return res.status(404).json({
 			success: false,
-			message: 'PRODUCTS NOT FOUND'
+			message: 'REVIEW NOT FOUND'
 		})
 	}
 	res.status(200).json({
@@ -175,24 +188,24 @@ exports.getAdminReviews = async (req, res, next) => {
 	})
 }
 
-exports.getAllPhotos = async (req, res, next) => {
-    try {
-        const allphotos = await Photo.find({}, 'name'); // Only fetch the name field
-        if (!allphotos) {
-            return res.status(404).json({
-                success: false,
-                message: 'PHOTOS NOT FOUND'
-            });
-        }
-        res.status(200).json({
-            success: true,
-            allphotos
-        });
-    } catch (error) {
-        console.error('ERROR GETTING PHOTOS:', error);
-        res.status(500).json({
-            success: false,
-            message: 'INTERNAL SERVER ERROR'
-        });
-    }
-};
+// exports.getAllPhotos = async (req, res, next) => {
+//     try {
+//         const allphotos = await Photo.find({}, 'name'); // Only fetch the name field
+//         if (!allphotos) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'PHOTOS NOT FOUND'
+//             });
+//         }
+//         res.status(200).json({
+//             success: true,
+//             allphotos
+//         });
+//     } catch (error) {
+//         console.error('ERROR GETTING PHOTOS:', error);
+//         res.status(500).json({
+//             success: false,
+//             message: 'INTERNAL SERVER ERROR'
+//         });
+//     }
+// };
