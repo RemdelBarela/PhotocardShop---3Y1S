@@ -49,13 +49,12 @@ import ProcessOrder from "./Components/Admin/Order/ProcessOrder"
 import Receipt from "./Components/Admin/Receipt/Receipt"
 
 import Dashboard from "./Components/Admin/Chart/Dashboard";
-// import PhotoSalesChart from "./Components/Admin/Chart/PhotoSalesChart";
-// import MaterialSalesChart from "./Components/Admin/Chart/MaterialSalesChart";
-// import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
+import PhotoSalesChart from "./Components/Admin/Chart/PhotoSalesChart";
+import MaterialSalesChart from "./Components/Admin/Chart/MaterialSalesChart";
+import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
 
 import ListReviews from "./Components/Photo/Review/ListReviews";
 // import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
-// import NewReview from "./Components/Review/NewReview";
 import ReviewsList from "./Components/Review/ReviewsList";
 
 
@@ -255,17 +254,17 @@ function App() {
           <Route path="/print-receipt/:id"
             element={<Receipt />}/>
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
 
-        {/* <Route
-            path="/dashboard"
+        <Route
+            path="/admin/dashboard"
             element={
               <ProtectedRoute isAdmin={true}>
                 <Dashboard />
               </ProtectedRoute>
-            }/> */}
+            }/>
 
-            {/* <Route
+            <Route
             path="/admin/photo-sales"
             element={
               <ProtectedRoute isAdmin={true}>
@@ -287,7 +286,7 @@ function App() {
               <ProtectedRoute isAdmin={true}>
                 <MaterialSalesChart />
               </ProtectedRoute>
-            }/> */}
+            }/>
         </Routes>
       </Router>
       <Footer />
