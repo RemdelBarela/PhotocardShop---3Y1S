@@ -10,6 +10,7 @@ import MetaData from '../../Layout/MetaData'
 // import Sidebar from './SideBar'
 import { getToken } from '../../../utils/helpers';
 import Loader from '../../Layout/Loader'
+import { FaRegMehBlank } from 'react-icons/fa';
 // ... (your existing imports)
 
 const MaterialsList = () => {
@@ -146,8 +147,7 @@ const MaterialsList = () => {
                 )),
                 name: material.name,
                 stock: material.stock,
-                actions: (
-                    <Fragment>
+                actions: <Fragment>
                         <Link to={`/admin/material/${material._id}`} className="btn btn-primary py-1 px-2">
                             <i className="fa fa-pen"></i>
                         </Link>
@@ -155,7 +155,7 @@ const MaterialsList = () => {
                             <i className="fa fa-trash"></i>
                         </button>
                     </Fragment>
-                )
+                
             });
         });
 
@@ -202,25 +202,16 @@ const MaterialsList = () => {
         }
     };
 
-
-
-
     return (
- 
-
 
         <Fragment>
         <MetaData title={'All Materials'} />
         <div className="row">
             <div className="col-12 col-md-2">
-                <div style={{ height: '210vh', overflow: 'scroll initial' }}>
                     <Sidebar />
                 </div>
-            </div>
-
-            <div className="col-12 col-md-8">
-                <div className="wrapper my-5">
-                    <div style={{ width: '100%', paddingLeft: '5%', margin: '0 auto' }}>
+            <div className="col-12 col-md-10" style={{  paddingLeft: "70px", marginBottom: "70px" }}>
+                <Fragment>
                         <h1 className="my-5">LIST OF ALL MATERIALS</h1>
                         {loading ? (
                             <Loader />
@@ -236,12 +227,12 @@ const MaterialsList = () => {
                                 </button>
                             </div>
                             <MDBDataTable data={materialsList()} className="px-3" bordered striped hover />
+                    
                         </div>
                     )}
-                    </div>
+                    </Fragment>
                 </div>
             </div>
-        </div>
     </Fragment>
     );
 };
