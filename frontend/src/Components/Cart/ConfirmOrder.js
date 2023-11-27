@@ -53,7 +53,7 @@ const ConfirmOrder = ({ shippingInfo}) => {
             <MetaData title={'Confirm Order'} />
             <CheckoutSteps shipping confirmOrder />
             
-            <div className="row wrapper">
+            <div className="row wrapper" style={{marginTop:"10px",marginBottom:"100px"}}>
         <div className="col-10 col-lg-5">
           
                    <h4 className="mb-3">SHIPPING DETAILS</h4>
@@ -99,10 +99,10 @@ const ConfirmOrder = ({ shippingInfo}) => {
   ))}
 </Fragment>
 
-                          
+      
                 </div>
 
-                <div className="col-12 col-lg-3 my-4">
+                <div className="col-12 col-lg-3 my-4" style={{marginBottom:"70px"}}>
                     <div id="order_summary">
                         <h4>ORDER SUMMARY</h4>
                         <hr />

@@ -88,24 +88,26 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             setLoading(false);
           } 
         }
-      };
+      };//
 
     const increaseQty = () => {
-        const count = document.querySelector('.count')
+        const count = document.querySelector('.count');
         const qty = count.valueAsNumber + 1;
-        setQuantity(qty)
-        if (qty === selectedMaterial.stock) {
+        if (qty <= selectedMaterial.stock) {
+            setQuantity(qty);
+        } else {
             toast.error('CANNOT ADD MORE, YOU REACH THE MAX STOCKS', {
-              position: toast.POSITION.BOTTOM_RIGHT
+                position: toast.POSITION.BOTTOM_RIGHT
             });
-            return;
         }
     }
-
+    
     const decreaseQty = () => {
-        const count = document.querySelector('.count')
+        const count = document.querySelector('.count');
         const qty = count.valueAsNumber - 1;
-        setQuantity(qty)
+        if (qty >= 1) {
+            setQuantity(qty);
+        }
     }
     
     const addToCart = async () => {
