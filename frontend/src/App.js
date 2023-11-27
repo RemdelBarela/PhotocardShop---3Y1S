@@ -54,8 +54,8 @@ import Dashboard from "./Components/Admin/Chart/Dashboard";
 // import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
 
 import ListReviews from "./Components/Photo/Review/ListReviews";
-import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
-import NewReview from "./Components/Review/NewReview";
+// import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
+// import NewReview from "./Components/Review/NewReview";
 import ReviewsList from "./Components/Review/ReviewsList";
 
 
@@ -209,7 +209,7 @@ function App() {
           
           
           <Route path="/review/:id" element={<ListReviews />} exact="true" />
-          <Route path="/review/new" element={<NewReview />} exact="true" />
+
           <Route
             path="/admin/reviews"
             element={
