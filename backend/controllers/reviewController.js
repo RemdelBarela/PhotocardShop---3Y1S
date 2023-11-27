@@ -44,96 +44,126 @@ exports.getSingleReview = async (req, res, next) => {
 	})
 }
 
-exports.createPhotoReview = async (req, res, next) => {
-    try {
-        const { rating, comment } = req.body;
-		console.log(req.body)
-        const photoId = req.params.id; // Assuming 'id' is passed correctly in the request
-
-        const newReview = new Review({
-            photo: photoId,
-            rev:{user: req.user._id,
-            name: req.user.name,
-            rating: Number(rating),
-            comment}
-        });
-        await newReview.save();
-
-        // Update numOfReviews in the Review model for the particular photo
-        const reviewCount = await Review.countDocuments({ photo: photoId });
-        await Photo.findByIdAndUpdate(photoId, { numOfReviews: reviewCount });
-
-        return res.status(200).json({
-            success: true,
-            message: 'Review submitted successfully'
-        });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to submit review'
-        });
-    }
-};
-
-
-
-// exports.newReview = async (req, res, next) => {
-// 	const { photo, rating, comment } = req.body;
-
-//     const userValidation = new Review({ photo, rating, comment });
-//     const validationError = userValidation.validateSync();
-
-//     if (validationError) {
-//         const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
-//         return res.status(400).json({ errors: errorMessages });
-//     }
-// 	const review = await Review.create(req.body);
-// 	if (!review)
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: 'FAILED TO CREATE REVIEW'
-// 		})
-// 	res.status(201).json({
+// exports.getPhotoReview = async (req, res, next) => {
+// 	try {
+// 	  const photo = await Photo.findById(req.params.id);
+	  
+// 	  if (!photo) {
+// 		return res.status(404).json({
+// 		  success: false,
+// 		  message: 'No Photo Found'
+// 		});
+// 	  }
+  
+// 	  // Assuming there's a relationship between Photo and Review models
+// 	  // and the Review model has a reference to the Photo ID
+// 	  const reviews = await Review.find({ photo: req.params.id });
+  
+// 	  res.status(200).json({
 // 		success: true,
-// 		review
-// 	})
-// }
+// 		photo,
+// 		reviews
+// 	  });
+// 	} catch (err) {
+// 	  return res.status(500).json({
+// 		success: false,
+// 		message: 'Error retrieving photo and reviews'
+// 	  });
+// 	}
+//   };
 
-exports.updateReview = async (req, res, next) => {
-	const { photo, rating, comment } = req.body;
-
-    const userValidation = new Review({ photo, rating, comment });
-    const validationError = userValidation.validateSync();
-
-    if (validationError) {
-        const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
-        return res.status(400).json({ errors: errorMessages });
-    }
-
-	let review = await Review.findById(req.params.id);
-	// console.log(req.body)
-	if (!review) {
+exports.getPhotoReview = async (req, res, next) => {
+	try {
+	  const photo = await Photo.findById(req.params.id);
+	  
+	  if (!photo) {
 		return res.status(404).json({
-			success: false,
-			message: 'NO REVIEW FOUND'
-		})
-	}
-	review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-		useFindandModify: false
-	})
-	if (!review)
-		return res.status(400).json({
-			success: false,
-			message: 'FAILED TO UPDATE REVIEW'
-		})
-	return res.status(200).json({
+		  success: false,
+		  message: 'No Photo Found'
+		});
+	  }
+  
+	  // Assuming you want to update the review for a specific user ID
+	  const userId = req.user._id; // Get user ID from request query or wherever it's provided
+  
+	  // Check if a review exists for the given user ID and photo ID
+	  let review = await Review.findOne({ photo: req.params.id, user_id: userId });
+  
+	  if (review) {
+		// If a review exists, update it
+		review = await Review.findOneAndUpdate(
+		  { photo: req.params.id, user_id: userId },
+		  { /* Update the review fields here */ },
+		  { new: true } // Return the updated review
+		);
+	  } else {
+		// If no review exists, create a new one
+		review = new Review({
+		  photo: req.params.id,
+		  user_id: userId,
+		  /* Other review fields */
+		});
+		review = await review.save();
+	  }
+  
+	  res.status(200).json({
 		success: true,
+		photo,
 		review
-	})
-}
+	  });
+	} catch (err) {
+	  return res.status(500).json({
+		success: false,
+		message: 'Error retrieving photo and reviews'
+	  });
+	}
+  };
+
+  exports.createPhotoReview = async (req, res, next) => {
+	try {
+	  const { rating, comment } = req.body;
+	  const photoId = req.params.id; // Assuming 'id' is passed correctly in the request
+  
+	  const existingReview = await Review.findOne({
+		photo: photoId,
+		'rev.user': req.user._id // Check if the user has already submitted a review for this photo
+	  });
+  
+	  if (existingReview) {
+		// If the user has already submitted a review, update it
+		existingReview.rev.rating = Number(rating);
+		existingReview.rev.comment = comment;
+		await existingReview.save();
+	  } else {
+		// If no review exists for the user, create a new review
+		const newReview = new Review({
+		  photo: photoId,
+		  rev: {
+			user: req.user._id,
+			name: req.user.name,
+			rating: Number(rating),
+			comment
+		  }
+		});
+		await newReview.save();
+	  }
+  
+	  // Update numOfReviews in the Review model for the particular photo
+	  const reviewCount = await Review.countDocuments({ photo: photoId });
+	  await Photo.findByIdAndUpdate(photoId, { numOfReviews: reviewCount });
+  
+	  return res.status(200).json({
+		success: true,
+		message: 'Review submitted successfully'
+	  });
+	} catch (err) {
+	  console.error(err);
+	  return res.status(500).json({
+		success: false,
+		message: 'Failed to submit review'
+	  });
+	}
+  };
 
 exports.deleteReview = async (req, res, next) => {
 	try {
