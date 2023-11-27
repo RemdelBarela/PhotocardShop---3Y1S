@@ -52,6 +52,8 @@ import Dashboard from "./Components/Admin/Chart/Dashboard";
 import PhotoSalesChart from "./Components/Admin/Chart/PhotoSalesChart";
 import OrderStatusSalesChart from "./Components/Admin/Chart/OrderStatusSalesChart";
 import UserSalesChart from "./Components/Admin/Chart/UserSalesChart";
+import RatingStatsChart from "./Components/Admin/Chart/RatingStatsChart";
+
 
 import ListReviews from "./Components/Photo/Review/ListReviews";
 // import PhotoReviews from "./Components/Admin/Photo/PhotoReview";
@@ -285,6 +287,14 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <OrderStatusSalesChart />
+              </ProtectedRoute>
+            }/>
+            
+            <Route
+            path="/admin/rating-stats"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <RatingStatsChart />
               </ProtectedRoute>
             }/>
         </Routes>

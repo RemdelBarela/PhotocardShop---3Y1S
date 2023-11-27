@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Label} from 'recharts';
 import { getToken } from '../../../utils/helpers';
 import axios from 'axios';
 import Loader from '../../Layout/Loader';
 
-export default function OrderStatusChart() {
+const OrderStatusChart = () => {
     const [orderStatusCounts, setOrderStatusCounts] = useState('');
+    const [activeIndex, setActiveIndex] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -30,21 +31,72 @@ export default function OrderStatusChart() {
         fetchOrderStatusCounts();
     }, []);
 
+    const handleMouseEnter = (_, index) => {
+        setActiveIndex(index);
+    };
+
+    const handleMouseLeave = () => {
+        setActiveIndex(null);
+    };
+
+    const renderCustomizedLabel = ({
+        cx, cy, midAngle, innerRadius, outerRadius, percent,
+    }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+        const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+
+        return (
+            <text x={x} y={y} fill="#FFF" textAnchor="middle" dominantBaseline="central">
+                {`${(percent * 100).toFixed(2)}%`}
+            </text>
+        );
+    };
+
     return (
-        <ResponsiveContainer width="70%" height={700}>
+        <ResponsiveContainer width="70%" height={700} onMouseLeave={handleMouseLeave}>
             {loading ? (
                 <Loader />
             ) : error ? (
                 <div>Error: {error}</div>
             ) : (
-                <LineChart width={600} height={300} data={orderStatusCounts} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="percent" stroke="#FF0000" fill="#FF0000" strokeWidth={8} />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5"  strokeWidth={4}/>
-                    <XAxis dataKey="status" />
-                    <YAxis />
+                <PieChart>
+                    <Pie
+                        data={orderStatusCounts}
+                        dataKey="percent"
+                        nameKey="status"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={330}
+                        label={renderCustomizedLabel}
+                        activeIndex={activeIndex}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        {
+                            orderStatusCounts.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={index === activeIndex ? '#000000' : '#FF0000'} />
+                            ))
+                        }
+                        <Label
+                            content={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                                const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+                                const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+                                const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+
+                                return (
+                                    <text x={x} y={y} fill="#FFF" textAnchor="middle" dominantBaseline="central">
+                                        {`${(percent * 100).toFixed(2)}%`}
+                                    </text>
+                                );
+                            }}
+                        />
+                    </Pie>
                     <Tooltip />
-                </LineChart>
+                </PieChart>
             )}
         </ResponsiveContainer>
     );
-}
+};
+
+export default OrderStatusChart;
