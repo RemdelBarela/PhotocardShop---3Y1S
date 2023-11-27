@@ -17,6 +17,10 @@ const photoSchema = new mongoose.Schema({
         type: String,
         required: [true, 'PHOTO DESCRIPTION REQUIRED'],
     },
+    ratings: {
+        type: Number,
+        default: 0
+    },
     numOfReviews: {
         type: Number,
         default: 0

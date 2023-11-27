@@ -4,6 +4,7 @@ const Photo = require('../models/photo')
 
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
+const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
 exports.getReviews = async (req, res, next) => {
 	// const photos = await Photo.find({});
@@ -44,34 +45,6 @@ exports.getSingleReview = async (req, res, next) => {
 	})
 }
 
-// exports.getPhotoReview = async (req, res, next) => {
-// 	try {
-// 	  const photo = await Photo.findById(req.params.id);
-	  
-// 	  if (!photo) {
-// 		return res.status(404).json({
-// 		  success: false,
-// 		  message: 'No Photo Found'
-// 		});
-// 	  }
-  
-// 	  // Assuming there's a relationship between Photo and Review models
-// 	  // and the Review model has a reference to the Photo ID
-// 	  const reviews = await Review.find({ photo: req.params.id });
-  
-// 	  res.status(200).json({
-// 		success: true,
-// 		photo,
-// 		reviews
-// 	  });
-// 	} catch (err) {
-// 	  return res.status(500).json({
-// 		success: false,
-// 		message: 'Error retrieving photo and reviews'
-// 	  });
-// 	}
-//   };
-
 exports.getPhotoReview = async (req, res, next) => {
 	try {
 	  const photo = await Photo.findById(req.params.id);
@@ -83,43 +56,23 @@ exports.getPhotoReview = async (req, res, next) => {
 		});
 	  }
   
-	  // Assuming you want to update the review for a specific user ID
-	  const userId = req.user._id; // Get user ID from request query or wherever it's provided
-  
-	  // Check if a review exists for the given user ID and photo ID
-	  let review = await Review.findOne({ photo: req.params.id, user_id: userId });
-  
-	  if (review) {
-		// If a review exists, update it
-		review = await Review.findOneAndUpdate(
-		  { photo: req.params.id, user_id: userId },
-		  { /* Update the review fields here */ },
-		  { new: true } // Return the updated review
-		);
-	  } else {
-		// If no review exists, create a new one
-		review = new Review({
-		  photo: req.params.id,
-		  user_id: userId,
-		  /* Other review fields */
-		});
-		review = await review.save();
-	  }
+	  // Assuming there's a relationship between Photo and Review models
+	  // and the Review model has a reference to the Photo ID
+	  const reviews = await Review.find({ photo: req.params.id });
   
 	  res.status(200).json({
 		success: true,
 		photo,
-		review
+		reviews
 	  });
 	} catch (err) {
-		console.error(err)
 	  return res.status(500).json({
-		
 		success: false,
 		message: 'Error retrieving photo and reviews'
 	  });
 	}
   };
+
 
   exports.createPhotoReview = async (req, res, next) => {
 	try {
