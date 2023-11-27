@@ -18,7 +18,8 @@ const Dashboard = () => {
     const [photos, setPhotos] = useState([])
     const [error, setError] = useState('')
     const [users, setUsers] = useState([])
-    const [orders, setOrders] = useState([])
+    const [reviews, setReviews] = useState([])
+    const [materials, setMaterials] = useState([])
     const [loading, setLoading] = useState(true)
     const [totalAmount, setTotalAmount] = useState([])
     let outOfStock = 0;
@@ -27,6 +28,7 @@ const Dashboard = () => {
             outOfStock += 1;
         }
     })
+
     const getAdminPhotos = async () => {
         try {
 
@@ -47,9 +49,72 @@ const Dashboard = () => {
         }
     }
 
+    const listUsers = async () => {
+        try {
+
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/users`, config)
+            setUsers(data.users)
+            setLoading(false)
+
+        } catch (error) {
+            setError(error.response.data.message)
+            
+        }
+    }
+
+    const getAdminMaterials = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/materials`, config);
+
+            console.log(data);
+            setMaterials(data.materials);
+            setLoading(false);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    };
+
+    const getAdminReviews = async () => {
+        try {
+
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/reviews`, config)
+            console.log(data)
+            setReviews(data.reviews)
+            setLoading(false)
+        } catch (error) {
+
+            setError(error.response.data.message)
+
+        }
+    }
+
+
     useEffect(() => {
         getAdminPhotos()
-        
+        listUsers()
+        getAdminMaterials()
+        getAdminReviews()
     }, [])
 
     return (
@@ -95,9 +160,41 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-danger o-hidden h-100">
 
-                                        {/* <div className="card-body">
-                                            <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
-                                        </div> */}
+                                        <div className="card-body">
+                                            <div className="text-center card-font-size">Materials<br /> <b>{materials && materials.length}</b></div>
+                                        </div>
+
+                                        <Link className="card-footer text-white clearfix small z-1" to="/admin/materials">
+                                            <span className="float-left">View Details</span>
+                                            <span className="float-right">
+                                                <i className="fa fa-angle-right"></i>
+                                            </span>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-info o-hidden h-100">
+
+                                        <div className="card-body">
+                                            <div className="text-center card-font-size">Accounts<br /> <b>{users && users.length}</b></div>
+                                        </div>
+
+                                        <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
+                                            <span className="float-left">View Details</span>
+                                            <span className="float-right">
+                                                <i className="fa fa-angle-right"></i>
+                                            </span>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-warning o-hidden h-100">
+
+                                        <div className="card-body">
+                                            <div className="text-center card-font-size">Reviews<br /> <b>{reviews && reviews.length}</b></div>
+                                        </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                             <span className="float-left">View Details</span>
@@ -108,33 +205,17 @@ const Dashboard = () => {
                                     </div>
                                 </div>
 
-
-                                <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-info o-hidden h-100">
-
-                                        {/* <div className="card-body">
-                                            <div className="text-center card-font-size">Users<br /> <b>{users && users.length}</b></div>
-                                        </div> */}
-
-                                        <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
-                                            <span className="float-left">View Details</span>
-                                            <span className="float-right">
-                                                <i className="fa fa-angle-right"></i>
-                                            </span>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-sm-6 mb-3">
+                                {/* <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-warning o-hidden h-100">
-                                        {/*<div className="card-body">
+                                        <div className="card-body">
                                             <div className="text-center card-font-size">Out of Stock<br /> <b>0</b></div>
-                                        </div>*/}
+                                        </div>
 
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Out of Stock<br /> <b>{outOfStock}</b></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </Fragment>
                     )}
