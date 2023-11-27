@@ -78,6 +78,16 @@ const MaterialsList = () => {
     }, [error, deleteError, isDeleted]);
 
 
+    const toggleAllMaterialsSelection = () => {
+        if (selectedMaterials.length === materials.length) {
+            // If all materials are selected, unselect all
+            setSelectedMaterials([]);
+        } else {
+            // Otherwise, select all materials
+            setSelectedMaterials(materials.map((material) => material._id));
+        }
+    };
+
     
     const deleteMaterial = async (id) => {
         try {
@@ -100,7 +110,12 @@ const MaterialsList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Select',
+                    label: (      <input
+                        type="checkbox"
+                        checked={selectedMaterials.length === materials.length}
+                        onChange={toggleAllMaterialsSelection}
+                    />
+                ),
                     field: 'select',
                     sort: 'asc',
                 },

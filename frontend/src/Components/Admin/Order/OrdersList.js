@@ -15,6 +15,9 @@ const OrdersList = () => {
     const [error, setError] = useState('')
     const [allOrders, setAllOrders] = useState([])
     const [isDeleted, setIsDeleted] = useState(false)
+    const [selectedOrders, setSelectedOrders] = useState([]);
+    const [deleteError, setDeleteError] = useState('');
+   
     const errMsg = (message = '') => toast.error(message, {
         position: toast.POSITION.BOTTOM_RIGHT
     });
@@ -38,7 +41,7 @@ const OrdersList = () => {
         }
     }
     const deleteOrder = async (id) => {
-        try {
+        try { 
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,6 +56,21 @@ const OrdersList = () => {
 
         }
     }
+
+
+    const toggleAllOrdersSelection = () => {
+        if (selectedOrders.length === allOrders.length) {
+            // If all materials are selected, unselect all
+           setSelectedOrders([]);
+        } else {
+            // Otherwise, select all materials
+            setSelectedOrders(allOrders.map((orders) => orders._id));
+        }
+    };
+
+
+
+
     useEffect(() => {
         listOrders()
         if (error) {
@@ -67,9 +85,32 @@ const OrdersList = () => {
     const deleteOrderHandler = (id) => {
         deleteOrder(id)
     }
+
+    
+    const toggleOrderSelection = (id) => {
+        const isSelected = selectedOrders.includes(id);
+        if (isSelected) {
+            setSelectedOrders(selectedOrders.filter((selectedId) => selectedId !== id));
+        } else {
+            setSelectedOrders([...selectedOrders, id]);
+        }
+    };
+
+
+
     const setOrders = () => {
         const data = {
             columns: [
+                {
+                    label: (      <input
+                        type="checkbox"
+                        checked={selectedOrders.length === allOrders.length}
+                        onChange={toggleAllOrdersSelection}
+                    /> ),
+                    field: 'select',
+                    sort: 'asc',
+
+                },
                 {
                     label: 'ORDER ID',
                     field: 'id',
@@ -101,6 +142,16 @@ const OrdersList = () => {
 
         allOrders.forEach(order => {
             data.rows.push({
+
+                select: (
+                    <input
+                        type="checkbox"
+                        checked={selectedOrders.includes(order._id)}
+                        onChange={() => toggleOrderSelection(order._id)}
+                    />
+                ),
+
+
                 id: order._id,
                 numofItems: order.orderItems.length,
                 amount: `$${order.totalPrice}`,
@@ -122,6 +173,36 @@ const OrdersList = () => {
         })
         return data;
     }
+
+
+    const deleteOrderHandler2 = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            // Send a request to delete multiple materials
+            const deleteRequests = selectedOrders.map(async (id) => {
+                return axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/order/${id}`, config);
+            });
+
+            // Wait for all delete requests to complete
+            const responses = await Promise.all(deleteRequests);
+
+            // Check if all requests were successful
+            const allSuccess = responses.every((response) => response.data.success);
+
+            setIsDeleted(allSuccess);
+            setLoading(false);
+        } catch (error) {
+            setDeleteError(error.response.data.message);
+        }
+    };
+
+
     return (
         <Fragment>
             <MetaData title={'All Orders'} />
@@ -133,6 +214,16 @@ const OrdersList = () => {
                     <Fragment>
                         <h1 className="my-5">All Orders</h1>
                         {loading ? <Loader /> : (
+                             <div>
+                            <div>
+                            <button
+                                className="btn btn-danger py-1 px-2 mb-2"
+                                onClick={deleteOrderHandler2}
+                                disabled={selectedOrders.length === 0}
+                            >
+                                Delete Selected
+                            </button>
+                            </div>
                             <MDBDataTable
                                 data={setOrders()}
                                 className="px-3"
@@ -140,6 +231,7 @@ const OrdersList = () => {
                                 striped
                                 hover
                             />
+                            </div>
                         )}
                     </Fragment>
                 </div>

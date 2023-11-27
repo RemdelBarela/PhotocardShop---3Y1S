@@ -27,6 +27,16 @@ const UsersList = () => {
         }
     }
 
+    const toggleAllUserSelection = () => {
+        if (selectedUsers.length === allUsers.length) {
+            // If all users are selected, unselect all
+            setSelectedUsers([]);
+        } else {
+            // Otherwise, select all users
+            setSelectedUsers(allUsers.map((user) => user._id));
+        }
+    };
+    
 
     const toggleUserSelection = (id) => {
         const isSelected = selectedUsers.includes(id);
@@ -93,7 +103,12 @@ const UsersList = () => {
         const data = {
             columns: [
                 {
-                    checkbox: true,
+                    label: (      <input
+                        type="checkbox"
+                        checked={selectedUsers.length === allUsers.length}
+                        onChange={toggleAllUserSelection}
+                    />
+                ),
                     field: 'select',
                     sort: 'asc',
                 },
