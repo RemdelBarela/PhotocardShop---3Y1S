@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import UserSalesChart from './UserSalesChart';
 import PhotoSalesChart from './PhotoSalesChart';
 import OrderStatusSalesChart from './OrderStatusSalesChart';
+import RatingStatsChart from './RatingStatsChart';
+
 
 const Dashboard = () => {
 
@@ -200,35 +202,25 @@ const Dashboard = () => {
                                         </Link>
                                     </div>
                                 </div>
-
-                                {/* <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-warning o-hidden h-100">
-                                        <div className="card-body">
-                                            <div className="text-center card-font-size">Out of Stock<br /> <b>0</b></div>
-                                        </div>
-
-                                        <div className="card-body">
-                                            <div className="text-center card-font-size">Out of Stock<br /> <b>{outOfStock}</b></div>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                         </Fragment>
-                        
                     )}<hr />
-                    
-                </div>
-                <Fragment>
-                        <UserSalesChart />
-                    </Fragment>
-                    <Fragment>
+                </div >
+
+                    <div className="col-12 col-md-10 my-4 text-center">
+                        <Fragment>
+                            <h1>Customer Sales Chart</h1>
+                            <UserSalesChart />
+                        </Fragment>
+                        <Fragment>
+                            <h1>Order Status</h1>
+                            <OrderStatusSalesChart />
+                        </Fragment>
+                        <Fragment>
                         
-                        <OrderStatusSalesChart />
-                    </Fragment>
-                    <Fragment>
-                       
-                        <PhotoSalesChart /> 
-                    </Fragment>
+                            <RatingStatsChart /> 
+                        </Fragment>
+                    </div>
             </div>
         </Fragment >
     )

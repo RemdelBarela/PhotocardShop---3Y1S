@@ -338,3 +338,40 @@ exports.photoSales = async (req, res, next) => {
         totalSales
     })
 }
+
+exports.getRatingStats = async (req, res, next) => {
+    try {
+        const totalPhotos = await Photo.countDocuments();
+        const ratings = await Photo.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: '$ratings' },
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        const ratingStats = {
+            total: ratings.length > 0 ? ratings[0].total : 0,
+            count: ratings.length > 0 ? ratings[0].count : 0,
+        };
+
+        const ratingPercentage = {
+            average: ratingStats.count > 0 ? (ratingStats.total / ratingStats.count).toFixed(2) : 0,
+            percentage: ratingStats.count > 0 ? ((ratingStats.count / totalPhotos) * 100).toFixed(2) : 0,
+        };
+
+        res.status(200).json({
+            success: true,
+            ratingStats,
+            ratingPercentage,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal Server Error',
+        });
+    }
+};
