@@ -95,7 +95,7 @@ const NewPhoto = () => {
         <Fragment>
             <MetaData title={'NEW PHOTO'} />
             <div className="row">
-            <div className="col-12 col-md-2">
+            <div className="col-12 col-md-2" style={{ marginBottom: "50px" }}>
             <div style={{  height: '130vh', overflow: 'scroll initial' }}>
                 <Sidebar />
                 </div>

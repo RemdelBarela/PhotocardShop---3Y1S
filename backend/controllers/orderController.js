@@ -1,5 +1,6 @@
 const Order = require('../models/order');
 const User = require('../models/user');
+const Photo = require('../models/photo');
 const Photocard = require('../models/photocard');
 const Material = require('../models/material');
 const sendShippedEmail = require('../utils/sendShippedEmail')
@@ -196,7 +197,7 @@ exports.totalOrders = async (req, res, next) => {
     ])
     if (!totalOrders) {
         return res.status(404).json({
-            message: 'error total orders',
+            message: 'ERROR TOTAL ORDERS',
         })
     }
     res.status(200).json({
@@ -217,7 +218,7 @@ exports.totalSales = async (req, res, next) => {
     ])
     if (!totalSales) {
         return res.status(404).json({
-            message: 'error total sales',
+            message: 'ERROR TOTAL SALES',
         })
     }
     res.status(200).json({

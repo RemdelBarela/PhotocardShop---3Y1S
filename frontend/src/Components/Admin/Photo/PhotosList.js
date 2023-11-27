@@ -98,11 +98,27 @@ const PhotosList = () => {
     };
 
 
+
+    const toggleAllPhotosSelection = () => {
+        if (selectedPhotos.length === photos.length) {
+            // If all materials are selected, unselect all
+           setSelectedPhotos([]);
+        } else {
+            // Otherwise, select all materials
+            setSelectedPhotos(photos.map((photos) => photos._id));
+        }
+    };
+
+
     const photosList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Select',
+                    label: (      <input
+                        type="checkbox"
+                        checked={selectedPhotos.length === photos.length}
+                        onChange={toggleAllPhotosSelection}
+                    /> ),
                     field: 'select',
                     sort: 'asc',
                 },

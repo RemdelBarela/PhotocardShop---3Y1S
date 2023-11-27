@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import UserSalesChart from './UserSalesChart';
-import MaterialSalesChart from './MaterialSalesChart';
 import PhotoSalesChart from './PhotoSalesChart';
+import MaterialSalesChart from './MaterialSalesChart';
 
 const Dashboard = () => {
 
@@ -22,13 +22,14 @@ const Dashboard = () => {
     // const [reviews, setReviews] = useState([])
     const [materials, setMaterials] = useState([])
     const [loading, setLoading] = useState(true)
-    const [totalAmount, setTotalAmount] = useState([])
-    let outOfStock = 0;
-    photos.forEach(photo => {
-        if (photo.stock === 0) {
-            outOfStock += 1;
-        }
-    })
+    // const [totalAmount, setTotalAmount] = useState([])
+    const [totalAmount, setTotalAmount] = useState(0);
+    // let outOfStock = 0;
+    // photos.forEach(photo => {
+    //     if (photo.stock === 0) {
+    //         outOfStock += 1;
+    //     }
+    // })
 
     const getAdminPhotos = async () => {
         try {
@@ -105,7 +106,6 @@ const Dashboard = () => {
         }
     }
 
-
     useEffect(() => {
         getAdminPhotos()
         listUsers()
@@ -122,22 +122,22 @@ const Dashboard = () => {
 
                 <div className="col-12 col-md-10">
                     <h1 className="my-4 text-center">DASHBOARD</h1>
-
+                    <hr />
                     {loading ? <Loader /> : (
                         <Fragment>
                             <MetaData title={'Admin Dashboard'} />
 
                             <div className="row pr-4">
                                 <div className="col-xl-12 col-sm-12 mb-3">
-                                    <div className="card text-white bg-primary o-hidden h-100">
+                                    <div className="card text-white bg-secondary o-hidden h-100">
                                         <div className="card-body">
-                                            {/* <div className="text-center card-font-size">Total Amount<br /> <b>${totalAmount && totalAmount.toFixed(2)}</b>
-                                            </div> */}
-
+                                            <div className="text-center card-font-size">TOTAL AMOUNT<br /> <b>₱ {totalAmount && totalAmount.toFixed(2)}</b>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="row pr-4">
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-success o-hidden h-100">
@@ -214,16 +214,20 @@ const Dashboard = () => {
                                 </div> */}
                             </div>
                         </Fragment>
-                    )}
+                        
+                    )}<hr />
+                    
                 </div>
                 <Fragment>
                         <UserSalesChart />
                     </Fragment>
                     <Fragment>
+                        
                         <MaterialSalesChart />
                     </Fragment>
                     <Fragment>
-                        {/* <PhotoSalesChart /> */}
+                       
+                        <PhotoSalesChart /> 
                     </Fragment>
             </div>
         </Fragment >
