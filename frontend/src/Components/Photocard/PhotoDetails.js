@@ -88,7 +88,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
             setLoading(false);
           } 
         }
-      };
+      };//
 
     const increaseQty = () => {
         const count = document.querySelector('.count');
