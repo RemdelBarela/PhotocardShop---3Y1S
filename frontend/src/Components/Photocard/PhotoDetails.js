@@ -38,7 +38,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [cart, setCart] = useState([])
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
-    const [review, setReviews] = useState('');
+    const [reviews, setReviews] = useState('');
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
     
@@ -61,11 +61,9 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         try {
             let res = await axios.get(`http://localhost:4000/api/v1/photo/${id}`);
             setPhoto(res.data.photo);
-            setReviews(res.data.reviews); // Assuming the reviews are returned as part of the photo data
             setLoading(false);
 
         } catch (err) {
-            console.log(err)
 
             // setLoading(false)
             setError('NO PHOTO AVAILABLE')
@@ -75,6 +73,22 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         }
 
     }
+
+      
+      const reviewDetails = async (id) => {
+        try {
+          // Fetch reviews using the reviewDetails function
+          let res = await axios.get(`http://localhost:4000/api/v1/review/photo/${id}`);
+          setReviews(res.data.reviews);
+          setLoading(false);
+        } catch (err) {
+          if (err.response && err.response.status === 404) {
+            // If no reviews available, handle it without error
+            setReviews([]);
+            setLoading(false);
+          } 
+        }
+      };
 
     const increaseQty = () => {
         const count = document.querySelector('.count');
@@ -180,6 +194,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     };
     useEffect(() => {
         photoDetails(id)
+        reviewDetails(id)
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -276,7 +291,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                         <br />
                         <h5 className="mt-2 text-left"><strong>TOTAL REVIEWS:</strong></h5>
                         <div className="rating-outer inline">
-                            <div className="rating-inner d-inline text-center" style={{ width: `${(photo.ratings / 5) * 100}%` }}></div>
+                            <div className="rating-inner d-inline text-center" style={{ width: `${(reviews.rating / 5) * 100}%` }}></div>
                         </div>
                         <span id="no_of_reviews"><br/>({photo.numOfReviews} REVIEWS)</span>
 

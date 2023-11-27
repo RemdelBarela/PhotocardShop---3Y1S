@@ -30,7 +30,7 @@ exports.getPhotos = async (req, res, next) => {
 }
 
 exports.getSinglePhoto = async (req, res, next) => {
-	const photo = await Photo.findById(req.params.id);
+	const photo = await Photo.findById(req.params.id)
 	if (!photo) {
 		return res.status(404).json({
 			success: false,
