@@ -6,45 +6,6 @@ const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
-exports.getReviews = async (req, res, next) => {
-	// const photos = await Photo.find({});
-	const resPerPage = 4;
-	const reviewsCount = await Review.countDocuments();
-	const apiFeatures = new APIFeatures(Review.find(), req.query).search().filter()
-	apiFeatures.pagination(resPerPage);
-	const reviews = await apiFeatures.query;
-	console.log(reviews); 
-	const filteredReviewsCount = reviews.length
-	if (!reviews) {
-		return res.status(404).json({
-			success: false,
-			message: 'REVIEW LIST IS EMPTY'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		count: reviews.length,
-		reviewsCount,
-		reviews,
-		resPerPage,
-		filteredReviewsCount,
-	})
-}
-
-exports.getSingleReview = async (req, res, next) => {
-	const review = await Review.findById(req.params.id);
-	if (!review) {
-		return res.status(404).json({
-			success: false,
-			message: 'NO REVIEW FOUND'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		review
-	})
-}
-
 exports.getPhotoReview = async (req, res, next) => {
 	try {
 	  const photo = await Photo.findById(req.params.id);
@@ -74,66 +35,108 @@ exports.getPhotoReview = async (req, res, next) => {
 }
   
 exports.createPhotoReview = async (req, res, next) => {
-	try {
-	  const { rating, comment } = req.body;
-	  const photoId = req.params.id; // Assuming 'id' is passed correctly in the request
-  
-	  const existingReview = await Review.findOne({
-		photo: photoId,
-		user: req.user._id // Check if any review exists for this photo by the user
-	  });
-  
-	  if (existingReview) {
-		// Update the existing review
-		existingReview.rating = Number(rating);
-		existingReview.comment = comment;
-  
-		await existingReview.save();
-  
-		console.log('Review Updated Successfully');
-		console.log('Updated Review:', existingReview);
-	  } else {
-		// If no review exists for the user, create a new review
-		const newReview = new Review({
-		  photo: photoId,
-		  user: req.user._id,
-		  name: req.user.name,
-		  rating: Number(rating),
-		  comment
-		});
+    try {
+        const { rating, comment } = req.body;
+        const photoId = req.params.id;
 
-		await newReview.save();
-	  }
-  
-	  	// Fetch reviews for the given photoId
-		const reviews = await Review.find({ photo: photoId });
+        const existingReview = await Review.findOne({
+            photo: photoId,
+            user: req.user._id
+        });
 
-		// Calculate review count
-		const reviewCount = reviews.length;
+        let imagesLinks = [];
 
-		// Calculate average rating
-		const totalRating = reviews.reduce((acc, item) => item.rating + acc, 0);
-		const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
+        if (existingReview) {
+            existingReview.rating = Number(rating);
+            existingReview.comment = comment;
 
-		// Update Photo document
-		await Photo.findByIdAndUpdate(photoId, {
-		numOfReviews: reviewCount,
-		ratings: averageRating
-		});
+            let images = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
 
-  
-	  return res.status(200).json({
-		success: true,
-		message: 'SUCCESSFULLY SUBMITTED YOUR REVIEW'
-	  });
-	} catch (err) {
-	  console.error(err);
-	  return res.status(500).json({
-		success: false,
-		message: 'FAILED TO SUBMIT REVIEW'
-	  });
-	}
-  };
+            if (images.length > 0) {
+                for (let i = 0; i < images.length; i++) {
+                    try {
+                        const result = await cloudinary.v2.uploader.upload(images[i], {
+                            folder: 'photos',
+                            width: 150,
+                            crop: "scale",
+                        });
+
+                        imagesLinks.push({
+                            public_id: result.public_id,
+                            url: result.secure_url
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+
+            req.body.images = imagesLinks;
+
+			existingReview.images = imagesLinks;
+            await existingReview.save();
+
+            console.log('Review Updated Successfully');
+            console.log('Updated Review:', existingReview);
+        } else {
+            let images = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
+
+            if (images.length > 0) {
+                for (let i = 0; i < images.length; i++) {
+                    try {
+                        const result = await cloudinary.v2.uploader.upload(images[i], {
+                            folder: 'photos',
+                            width: 150,
+                            crop: "scale",
+                        });
+
+                        imagesLinks.push({
+                            public_id: result.public_id,
+                            url: result.secure_url
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+
+            req.body.images = imagesLinks;
+
+            const newReview = new Review({
+                photo: photoId,
+                user: req.user._id,
+                name: req.user.name,
+				images: imagesLinks,
+                rating: Number(rating),
+                comment
+            });
+
+            await newReview.save();
+        }
+
+        const reviews = await Review.find({ photo: photoId });
+        const reviewCount = reviews.length;
+        const totalRating = reviews.reduce((acc, item) => item.rating + acc, 0);
+        const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
+
+        await Photo.findByIdAndUpdate(photoId, {
+            numOfReviews: reviewCount,
+            ratings: averageRating
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: 'SUCCESSFULLY SUBMITTED YOUR REVIEW'
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: 'FAILED TO SUBMIT REVIEW'
+        });
+    }
+};
+
   
   exports.deleteReview = async (req, res, next) => {
 	try {
@@ -187,25 +190,3 @@ exports.getAdminReviews = async (req, res, next) => {
 		reviews
 	})
 }
-
-// exports.getAllPhotos = async (req, res, next) => {
-//     try {
-//         const allphotos = await Photo.find({}, 'name'); // Only fetch the name field
-//         if (!allphotos) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: 'PHOTOS NOT FOUND'
-//             });
-//         }
-//         res.status(200).json({
-//             success: true,
-//             allphotos
-//         });
-//     } catch (error) {
-//         console.error('ERROR GETTING PHOTOS:', error);
-//         res.status(500).json({
-//             success: false,
-//             message: 'INTERNAL SERVER ERROR'
-//         });
-//     }
-// };
