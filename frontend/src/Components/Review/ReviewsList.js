@@ -122,6 +122,11 @@ const ReviewsList = () => {
                     sort: 'asc',
                 },
                 {
+                    label: 'Images',
+                    field: 'images',
+                    sort: 'asc',
+                },
+                {
                     label: 'RATING',
                     field: 'rating',
                     sort: 'asc',
@@ -151,6 +156,9 @@ const ReviewsList = () => {
                 reviewId: review._id,
                 photoId: review.photo,
                 name: review.name,
+                images: review.images.map((image, index) => (
+                    <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '50px', height: '50px' }} />
+                )),
                 rating: review.rating,
                 comment: review.comment,
                 actions: (
