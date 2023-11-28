@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import MetaData from '../../Layout/MetaData'
 import Loader from '../../Layout/Loader'
-// import Sidebar from '../SideBar'
+import Sidebar from '../Sidebar'
 import { getToken } from '../../../utils/helpers';
 import axios from 'axios'
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ const Dashboard = () => {
     const [materials, setMaterials] = useState([])
     const [loading, setLoading] = useState(true)
     // const [totalAmount, setTotalAmount] = useState([])
-    const [totalAmount, setTotalAmount] = useState(0);
+    // const [totalAmount, setTotalAmount] = useState(0);
     // let outOfStock = 0;
     // photos.forEach(photo => {
     //     if (photo.stock === 0) {
@@ -119,7 +119,7 @@ const Dashboard = () => {
         <Fragment>
             <div className="row">
                 <div className="col-12 col-md-2">
-                    {/* <Sidebar /> */}
+                <Sidebar />
                 </div>
 
                 <div className="col-12 col-md-10">
@@ -129,7 +129,7 @@ const Dashboard = () => {
                         <Fragment>
                             <MetaData title={'Admin Dashboard'} />
 
-                            <div className="row pr-4">
+                            {/* <div className="row pr-4">
                                 <div className="col-xl-12 col-sm-12 mb-3">
                                     <div className="card text-white bg-secondary o-hidden h-100">
                                         <div className="card-body">
@@ -138,9 +138,9 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="row pr-4">
+                            <div className="row pr-4 " style={{ margin: '3%' }}>
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-success o-hidden h-100">
                                         <div className="card-body">
@@ -207,19 +207,19 @@ const Dashboard = () => {
                     )}<hr />
                 </div >
 
-                    <div className="col-12 col-md-10 my-4 text-center">
+                    <div className="col-12 col-md-10 my-4" style={{ marginLeft: '30%' }}>
                         <Fragment>
-                            <h1>Customer Sales Chart</h1>
+                            <h1 style={{ marginLeft: '20%' }}>Customer Sales Chart</h1>
                             <UserSalesChart />
                         </Fragment>
                         <Fragment>
-                            <h1>Order Status</h1>
+                            <h1 style={{ marginLeft: '27%' }}>Order Status</h1>
                             <OrderStatusSalesChart />
                         </Fragment>
                         <Fragment>
-                        
+                            <h1 style={{ marginLeft: '20%' }}>Rating Reviews Chart</h1>
                             <RatingStatsChart /> 
-                        </Fragment>
+                        </Fragment> 
                     </div>
             </div>
         </Fragment >

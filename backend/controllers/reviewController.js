@@ -190,3 +190,84 @@ exports.getAdminReviews = async (req, res, next) => {
 		reviews
 	})
 }
+
+// exports.getRatingStats = async (req, res, next) => {
+//   try {
+//     // Get the average rating and percentage from your reviews
+//     const ratingStats = await Review.aggregate([
+//       {
+//         $group: {
+//           _id: null,
+//           average: { $avg: '$rating' },
+//           percentage: {
+//             $push: {
+//               rating: '$rating',
+//               count: { $sum: 1 },
+//             },
+//           },
+//         },
+//       },
+//     ]);
+
+//     if (ratingStats.length === 0) {
+//       return next(new ErrorResponse('No rating statistics found', 404));
+//     }
+
+//     // Calculate the percentage for each rating
+//     const totalReviews = ratingStats[0].percentage.reduce((acc, curr) => acc + curr.count, 0);
+//     ratingStats[0].percentage = ratingStats[0].percentage.map(item => ({
+//       rating: item.rating,
+//       percentage: (item.count / totalReviews) * 100,
+//     }));
+
+//     res.status(200).json({
+//       success: true,
+//       ratingPercentage: ratingStats[0],
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     next(new ErrorResponse('Internal Server Error', 500));
+//   }
+// };
+exports.getRatingStats = async (req, res, next) => {
+  try {
+    const ratingStats = await Review.aggregate([
+      {
+        $group: {
+          _id: '$photo',
+          averageRating: { $avg: '$rating' },
+        },
+      },
+    ]);
+
+    if (ratingStats.length === 0) {
+      return next(new ErrorResponse('No rating statistics found', 404));
+    }
+
+    // If you want to include the photo details, you can use $lookup to join with the Photo model
+    const ratingStatsWithPhotoDetails = await Review.aggregate([
+      {
+        $group: {
+          _id: '$photo',
+          averageRating: { $avg: '$rating' },
+        },
+      },
+      {
+        $lookup: {
+          from: 'photos', // Change this to the actual name of your Photo model's collection
+          localField: '_id',
+          foreignField: '_id',
+          as: 'photoDetails',
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      ratingStats: ratingStatsWithPhotoDetails,
+    });
+  } catch (error) {
+    console.error(error);
+    next(new ErrorResponse('Internal Server Error', 500));
+  }
+};
