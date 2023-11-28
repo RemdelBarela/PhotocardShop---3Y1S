@@ -4,12 +4,79 @@ const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
+// exports.registerUser = async (req, res, next) => {
+
+
+//     const {name, email, password } = req.body;
+
+//     const userValidation = new User({ email, password,name });
+//     const validationError = userValidation.validateSync();
+
+//     if (validationError) {
+//         const errorMessages = Object.keys(validationError.errors).map(key => validationError.errors[key].message);
+//         return res.status(400).json({ errors: errorMessages });
+//     }
+
+//     let avatar = [];
+//     if (typeof req.body.avatar === 'string') {
+//         avatar.push(req.body.avatar);
+//     } else {
+//         avatar = req.body.avatar;
+//     }
+
+//     let avatarLinks = [];
+
+//     if (avatar && avatar.length) {
+      
+//     for (let i = 0; i < avatar.length; i++) {
+//         let avatarDataUri = avatar[i];
+
+//         try {
+//             const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
+//                 folder: 'user',
+//                 width: 150,
+//                 crop: "scale",
+//             });
+
+//             avatarLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url
+//             })
+            
+//         } catch (error) {
+// 			console.log(error)
+// 		}
+
+//     }
+// }
+//     req.body.avatar = avatarLinks;
+
+//     const user = await User.create(req.body);
+//     if (!user)
+//         return res.status(400).json({
+//             success: false,
+//             message: 'UNSUCCESFUL REGISTRATION'
+//         })
+//     res.status(201).json({
+//         success: true,
+//         user
+//     })
+
+//     // sendToken(user, 200, res);
+// }
+
+
+
 exports.registerUser = async (req, res, next) => {
+    const { name, email, password } = req.body;
 
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.status(400).json({ errors: ['Email already exists.'] });
+    }
 
-    const {name, email, password } = req.body;
-
-    const userValidation = new User({ email, password,name });
+    const userValidation = new User({ email, password, name });
     const validationError = userValidation.validateSync();
 
     if (validationError) {
@@ -27,43 +94,38 @@ exports.registerUser = async (req, res, next) => {
     let avatarLinks = [];
 
     if (avatar && avatar.length) {
-      
-    for (let i = 0; i < avatar.length; i++) {
-        let avatarDataUri = avatar[i];
+        for (let i = 0; i < avatar.length; i++) {
+            let avatarDataUri = avatar[i];
 
-        try {
-            const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
-                folder: 'user',
-                width: 150,
-                crop: "scale",
-            });
+            try {
+                const result = await cloudinary.v2.uploader.upload(`${avatarDataUri}`, {
+                    folder: 'user',
+                    width: 150,
+                    crop: 'scale',
+                });
 
-            avatarLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url
-            })
-            
-        } catch (error) {
-			console.log(error)
-		}
-
+                avatarLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
-}
     req.body.avatar = avatarLinks;
 
     const user = await User.create(req.body);
     if (!user)
         return res.status(400).json({
             success: false,
-            message: 'UNSUCCESFUL REGISTRATION'
-        })
+            message: 'UNSUCCESSFUL REGISTRATION',
+        });
     res.status(201).json({
         success: true,
-        user
-    })
-
-    // sendToken(user, 200, res);
-}
+        user,
+    });
+};
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
