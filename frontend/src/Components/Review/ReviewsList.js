@@ -208,18 +208,12 @@ const ReviewsList = () => {
             <MetaData title={'All Reviews'} />
             <div className="row">
                 <div className="col-12 col-md-2">
-                <div style={{  height: '210vh', overflow: 'scroll initial' }}>
-    
-                    <Sidebar />
-                    </div>
+                <Sidebar />
                 </div>
-
-                <div className="col-12 col-md-8">
-                <div className="wrapper my-5">
+           
+                <div className="col-12 col-md-10" style={{  paddingLeft: "70px", marginBottom: "70px" }}>
                 <Fragment>
-                <div style={{ width: '100%', padding: '20px' }} >
-              
-                        <h1 className="my-5 text-center">All Reviews</h1>
+              <h1 className="my-5 text-center">All Reviews</h1>
 
                         {loading ? <Loader /> : (
                             <div>
@@ -241,11 +235,10 @@ const ReviewsList = () => {
                             />
                             </div>
                         )}
-                    </div>
+                    
                     </Fragment>
-                </div></div>
             </div>
-
+          </div>
         </Fragment>
     )
 }

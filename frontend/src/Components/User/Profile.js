@@ -51,7 +51,7 @@ const Profile = () => {
                 <MDBCol lg="9" xl="7">
                   <MDBCard>
                     <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
-                      <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
+                       <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                       {user.avatar.length > 0 && (
                         <MDBCardImage src={user.avatar[0].url}
                           alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" 

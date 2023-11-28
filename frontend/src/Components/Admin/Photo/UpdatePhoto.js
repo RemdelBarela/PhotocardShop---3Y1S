@@ -124,15 +124,14 @@ const UpdatePhoto = () => {
         <Fragment>
         <MetaData title={'UPDATE PHOTO'} />
         <div className="row">
-            <div className="col-12 col-md-2">
-            <div style={{ display: 'flex', height: '106vh', overflow: 'scroll initial' }}>
-    
+        <div className="col-12 col-md-2"style={{  marginBottom: "2px" }}>
+        <div style={{  height: '100vh', overflow: 'scroll initial' }}>
                 <Sidebar />
                 </div>
             </div>
-            <div className="col-12 col-md-8">
-                <div className="wrapper my-5">
-                    <form className="shadow-lg photoForm" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
+            <div className="np col-12 col-md-8">
+                    <div className="np wrapper my-5" style={{ width: '100%', paddingLeft: '10%', marginLeft: '10%' }}>
+                      <form className="shadow-lg photoForm" onSubmit={submitHandler} encType='multipart/form-data' style={{ width: '100%', padding: '20px' }}>
                         <h1 className="mb-4 text-center">UPDATE PHOTO</h1>
                         <div className="form-group">
                             <label htmlFor="name_field">NAME</label>
