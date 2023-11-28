@@ -333,7 +333,7 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
 
                                 <div className="text-center" style={{ border: '2px solid #ddd', paddingTop: '12px', borderRadius: '100px' }}>
                                 
-                                    <p>AVAILABLE STOCK: {selectedMaterial.stock || 'None Selected'}</p>
+                                    <p>AVAILABLE STOCK: {selectedMaterial.stock}</p>
                                 </div>
                             </div>
 

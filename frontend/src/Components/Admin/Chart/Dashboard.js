@@ -117,28 +117,19 @@ const Dashboard = () => {
 
     return (
         <Fragment>
+             <MetaData title={'Dashboard'} />
             <div className="row">
                 <div className="col-12 col-md-2">
                 <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10" style={{  paddingLeft: "70px", marginBottom: "70px" }}>
                     <h1 className="my-4 text-center">DASHBOARD</h1>
                     <hr />
                     {loading ? <Loader /> : (
                         <Fragment>
-                            <MetaData title={'Admin Dashboard'} />
+                           
 
-                            {/* <div className="row pr-4">
-                                <div className="col-xl-12 col-sm-12 mb-3">
-                                    <div className="card text-white bg-secondary o-hidden h-100">
-                                        <div className="card-body">
-                                            <div className="text-center card-font-size">TOTAL AMOUNT<br /> <b>₱ {totalAmount && totalAmount.toFixed(2)}</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
 
                             <div className="row pr-4 " style={{ margin: '3%' }}>
                                 <div className="col-xl-3 col-sm-6 mb-3">
@@ -205,7 +196,7 @@ const Dashboard = () => {
                             </div>
                         </Fragment>
                     )}<hr />
-                </div >
+               
 
                     <div className="col-12 col-md-10 my-4" style={{ marginLeft: '28%' }}>
                         <Fragment>
@@ -221,6 +212,7 @@ const Dashboard = () => {
                             <RatingStatsChart /> <br /> <br />
                         </Fragment> 
                     </div>
+                    </div >
             </div>
         </Fragment >
     )
