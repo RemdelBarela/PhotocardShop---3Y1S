@@ -88,6 +88,16 @@ const ReviewsList = () => {
         }
     }
 
+    const toggleAllReviewsSelection = () => {
+        if (selectedReviews.length === reviews.length) {
+            // If all materials are selected, unselect all
+            setSelectedReviews([]);
+        } else {
+            // Otherwise, select all materials
+            setSelectedReviews(reviews.map((reviews) => reviews._id));
+        }
+    };
+
     const toggleReviewSelection = (id) => {
         const isSelected = selectedReviews.includes(id);
         if (isSelected) {
@@ -102,11 +112,15 @@ const ReviewsList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Select',
+                    label: (      <input
+                        type="checkbox"
+                        checked={selectedReviews.length === reviews.length}
+                        onChange={toggleAllReviewsSelection}
+                    />
+                ),
                     field: 'select',
                     sort: 'asc',
-                },
-                {
+                },                {
                     label: 'REVIEW ID',
                     field: 'reviewId',
                     sort: 'asc',
