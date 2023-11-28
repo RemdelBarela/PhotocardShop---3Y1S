@@ -142,7 +142,7 @@ const Dashboard = () => {
 
                             <div className="row pr-4 " style={{ margin: '3%' }}>
                                 <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-success o-hidden h-100">
+                                    <div className="card text-white" style={{ backgroundColor: '#333' }}>
                                         <div className="card-body">
                                             <div className="text-center card-font-size">PHOTOS<br /> <b>{photos && photos.length}</b></div>
                                         </div>
@@ -156,7 +156,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-danger o-hidden h-100">
+                                    <div className="card text-white" style={{ backgroundColor: '#000' }}>
 
                                         <div className="card-body">
                                             <div className="text-center card-font-size">MATERIALS<br /> <b>{materials && materials.length}</b></div>
@@ -172,7 +172,7 @@ const Dashboard = () => {
                                 </div>
 
                                 <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-info o-hidden h-100">
+                                    <div className="card text-white" style={{ backgroundColor: '#C00' }}>
 
                                         <div className="card-body">
                                             <div className="text-center card-font-size">ACCOUNTS<br /> <b>{users && users.length}</b></div>
@@ -188,7 +188,7 @@ const Dashboard = () => {
                                 </div>
 
                                 <div className="col-xl-3 col-sm-6 mb-3">
-                                    <div className="card text-white bg-warning o-hidden h-100">
+                                    <div className="card text-white" style={{ backgroundColor: '#F00' }}>
 
                                         <div className="card-body">
                                             <div className="text-center card-font-size">ORDERS<br /> <b>{orders && orders.length}</b></div>
@@ -207,18 +207,18 @@ const Dashboard = () => {
                     )}<hr />
                 </div >
 
-                    <div className="col-12 col-md-10 my-4" style={{ marginLeft: '30%' }}>
+                    <div className="col-12 col-md-10 my-4" style={{ marginLeft: '28%' }}>
                         <Fragment>
-                            <h1 style={{ marginLeft: '20%' }}>Customer Sales Chart</h1>
-                            <UserSalesChart />
+                            <h1 style={{ marginLeft: '20%' }}>CUSTOMER SALES CHART</h1>
+                            <UserSalesChart /><br /> <br />
                         </Fragment>
                         <Fragment>
-                            <h1 style={{ marginLeft: '27%' }}>Order Status</h1>
-                            <OrderStatusSalesChart />
+                            <h1 style={{ marginLeft: '27%' }}>ORDER STATUS</h1>
+                            <OrderStatusSalesChart /> <br /> <br />
                         </Fragment>
                         <Fragment>
-                            <h1 style={{ marginLeft: '20%' }}>Rating Reviews Chart</h1>
-                            <RatingStatsChart /> 
+                            <h1 style={{ marginLeft: '20%' }}>RATING REVIEWS CHART</h1>
+                            <RatingStatsChart /> <br /> <br />
                         </Fragment> 
                     </div>
             </div>
