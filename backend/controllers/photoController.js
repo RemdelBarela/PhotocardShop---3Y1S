@@ -1,7 +1,7 @@
 const Photo = require('../models/photo')
 const Order = require('../models/order')
 const Material = require('../models/material')
-
+const Review = require('../models/review')
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 
@@ -190,40 +190,94 @@ exports.updatePhoto = async (req, res, next) => {
 	})
 }
 
+// exports.deletePhoto = async (req, res, next) => {
+// 	try {
+// 	const photo = await Photo.findByIdAndDelete(req.params.id);
+// 	if (!photo) {
+// 		return res.status(404).json({
+// 			success: false,
+// 			message: 'NO PRODUCT FOUND'
+// 		})
+// 	}
+
+// 	if (photo.images && photo.images.length > 0) {
+// 		for (const images of photo.images) {
+// 			if (images.public_id) {
+// 				await cloudinary.v2.uploader.destroy(images.public_id);
+// 			}
+// 		}
+// 	}
+	
+//     await Photo.findByIdAndDelete(req.params.id);
+// 	res.status(200).json({
+// 		success: true,
+// 		message: 'PHOTO REMOVED'
+// 	});
+// 	} catch (error) {
+// 		// Log the error for debugging purposes
+// 		console.error(error);
+
+// 		// Send an error response
+// 		res.status(500).json({
+// 			success: false,
+// 			message: 'INTERNAL SERVER ERROR'
+// 		});
+// 	}
+// }
+
+
+
 exports.deletePhoto = async (req, res, next) => {
 	try {
-	const photo = await Photo.findByIdAndDelete(req.params.id);
-	if (!photo) {
+	  const photo = await Photo.findById(req.params.id);
+	  if (!photo) {
 		return res.status(404).json({
-			success: false,
-			message: 'NO PRODUCT FOUND'
-		})
-	}
-
-	if (photo.images && photo.images.length > 0) {
-		for (const images of photo.images) {
-			if (images.public_id) {
-				await cloudinary.v2.uploader.destroy(images.public_id);
-			}
+		  success: false,
+		  message: 'NO PRODUCT FOUND'
+		});
+	  }
+  
+	  // Check if there are associated reviews
+	  const reviews = await Review.find({ photo: req.params.id });
+	  if (reviews && reviews.length > 0) {
+		// Delete associated reviews first
+		for (const review of reviews) {
+		  await Review.findByIdAndDelete(review._id);
 		}
-	}
-	
-    await Photo.findByIdAndDelete(req.params.id);
-	res.status(200).json({
+	  }
+
+
+	//   const photocard = await Photocard.find({ photo: req.params.id });
+	//   if (photocard && photocard.length > 0) {
+	// 	// Delete associated reviews first
+	// 	for (const photocard of photocard) {
+	// 	  await photocard.findByIdAndDelete(review._id);
+	// 	}
+	//   }
+  
+	  // Delete photo and its images
+	  if (photo.images && photo.images.length > 0) {
+		for (const image of photo.images) {
+		  if (image.public_id) {
+			await cloudinary.v2.uploader.destroy(image.public_id);
+		  }
+		}
+	  }
+  
+	  await Photo.findByIdAndDelete(req.params.id);
+  
+	  res.status(200).json({
 		success: true,
 		message: 'PHOTO REMOVED'
-	});
+	  });
 	} catch (error) {
-		// Log the error for debugging purposes
-		console.error(error);
-
-		// Send an error response
-		res.status(500).json({
-			success: false,
-			message: 'INTERNAL SERVER ERROR'
-		});
+	  console.error(error);
+	  res.status(500).json({
+		success: false,
+		message: 'INTERNAL SERVER ERROR'
+	  });
 	}
-}
+  };
 
 exports.getAdminPhotos = async (req, res, next) => {
 	const photos = await Photo.find();
