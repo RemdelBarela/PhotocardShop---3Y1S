@@ -39,6 +39,8 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
     const [review, setReview] = useState('');
+    const [images, setImages] = useState([]);
+    const [imagesPreview, setImagesPreview] = useState([]);
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
     
@@ -142,6 +144,22 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         
     };
 
+    const onChange = e => {
+        const files = Array.from(e.target.files);
+        setImagesPreview([]);
+        setImages([]);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImagesPreview(oldArray => [...oldArray, reader.result]);
+                    setImages(oldArray => [...oldArray, reader.result]);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     function setUserRatings() {
         const faces = document.querySelectorAll('.face');
         faces.forEach((face, index) => {
@@ -191,10 +209,28 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
         }
     };
 
-    const reviewHandler = () => {
-        const reviewData = { rating, comment, photoId: id }; // Ensure 'id' is defined or passed appropriately
-        newReview(reviewData);
-        console.log(reviewData)
+    
+    // const reviewHandler = () => {
+    //     const reviewData = { rating, comment, photoId: id }; // Ensure 'id' is defined or passed appropriately
+    //     newReview(reviewData);
+    //     console.log(reviewData)
+    // };
+
+    const reviewHandler = async () => {
+        const formData = new FormData();
+        images.forEach(image => {
+            formData.append('images', image);
+        });
+    
+        const reviewData = {
+            rating: rating,
+            comment: comment,
+            photoId: id,
+            images: Array.from(formData.getAll('images'))
+        };
+    
+        await newReview(reviewData);
+        console.log(reviewData);
     };
     useEffect(() => {
         const fetchData = async () => {
@@ -377,6 +413,25 @@ const PhotoDetails = ({ cartItems, addItemToCart }) => {
                                                 value={comment}
                                                 onChange={(e) => setComment(e.target.value)}
                                                 ></textarea>
+                                                <div className='form-group'>
+                                                    
+                                            <div className='custom-file'>
+                                                <input
+                                                    type='file'
+                                                    name='avatar'
+                                                    className='custom-file-input'
+                                                    id='customFile'
+                                                    onChange={onChange}
+                                                    multiple
+                                                />
+                                                <label className='custom-file-label' htmlFor='customFile'>
+                                                    UPLOAD IMAGES
+                                                </label>
+                                            </div>
+                                            {imagesPreview.map(img => (
+                                                <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
+                                            ))}
+                                        </div>
                                                 <button className="btn my-3 review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>
                                                 SUBMIT
                                                 </button>
